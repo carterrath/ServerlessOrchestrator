@@ -29,7 +29,7 @@ func ConnectToDB() {
 		To test this we will use a pre-made repository but repoLink will be provided through the UI
 		The Developer would provide their repoLink and we would clone it and run the SQL file
 	*/
-	repoLink := "https://github.com/JaclynW/testRepo.git"
+	repoLink := "https://github.com/ruthijimenez/service-catalog.git"
 
 	// Temporary local path to clone and store the repository's contents.
 	clonePath := "./tempRepo"
