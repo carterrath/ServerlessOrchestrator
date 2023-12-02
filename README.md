@@ -8,6 +8,9 @@
 5. Right click microservice.db
 6. In SQLITE EXPLORER, Drop down microservice.db and click play button
 
+## Sample Microservice
+https://github.com/ruthijimenez/service-catalog
+
 ## Run Minikube
 Run minikube tunnel in a seperate terminal
 minikube start
