@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/GoKubes/ServerlessOrchestrator/api"
+	"github.com/GoKubes/ServerlessOrchestrator/Application"
 	"github.com/gin-gonic/gin"
 
 	"github.com/stretchr/testify/suite"
@@ -22,7 +22,7 @@ func (suite *ApiTestSuite) SetupSuite() {
 	// Initialize anything you need before running your test suite
 	gin.SetMode(gin.TestMode)
 	suite.router = gin.Default()
-	api.RegisterRoutes(suite.router) // Register API routes
+	Application.RegisterRoutes(suite.router) // Register API routes
 }
 
 // TC-001: Database fetching for all microservices.

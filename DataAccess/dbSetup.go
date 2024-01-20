@@ -1,4 +1,4 @@
-package db
+package DataAccess
 
 import (
 	"database/sql"
@@ -20,9 +20,10 @@ func CreateDatabase() {
 	*/
 	createMicroservicesTable := `CREATE TABLE IF NOT EXISTS microservices (
 		"id" INTEGER PRIMARY KEY, 
+		"name" TEXT UNIQUE,
 		"service_hook" TEXT, 
 		"build_script" TEXT,
-		"placeholder" TEXT
+		"place_holder" TEXT
 	);`
 
 	_, err = database.Exec(createMicroservicesTable)

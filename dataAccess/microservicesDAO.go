@@ -1,4 +1,4 @@
-package dataAccess
+package DataAccess
 
 import (
 	"database/sql"
@@ -9,16 +9,160 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/GoKubes/ServerlessOrchestrator/Business"
 	"github.com/go-git/go-git/v5"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func ConnectToDB() {
-	database, err := sql.Open("sqlite3", "./microservice.db")
+type MicroservicesDAO struct{}
+
+var _ Business.DataAccess_IF = &MicroservicesDAO{}
+
+// OpenDBConnection opens a connection to the SQLite database.
+func (dao *MicroservicesDAO) OpenDBConnection() (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", "./microservice.db")
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
+
+// CloseDBConnection closes the provided database connection.
+func (dao *MicroservicesDAO) CloseDBConnection(db *sql.DB) {
+	if db != nil {
+		db.Close()
+	}
+}
+
+// getAllMicroservices function retrieves all microservices from the database and returns them in a list.
+func (dao *MicroservicesDAO) GetAllMicroservices() ([]Business.Microservice, error) {
+	//open database connection
+	database, err := dao.OpenDBConnection()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer database.Close()
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
+	// Prepare a SELECT query to retrieve all microservices from the database.
+	// Should add a WHERE clause to the query to filter by the user id when we have a user table?
+	rows, err := database.Query("SELECT * FROM microservices")
+	if err != nil {
+		return nil, fmt.Errorf("Error querying the database: %v", err)
+	}
+	defer rows.Close()
+
+	// Create a slice to store the microservices.
+	var microservices []Business.Microservice
+
+	// Iterate over the rows and append microservices to the slice.
+	for rows.Next() {
+		var micro Business.Microservice
+		if err := rows.Scan(&micro.ID, &micro.Name, &micro.ServiceHook, &micro.BuildScript, &micro.PlaceHolder); err != nil {
+			return nil, fmt.Errorf("Error scanning row: %v", err)
+		}
+		microservices = append(microservices, micro)
+	}
+
+	// Check for any errors during iteration.
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("Error during iteration: %v", err)
+	}
+
+	// Return the slice of microservices.
+	return microservices, nil
+}
+
+// getMicroservice function retrieves a microservice from the database by its name. (and user id?)
+func (dao *MicroservicesDAO) GetMicroserviceByName(name string) (Business.Microservice, error) {
+	//open database connection
+	database, err := dao.OpenDBConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
+	// Prepare a SELECT query to retrieve the microservice from the database.
+	// Should add a WHERE clause to the query to filter by the user id when we have a user table?
+	row := database.QueryRow("SELECT * FROM microservices WHERE name = ?", name)
+
+	var micro Business.Microservice
+	if err := row.Scan(&micro.ID, &micro.Name, &micro.ServiceHook, &micro.BuildScript, &micro.PlaceHolder); err != nil {
+		return micro, fmt.Errorf("Error scanning row: %v", err)
+	}
+
+	// Return the microservice.
+	return micro, nil
+}
+
+// getMicroservice function retrieves a microservice from the database by its id. (and user id?)
+func (dao *MicroservicesDAO) GetMicroserviceByID(id int) (Business.Microservice, error) {
+	//open database connection
+	database, err := dao.OpenDBConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
+	// Prepare a SELECT query to retrieve the microservice from the database.
+	// Should add a WHERE clause to the query to filter by the user id when we have a user table?
+	row := database.QueryRow("SELECT * FROM microservices WHERE id = ?", id)
+
+	var micro Business.Microservice
+	if err := row.Scan(&micro.ID, &micro.Name, &micro.ServiceHook, &micro.BuildScript, &micro.PlaceHolder); err != nil {
+		return micro, fmt.Errorf("Error scanning row: %v", err)
+	}
+
+	// Return the microservice.
+	return micro, nil
+}
+
+// insertMicroservice function inserts a microservice into the database.
+func (dao *MicroservicesDAO) InsertMicroservice(micro Business.Microservice) error {
+	//open database connection
+	database, err := dao.OpenDBConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
+	// Prepare an SQL statement for insertion.
+	statement, _ := database.Prepare("INSERT INTO microservices (name, service_hook, build_script, place_holder) VALUES (?, ?, ?, ?)")
+	statement.Exec(micro.Name, micro.ServiceHook, micro.BuildScript, micro.PlaceHolder) // Execute the statement with provided values.
+	return nil
+}
+
+// updateMicroservice function updates a microservice in the database.
+func (dao *MicroservicesDAO) UpdateMicroservice(micro Business.Microservice) error {
+	//open database connection
+	database, err := dao.OpenDBConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
+	// Prepare an SQL statement for update.
+	statement, _ := database.Prepare("UPDATE microservices SET name = ?, service_hook = ?, build_script = ?, place_holder = ? WHERE id = ?")
+	statement.Exec(micro.Name, micro.ServiceHook, micro.BuildScript, micro.PlaceHolder, micro.ID) // Execute the statement with provided values.
+	return nil
+}
+
+// deleteMicroservice function deletes a microservice from the database.
+func (dao *MicroservicesDAO) DeleteMicroservice(micro Business.Microservice) error {
+	//open database connection
+	database, err := dao.OpenDBConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
+	// Prepare an SQL statement for deletion.
+	statement, _ := database.Prepare("DELETE FROM microservices WHERE id = ?")
+	statement.Exec(micro.ID) // Execute the statement with provided values.
+	return nil
+}
+
+// This should be added to a different class, and maybe split into different functions
+// ConnectToDB connects to the SQLite database, interacts with microservices data, and handles scenarios.
+func (dao *MicroservicesDAO) ConnectToDB() {
+	database, err := dao.OpenDBConnection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dao.CloseDBConnection(database) // Close the database connection when done.
 
 	var microName string
 	fmt.Print("Enter your Microservice name: ")
@@ -93,6 +237,7 @@ func ConnectToDB() {
 }
 
 // cloneRepo function uses the go-git package to clone a given GitHub repository
+// This should be in a different class
 // into a specified local path.
 func cloneRepo(url, path string) {
 	// The PlainClone function clones a repository into the path.
