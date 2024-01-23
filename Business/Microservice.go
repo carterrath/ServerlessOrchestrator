@@ -1,4 +1,4 @@
-package Business
+package business
 
 // Microservice struct represents a microservice with its properties.
 type Microservice struct {

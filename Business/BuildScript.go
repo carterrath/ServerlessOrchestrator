@@ -1,4 +1,4 @@
-package Business
+package business
 
 type BuildScript struct {
 	// Properties TBD

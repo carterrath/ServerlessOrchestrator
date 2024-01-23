@@ -1,4 +1,4 @@
-package DataAccess
+package dataaccess
 
 import (
 	"database/sql"
@@ -9,14 +9,16 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/GoKubes/ServerlessOrchestrator/Business"
+	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/go-git/go-git/v5"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type MicroservicesDAO struct{}
+type MicroservicesDAO struct {
+	DB *sql.DB
+}
 
-var _ Business.DataAccess_IF = &MicroservicesDAO{}
+var _ business.DataAccess_IF = &MicroservicesDAO{}
 
 // OpenDBConnection opens a connection to the SQLite database.
 func (dao *MicroservicesDAO) OpenDBConnection() (*sql.DB, error) {
@@ -35,9 +37,9 @@ func (dao *MicroservicesDAO) CloseDBConnection(db *sql.DB) {
 }
 
 // getAllMicroservices function retrieves all microservices from the database and returns them in a list.
-func (dao *MicroservicesDAO) GetAllMicroservices() ([]Business.Microservice, error) {
+func (dao *MicroservicesDAO) GetAll() ([]business.Microservice, error) {
 	//open database connection
-	database, err := dao.OpenDBConnection()
+	database, err := dao.DB
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,11 +53,11 @@ func (dao *MicroservicesDAO) GetAllMicroservices() ([]Business.Microservice, err
 	defer rows.Close()
 
 	// Create a slice to store the microservices.
-	var microservices []Business.Microservice
+	var microservices []business.Microservice
 
 	// Iterate over the rows and append microservices to the slice.
 	for rows.Next() {
-		var micro Business.Microservice
+		var micro business.Microservice
 		if err := rows.Scan(&micro.ID, &micro.Name, &micro.ServiceHook, &micro.BuildScript, &micro.PlaceHolder); err != nil {
 			return nil, fmt.Errorf("Error scanning row: %v", err)
 		}
@@ -72,7 +74,7 @@ func (dao *MicroservicesDAO) GetAllMicroservices() ([]Business.Microservice, err
 }
 
 // getMicroservice function retrieves a microservice from the database by its name. (and user id?)
-func (dao *MicroservicesDAO) GetMicroserviceByName(name string) (Business.Microservice, error) {
+func (dao *MicroservicesDAO) GetByName(name string) (business.Microservice, error) {
 	//open database connection
 	database, err := dao.OpenDBConnection()
 	if err != nil {
@@ -83,7 +85,7 @@ func (dao *MicroservicesDAO) GetMicroserviceByName(name string) (Business.Micros
 	// Should add a WHERE clause to the query to filter by the user id when we have a user table?
 	row := database.QueryRow("SELECT * FROM microservices WHERE name = ?", name)
 
-	var micro Business.Microservice
+	var micro business.Microservice
 	if err := row.Scan(&micro.ID, &micro.Name, &micro.ServiceHook, &micro.BuildScript, &micro.PlaceHolder); err != nil {
 		return micro, fmt.Errorf("Error scanning row: %v", err)
 	}
@@ -93,7 +95,7 @@ func (dao *MicroservicesDAO) GetMicroserviceByName(name string) (Business.Micros
 }
 
 // getMicroservice function retrieves a microservice from the database by its id. (and user id?)
-func (dao *MicroservicesDAO) GetMicroserviceByID(id int) (Business.Microservice, error) {
+func (dao *MicroservicesDAO) GetByID(id int) (business.Microservice, error) {
 	//open database connection
 	database, err := dao.OpenDBConnection()
 	if err != nil {
@@ -104,7 +106,7 @@ func (dao *MicroservicesDAO) GetMicroserviceByID(id int) (Business.Microservice,
 	// Should add a WHERE clause to the query to filter by the user id when we have a user table?
 	row := database.QueryRow("SELECT * FROM microservices WHERE id = ?", id)
 
-	var micro Business.Microservice
+	var micro business.Microservice
 	if err := row.Scan(&micro.ID, &micro.Name, &micro.ServiceHook, &micro.BuildScript, &micro.PlaceHolder); err != nil {
 		return micro, fmt.Errorf("Error scanning row: %v", err)
 	}
@@ -114,7 +116,7 @@ func (dao *MicroservicesDAO) GetMicroserviceByID(id int) (Business.Microservice,
 }
 
 // insertMicroservice function inserts a microservice into the database.
-func (dao *MicroservicesDAO) InsertMicroservice(micro Business.Microservice) error {
+func (dao *MicroservicesDAO) Insert(micro business.Microservice) error {
 	//open database connection
 	database, err := dao.OpenDBConnection()
 	if err != nil {
@@ -128,7 +130,7 @@ func (dao *MicroservicesDAO) InsertMicroservice(micro Business.Microservice) err
 }
 
 // updateMicroservice function updates a microservice in the database.
-func (dao *MicroservicesDAO) UpdateMicroservice(micro Business.Microservice) error {
+func (dao *MicroservicesDAO) Update(micro business.Microservice) error {
 	//open database connection
 	database, err := dao.OpenDBConnection()
 	if err != nil {
@@ -142,7 +144,7 @@ func (dao *MicroservicesDAO) UpdateMicroservice(micro Business.Microservice) err
 }
 
 // deleteMicroservice function deletes a microservice from the database.
-func (dao *MicroservicesDAO) DeleteMicroservice(micro Business.Microservice) error {
+func (dao *MicroservicesDAO) Delete(micro business.Microservice) error {
 	//open database connection
 	database, err := dao.OpenDBConnection()
 	if err != nil {
