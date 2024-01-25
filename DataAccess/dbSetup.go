@@ -1,33 +1,49 @@
 package dataaccess
 
 import (
-	"database/sql"
+	"fmt"
 	"log"
+	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/GoKubes/ServerlessOrchestrator/business"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
+type Postgres_SDK struct {
+	db  *gorm.DB
+	dsn string
+}
+
 func CreateDatabase() {
-	database, err := sql.Open("sqlite3", "./microservice.db")
+	// PostgreSQL connection string
+	// "host=localhost user=username password=password dbname=database_name sslmode=disable"
+	// Adjust with your actual credentials and database name
+	// store credentials in an environment variable
+	Username := "postgres"
+	Password := "Gokubes123"
+	Host := "localhost"
+	Port := "5432"
+	DB := "postgres"
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=UTC", Host, Username, Password, DB, Port)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("failed to connect database: %v", err)
 	}
-	defer database.Close()
 
-	/*
-	 Create a table for microservices
-	 Each microservice will have a service hook, build script, and placeholder
-	*/
-	createMicroservicesTable := `CREATE TABLE IF NOT EXISTS microservices (
-		"id" INTEGER PRIMARY KEY, 
-		"name" TEXT UNIQUE,
-		"service_hook" TEXT, 
-		"build_script" TEXT,
-		"place_holder" TEXT
-	);`
+	// pooling?
+	if dbC, err := db.DB(); err != nil {
+		log.Fatalf("failed to connect database: %v", err)
+	} else {
+		dbC.SetMaxIdleConns(22)
+		dbC.SetMaxOpenConns(22)
+		dbC.SetConnMaxLifetime(time.Hour)
+	}
 
-	_, err = database.Exec(createMicroservicesTable)
+	// AutoMigrate will create or migrate your tables according to the struct
+	err = db.AutoMigrate(&business.Microservice{})
 	if err != nil {
-		log.Fatalf("Failed to create table: %v", err)
+		log.Fatalf("failed to migrate database: %v", err)
 	}
 }

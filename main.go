@@ -9,6 +9,6 @@ func main() {
 	//api.APIStart()
 
 	dataaccess.CreateDatabase()
-	dao := &dataaccess.MicroservicesDAO{}
-	dao.ConnectToDB()
+	//dao := &dataaccess.MicroservicesDAO{}
+	//dao.ConnectToDB()
 }

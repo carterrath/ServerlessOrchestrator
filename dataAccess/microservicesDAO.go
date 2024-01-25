@@ -39,7 +39,7 @@ func (dao *MicroservicesDAO) CloseDBConnection(db *sql.DB) {
 // getAllMicroservices function retrieves all microservices from the database and returns them in a list.
 func (dao *MicroservicesDAO) GetAll() ([]business.Microservice, error) {
 	//open database connection
-	database, err := dao.DB
+	database, err := dao.OpenDBConnection()
 	if err != nil {
 		log.Fatal(err)
 	}
