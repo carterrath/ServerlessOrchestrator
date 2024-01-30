@@ -3,6 +3,7 @@ package dataaccess
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
@@ -20,13 +21,14 @@ func CreateDatabase() {
 	// "host=localhost user=username password=password dbname=database_name sslmode=disable"
 	// Adjust with your actual credentials and database name
 	// store credentials in an environment variable
-	Username := "postgres"
-	Password := "Gokubes123"
-	Host := "localhost"
-	Port := "5432"
-	DB := "postgres"
+	Username := os.Getenv("POSTGRES_USERNAME")
+	//Password := os.Getenv("POSTGRES_PASSWORD")
+	Password := ""
+	Host := os.Getenv("POSTGRES_HOST")
+	Port := os.Getenv("POSTGRES_PORT")
+	DB := os.Getenv("POSTGRES_DB")
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=UTC", Host, Username, Password, DB, Port)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", Host, Username, Password, DB, Port)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
@@ -46,4 +48,5 @@ func CreateDatabase() {
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
+
 }
