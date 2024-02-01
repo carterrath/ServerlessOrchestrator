@@ -1,4 +1,4 @@
-package api_tests
+package dataaccesstests
 
 import (
 	"testing"

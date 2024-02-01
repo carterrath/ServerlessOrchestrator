@@ -1,15 +1,14 @@
 package main
 
 import (
-	//"github.com/GoKubes/ServerlessOrchestrator/api"
-	"github.com/GoKubes/ServerlessOrchestrator/dataAccess"
-	"github.com/GoKubes/ServerlessOrchestrator/db"
+	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
 func main() {
 	// Start the API server
 	//api.APIStart()
 
-	db.CreateDatabase()
-	dataAccess.ConnectToDB()
+	dataaccess.CreateDatabase()
+	//dao := &dataaccess.MicroservicesDAO{}
+	//dao.ConnectToDB()
 }
