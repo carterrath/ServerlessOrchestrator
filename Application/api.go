@@ -1,3 +1,31 @@
+/*
+Package application provides the API server for the application.
+
+The API server is a RESTful API that allows clients to interact with the application.
+
+The API server is built using the Gin web framework.
+
+The API server provides the following endpoints:
+
+- GET /items: Get all items
+- POST /items: Add a new item
+
+API provides the following Devloper endpoints:
+- POST /submit-repo: Submit a GitHub repository for analysis
+  - Check public or private
+  - If public, check for duplicates in database
+  - If private, return error
+  - If no duplicates, add to database
+  - If duplicates, return error
+
+- GET /microservices: Get all microservices
+  - Return all microservices in the database
+  - Return error if database is empty
+
+- GET /microservices/:id: Get a microservice by ID
+
+The API server is started by calling the APIStart function.
+*/
 package application
 
 import (
@@ -6,6 +34,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// APIStart initializes and starts the API server
+func APIStart() {
+	router := gin.Default()
+
+	// Register API routes
+	RegisterRoutes(router)
+
+	// Run the server on port 8080
+	router.Run(":8080") //TODO: Change to 3000? or 3001?
+
+}
+
+// ///// Test Data //////////////////
 type Item struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
@@ -14,12 +55,13 @@ type Item struct {
 var items = []Item{
 	{ID: 1, Name: "Item 1"},
 	{ID: 2, Name: "Item 2"},
-	// Add more items as needed
 }
 
 func GetItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
+
+////////////////////////////////////
 
 func checkRepoVisibility(c *gin.Context) {
 	repoURL := c.Query("repo_url")
@@ -96,15 +138,4 @@ func RegisterRoutes(router *gin.Engine) {
 	router.GET("/items", GetItems)
 	router.POST("/items", AddItem)
 	router.GET("/check-repo-visibility", checkRepoVisibility)
-}
-
-// APIStart initializes and starts the API server
-func APIStart() {
-	router := gin.Default()
-
-	// Register API routes
-	RegisterRoutes(router)
-
-	// Run the server on port 8080
-	router.Run(":8080")
 }
