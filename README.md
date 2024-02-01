@@ -19,3 +19,13 @@ go run main.go
 enter same microservice name
 enter yes
 
+## React setup
+Install node.js and npm
+    brew install node
+Navigate to program directory
+    npm install react-router-dom
+
+## Dependencies
+    npm install @mui/material @mui/icons-material @emotion/styled @emotion/react
+    
+
