@@ -46,6 +46,13 @@ func APIStart() {
 
 }
 
+// RegisterRoutes registers API endpoints with the provided Gin router
+func RegisterRoutes(router *gin.Engine) {
+	router.GET("/items", GetItems)
+	router.POST("/items", AddItem)
+	router.GET("/check-repo-visibility", checkRepoVisibility)
+}
+
 // ///// Test Data //////////////////
 type Item struct {
 	ID   int    `json:"id"`
@@ -59,6 +66,22 @@ var items = []Item{
 
 func GetItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
+}
+
+func AddItem(c *gin.Context) {
+	var newItem Item
+	if err := c.BindJSON(&newItem); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Assuming you generate a unique ID for the new item
+	newItem.ID = len(items) + 1
+
+	// Add the new item to the list
+	items = append(items, newItem)
+
+	c.JSON(http.StatusCreated, newItem)
 }
 
 ////////////////////////////////////
@@ -116,26 +139,3 @@ func checkRepoVisibility(c *gin.Context) {
 // func GetRepository(c *gin.Context) {
 
 // }
-
-func AddItem(c *gin.Context) {
-	var newItem Item
-	if err := c.BindJSON(&newItem); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// Assuming you generate a unique ID for the new item
-	newItem.ID = len(items) + 1
-
-	// Add the new item to the list
-	items = append(items, newItem)
-
-	c.JSON(http.StatusCreated, newItem)
-}
-
-// RegisterRoutes registers API endpoints with the provided Gin router
-func RegisterRoutes(router *gin.Engine) {
-	router.GET("/items", GetItems)
-	router.POST("/items", AddItem)
-	router.GET("/check-repo-visibility", checkRepoVisibility)
-}
