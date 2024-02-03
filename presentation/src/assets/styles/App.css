@@ -40,3 +40,58 @@
 .read-the-docs {
   color: #888;
 }
+
+.App {
+  text-align: center;
+  background-color: #f8e1f4; /* Light pink background */
+  height: 100vh; /* Full height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App-header {
+  background-color: #fff; /* White background for the header */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+}
+
+h1 {
+  color: #333; /* Dark grey color for the title */
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.login {
+  flex: 1;
+  margin: 0 10px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 94%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #000; /* Black background for buttons */
+  color: #fff; /* White text for buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555; /* Darker background on hover */
+}
