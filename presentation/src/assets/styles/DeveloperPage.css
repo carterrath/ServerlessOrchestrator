@@ -1,40 +1,38 @@
 .developer-page {
-    background-color: #f8e1f4; /* Light pink background */
-    height: 100vh; /* Full height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .Developer-header {
-    background-color: #fff; /* White background for the header */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 77%;
-  }
-  
-  .developer-page h1 {
-    margin-bottom: 20px;
-  }
-  
-  .developer-page input {
-    margin-bottom: 20px;
-    padding: 10px;
-    width: 300px; /* Adjust width as necessary */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .developer-page button {
-    padding: 10px 20px;
-    background-color: #000; /* Black background for buttons */
-    color: #fff; /* White text for buttons */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* Additional styling as needed to match the screenshot */
-  
+  background-color: #f8e1f4; /* Light pink background */
+  height: 100vh; /* Full height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Developer-header {
+  background-color: #fff; /* White background for the header */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 77%;
+}
+
+.developer-page h1 {
+  margin-bottom: 20px;
+}
+
+.developer-page input {
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 300px; /* Adjust width as necessary */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.developer-page button {
+  padding: 10px 20px;
+  background-color: #000; /* Black background for buttons */
+  color: #fff; /* White text for buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
