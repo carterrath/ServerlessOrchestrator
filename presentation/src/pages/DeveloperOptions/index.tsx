@@ -1,5 +1,5 @@
 
-import './DeveloperOptions.css';
+import './../../assets/styles/DeveloperOptions.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 //import DeveloperPage from './DeveloperPage';
 
