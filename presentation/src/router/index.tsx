@@ -11,7 +11,7 @@ export function Router() {
         <Route path="/*"  element={<Home />} />
         <Route path="/Login"  element={<Login />} />
         <Route path="/Developer" element={<Developer />} />
-        <Route path="DeveloperOptions" element={<DeveloperOptions />} />
+        <Route path="/DeveloperOptions" element={<DeveloperOptions />} />
         
       </Routes>
     </BrowserRouter>

@@ -1,11 +1,12 @@
 import './../../assets/styles/Login.css';
+import { useNavigate } from "react-router-dom";
 export function Login() {
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   
-  // const handleDeveloperLogin = () => {
-  //   navigate('/developeroptions');
-  // };
+  const handleLogin = () => {
+    navigate('/DeveloperOptions');
+  };
 
   return (
     <div className="App">
@@ -16,7 +17,7 @@ export function Login() {
       <h2>Developer</h2>
       <input type="text" placeholder="Username" />
       <input type="password" placeholder="Password" />
-      <button >Login</button>
+      <button onClick={handleLogin}>Login</button>
       </div>
       <div className="login user-login">
       <h2>Consumer</h2>

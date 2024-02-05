@@ -1,37 +1,41 @@
 h1 {
-    color: #333; /* Dark grey color for the title */
-  }
-  
-  .login-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .login {
-    flex: 1;
-    margin: 0 10px;
-  }
-  
-  input[type="text"], input[type="password"] {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    width: 94%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #000; /* Black background for buttons */
-    color: #fff; /* White text for buttons */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #555; /* Darker background on hover */
-  }
+  color: #333; /* Dark grey color for the title */
+}
+
+h2 {
+  color: #333; /* Dark grey color for the sub-titles */
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.login {
+  flex: 1;
+  margin: 0 10px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 94%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #000; /* Black background for buttons */
+  color: #fff; /* White text for buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555; /* Darker background on hover */
+}
