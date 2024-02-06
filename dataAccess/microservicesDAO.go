@@ -18,7 +18,9 @@ type MicroservicesDAO struct {
 	DB *sql.DB
 }
 
-var _ business.DataAccess_IF = &MicroservicesDAO{}
+// Had to comment out to avoid error. Uncomment line below to use this class.
+// Keep in mind that the interface methods need to match the ones in this file. DAO_IF has been updated for another version of MicroserviceDAO.
+// var _ business.DAO_IF = &MicroservicesDAO{}
 
 // OpenDBConnection opens a connection to the SQLite database.
 func (dao *MicroservicesDAO) OpenDBConnection() (*sql.DB, error) {

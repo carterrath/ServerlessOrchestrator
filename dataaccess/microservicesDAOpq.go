@@ -46,8 +46,22 @@ func (dao *MicroservicesDAOpq) GetByID(id uint) (business.Microservice, error) {
 	return micro, nil
 }
 
+// GetByName retrieves a microservice by its name, case-insensitively.
+func (dao *MicroservicesDAOpq) GetByName(name string) (business.Microservice, error) {
+	var micro business.Microservice
+	// Using ILIKE for PostgreSQL for case-insensitive comparison
+	result := dao.db.Where("LOWER(name) = LOWER(?)", name).First(&micro)
+	if result.Error != nil {
+		return business.Microservice{}, result.Error
+	}
+	return micro, nil
+}
+
 // Update modifies an existing microservice record.
 func (dao *MicroservicesDAOpq) Update(micro business.Microservice) error {
 	result := dao.db.Save(&micro)
 	return result.Error
 }
+
+// Ensure that MicroservicesDAOpq implements the MicroservicesDAO_IF interface.
+var _ business.DAO_IF = &MicroservicesDAOpq{}
