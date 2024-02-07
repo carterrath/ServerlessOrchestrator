@@ -1,9 +1,11 @@
 # ServerlessOrchestrator
 
-## SQLite Database Steps
-1. Download SQLite3 extension on VS Code.
-2. In terminal, run "go get github.com/mattn/go-sqlite3"
-3. In terminal, run "go get github.com/go-git/go-git/v5"
+## Accessing PostgreSQL 
+1. Go to PostgreSQL App. 
+2. Click your personal server. A terminal will appear.
+3. Use the folowing command to look at tables in your database: \dt
+4. Then to enter into the microservices table use: \d microservices
+5. To view the rows of the table use: SELECT * FROM microservices;
 
 ## Run Minikube
 Run minikube tunnel in a separate terminal
