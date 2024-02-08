@@ -31,6 +31,10 @@ package application
 import (
 	"net/http"
 
+	"fmt"
+
+	"github.com/GoKubes/ServerlessOrchestrator/application/routes/microservice"
+	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/gin-gonic/gin"
 )
 
@@ -54,6 +58,43 @@ func RegisterRoutes(router *gin.Engine) {
 }
 
 // ///// Test Data //////////////////
+func Init(dao *dataaccess.MicroservicesDAOpq) error {
+	router := gin.Default()
+
+	// Add CORS middleware to allow requests from http://localhost:5173
+	router.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
+
+		c.Next()
+	})
+
+	handleRoutes(router, dao)
+
+	err := router.Run("localhost:8080")
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Server is now listening on localhost:8080")
+
+	return nil
+}
+
+func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq) {
+	//MicroserviceRouter := router.Group("/microservice")
+	router.GET("/microservice", func(c *gin.Context) {
+		microservice.GetAllMicroservices(c, dao)
+	})
+}
+
 type Item struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
@@ -63,6 +104,8 @@ var items = []Item{
 	{ID: 1, Name: "Item 1"},
 	{ID: 2, Name: "Item 2"},
 }
+
+// getAlbums responds with the list of all albums as JSON.
 
 func GetItems(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
