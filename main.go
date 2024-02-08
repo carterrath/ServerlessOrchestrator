@@ -9,18 +9,24 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/go-git/go-git/v5"
 )
 
+// Define a struct to hold dependencies
+
 func main() {
-
-	// dataaccess.CreateDatabase()
 	db := dataaccess.CreateDatabase()
-
+	dao := dataaccess.NewMicroservicesDAO(db)
+	// dataaccess.CreateDatabase()
+	// db := dataaccess.CreateDatabase()
+	if err := application.Init(dao); err != nil {
+		panic(err)
+	}
 	// Create an instance of MicroservicesDAO
-	microservicesDAOpq := dataaccess.NewMicroservicesDAO(db)
+	//  microservicesDAOpq := dataaccess.NewMicroservicesDAO(db)
 
 	// Example: Insert a record into the Microservice table
 	// microservice := business.Microservice{
@@ -48,27 +54,30 @@ func main() {
 	// 	fmt.Printf("ID: %d, Name: %s, ServiceHook: %s, BuildScript: %s, Placeholder: %s\n", ms.ID, ms.Name, ms.ServiceHook, ms.BuildScript, ms.PlaceHolder)
 	// }
 
-	for {
-		fmt.Println("\nMain Menu:")
-		fmt.Println("1. Submit a new microservice")
-		fmt.Println("2. View Microservices")
-		fmt.Println("3. Exit")
-		fmt.Print("Enter your choice: ")
+	// for {
+	// 	fmt.Println("\nMain Menu:")
+	// 	fmt.Println("1. Submit a new microservice")
+	// 	fmt.Println("2. View Microservices")
+	// 	fmt.Println("3. Exit")
+	// 	fmt.Print("Enter your choice: ")
 
-		choice := readInput()
+	// 	choice := readInput()
 
-		switch choice {
-		case "1":
-			submitNewMicroservice(microservicesDAOpq)
-		case "2":
-			viewAndExecuteMicroservices(microservicesDAOpq)
-		case "3":
-			fmt.Println("Exiting...")
-			return
-		default:
-			fmt.Println("Invalid choice, please try again.")
-		}
-	}
+	// 	switch choice {
+	// 	case "1":
+	// 		submitNewMicroservice(microservicesDAOpq)
+	// 	case "2":
+	// 		viewAndExecuteMicroservices(microservicesDAOpq)
+	// 	case "3":
+	// 		fmt.Println("Exiting...")
+	// 		return
+	// 	default:
+	// 		fmt.Println("Invalid choice, please try again.")
+	// 	}
+	// }
+
+	//dao := &dataaccess.MicroservicesDAO{}
+	//dao.ConnectToDB()
 }
 
 func readInput() string {

@@ -3,7 +3,8 @@ import './../../assets/styles/DeveloperOptions.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 //import DeveloperPage from './DeveloperPage';
 
-function DeveloperOptions() {
+export default function DeveloperOptions() {
+    const data = useDeveloperOptions();
     const navigate = useNavigate();
     const handleUpload = () => {
         navigate('/developer');
@@ -22,6 +23,7 @@ function DeveloperOptions() {
             </div>
             <div className="login user-login">
             <div className="dropdown">
+            <button onClick={data.getMicroservices}>Browse Microservices</button>
             <button className="dropdown-btn">Browse Microservices</button>
             <div className="dropdown-content">
             <a href="#1">Cart</a>
@@ -40,5 +42,23 @@ function DeveloperOptions() {
         );
     }
     
-    export default DeveloperOptions;
+   export function useDeveloperOptions() {
+
+    const getMicroservices = async () => {
+        try {
+          const response = await fetch('http://localhost:8080/microservice');
+          if (!response.ok) {
+            throw new Error('Failed to fetch microservices');
+          }
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error('Error fetching microservices:', error);
+        }
+      };
+
+    return {
+        getMicroservices
+    }
+   }
     
