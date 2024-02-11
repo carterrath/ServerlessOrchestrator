@@ -29,5 +29,6 @@ Navigate to program directory
 
 ## Dependencies
     npm install @mui/material @mui/icons-material @emotion/styled @emotion/react
+    npm install --save-dev @types/react @types/react-dom
     
 
