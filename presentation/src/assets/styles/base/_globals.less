@@ -1,0 +1,1183 @@
+// Description:
+// Global styles are applied across all pages.
+@import "_variables.less";
+
+* {
+    box-sizing: border-box;
+    font-family: @copy-font-family;
+    font-size: @copy-md;
+    font-weight: @copy-font-weight;
+    line-height: @copy-line-height;
+    margin: initial;
+    padding: initial;
+}
+
+*[hidden] {
+    display: none !important;
+}
+
+iframe {
+    width: 100%;
+    border: none;
+}
+
+// scrollbar design
+&::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+}
+&::-webkit-scrollbar-track {background: transparent; cursor: pointer}
+&::-webkit-scrollbar-thumb {background: @gray; cursor: pointer; border-radius: 10px;}
+&::-webkit-scrollbar-thumb:hover {background: @gray-dark;}
+
+span,
+em,
+i,
+b,
+a,
+strong {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+b,
+strong {
+    font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: @black;
+    font-family: 'ubuntu', 'helvetica', 'serif';
+    font-weight: 700;
+    line-height: 1.1em;
+}
+
+h1 {
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+h2 {
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+ul,
+ol {
+    margin-left: @spacing-4;
+}
+
+code {
+    background: @gray-light;
+    border-radius: @border-radius-round;
+    color: @pink-light;
+    font-family: Monospace;
+    white-space: break-spaces;
+}
+
+footer {
+    all: unset;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.fa {
+    font-family: 'FontAwesome' !important;
+}
+
+.highcharts-text-outline {
+    font-size: 0 !important;
+}
+
+.highcharts-label text {
+    color: black !important;
+    fill: black !important;
+    font-size: 14px !important;
+    font-family: 'Nunito', 'Open Sans', Arial;
+}
+
+.highcharts-sankey-series path {
+    cursor: pointer;
+}
+
+*[data-lastpass-icon-root] {
+    display: none !important;
+}
+
+#react-app-container {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background: @background;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.fixed-container {
+    width: 1150px;
+    margin: 0 auto;
+}
+
+.main-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-width: 1130px;
+}
+
+.main-body {
+    display: block;
+    position: relative;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    height: calc(100vh - 50px);
+}
+
+div {
+    [dnd-list] .dndPlaceholder {
+        background-color: #ddd;
+        display: block;
+        min-height: 30px;
+    }
+
+    [dnd-draggable].dndDraggingSource {
+        display: none;
+    }
+
+    #filtersetContainer > filterset > ul {
+        padding-left: 0px;
+        padding-bottom: 15px;
+    }
+
+    [dnd-list] li {
+        list-style: none;
+        /*padding-bottom: 5px; */
+    }
+}
+
+
+.help-modal {
+    iframe {
+        width: 100%;
+        height: calc(~"100vh - 170px");
+    }
+}
+
+
+.open {
+    .dropdown-menu {
+        z-index: 999992;
+    }
+}
+
+
+.text-danger {
+    color: @danger;
+
+    a:hover & {
+        color: darken(@danger, 10%);
+    }
+}
+
+
+.text-success {
+    color: @success;
+
+    a:hover & {
+        color: darken(@success, 10%);
+    }
+}
+
+
+.modal-larger {
+    width: 700px;
+}
+
+
+@media (min-width: 992px) {
+    .modal-larger {
+        width: 950px;
+    }
+}
+
+
+/*https://webdesign.tutsplus.com/articles/quick-tip-tooltips-courtesy-of-html5-data-attributes--webdesign-4826
+    Example: <a href="#" class="tooltip" data-tip="this is the tip!">This is the link</a>
+*/
+a.tooltip {
+    &::before {
+        content: attr(data-tip);
+        font-size: 10px;
+        position: absolute;
+        z-index: 999;
+        white-space: nowrap;
+        bottom: 9999px;
+        left: 50%;
+        background: #000;
+        color: #e0e0e0;
+        padding: 0px 7px;
+        line-height: 24px;
+        height: 24px;
+        opacity: 0;
+        transition: opacity 0.4s ease-out;
+    }
+
+    &:hover::before {
+        opacity: 1;
+        bottom: -35px;
+    }
+}
+
+.ui-grid-column-menu-button-last-col {
+    margin-right: 1px;
+}
+
+
+#objects-list-grid {
+
+    .provider-type-icon {
+        max-height: 30px;
+        max-width: 100px;
+    }
+
+    .myGrid {
+
+        .ui-grid-selection-row-header-buttons::before {
+            opacity: 0.4;
+        }
+
+        .ui-grid-cell.ui-grid-row-header-cell {
+            border-bottom: solid 0px #d4d4d4;
+
+            .ui-grid-disable-selection {
+                .ui-grid-cell-contents {
+                    padding: 0px;
+
+                    .ui-grid-selection-row-header-buttons {
+                        padding: 5px;
+                    }
+                }
+            }
+        }
+
+        .ui-grid-selection-row-header-buttons {
+            &.ui-grid-all-selected::before {
+                opacity: 1;
+            }
+        }
+
+        .ui-grid-top-panel {
+            background: none;
+            background-color: white;
+        }
+
+        /* Fixes problem with the scroll getting offset when you scroll to the bottom of the UIGrid list.*/
+
+        .ui-grid-row:last-child .ui-grid-row-header-cell {
+            margin-bottom: 22px;
+        }
+
+        .ui-grid-viewport, .ui-grid-render-container, .ui-grid-contents-wrapper {
+            outline: 0 solid;
+        }
+
+        .ui-grid-focuser:focus {
+            box-shadow: none !important;
+        }
+
+        &.ui-grid {
+            color: #333;
+            border: 0px solid;
+            outline: 0 solid;
+        }
+
+        .ui-grid-header {
+            /* Removes the 1px solid dark gray border on bottom of header row.*/
+            border-bottom: none;
+
+            .ui-grid-header-cell {
+                background-color: white;
+                border: 0px solid;
+
+                .ui-grid-column-resizer {
+                    border-right: none;
+                }
+            }
+        }
+
+        .ui-grid-vertical-bar {
+            background-color: white;
+        }
+
+        .ui-grid-menu-button {
+            background-color: white;
+            border-color: transparent;
+        }
+
+        .ui-grid-header-canvas {
+            background-color: white;
+            border-color: transparent;
+        }
+
+        .ui-grid-cell-focus {
+            background-color: inherit;
+        }
+
+        .ui-grid-cell {
+            border-right: 0px solid;
+        }
+
+        .ui-grid-menu .ui-grid-menu-inner ul li:not(:last-child) > button {
+            border: none;
+        }
+
+        .ui-grid-menu .ui-grid-menu-inner ul li button.ui-grid-menu-item-active {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .ui-grid-menu .ui-grid-menu-inner ul li button:hover, .ui-grid-menu .ui-grid-menu-inner ul li button:focus {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            background-color: #ddd;
+        }
+
+        .contactdiff-update {
+            font-weight: bold;
+            color: #4cae4c;
+            font-size: 1.1em;
+        }
+    }
+}
+
+
+.big-popover {
+    max-width: none;
+}
+
+
+#connectemailsuggestions {
+    .jumbotron {
+        text-align: center;
+        min-height: 380px;
+
+        img {
+            height: 80px;
+            cursor: pointer;
+        }
+
+        button {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+
+.opac-6 {
+    opacity: 0.6;
+}
+
+
+.margin-bottom-less {
+    margin-bottom: 0px;
+}
+
+
+.clickable {
+    cursor: pointer;
+}
+
+
+.inner-div-ccf {
+    font-size: 14px;
+    text-align: justify;
+    padding: 10px;
+}
+
+
+/** SCROLLBAR DESIGN **/
+.scrollbar {
+    float: left;
+    height: 100px;
+    width: 100%;
+    background: #F5F5F5;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+
+table {
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+th {
+    text-align: left;
+}
+
+
+#create-wizard-review-screen {
+    .scrollbar {
+        height: unset;
+    }
+}
+
+
+.force-overflow {
+    min-height: 100px;
+}
+
+
+#style-3::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+
+#style-3::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+
+#style-3::-webkit-scrollbar-thumb {
+    background-color: #5cb85c;
+}
+
+
+.modal-content {
+    font-size: 16px;
+
+    .modal-title {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .bold-instructions {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    
+    &:hover, &:focus {
+        border-color: darken(#fff, 5%);
+        background-color: darken(#ccc, 5%);
+    }
+}
+
+.btn-success {
+    color: white;
+    background-color: rgb(105, 191, 35);
+
+    &:hover, &:focus {
+        border-color: darken(rgb(105, 191, 35), 5%);
+        background-color: darken(rgb(105, 191, 35), 5%);
+    }
+}
+.btn-primary {
+    color: white;
+    background-color: #428bca;
+    
+    &:hover, &:focus {
+        border-color: darken(#428bca, 5%);
+        background-color: darken(#428bca, 5%);
+    }
+}
+.btn-danger {
+    color: white;
+    background-color: #d9534f;
+    
+    &:hover, &:focus {
+        border-color: darken(#d9534f, 5%);
+        background-color: darken(#d9534f, 5%);
+    }
+}
+
+.bordered-box-info {
+    border-color: #D1D1D1;
+    border-style: solid;
+    border-radius: 2px;
+    border-width: 1px;
+}
+
+div.centered-cta-box {
+    text-align: center;
+    padding-bottom: 35px;
+
+    h1 {
+        font-weight: 800;
+        font-size: 24px;
+        color: #000000;
+    }
+
+    p {
+        font-size: 16px;
+        color: #000000;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+
+.single-action-page {
+    max-width: 600px;
+    margin: 0px auto;
+    font-size: 16px;
+
+    @media screen and (max-width: @breakpoint-md) {
+        max-width: 100%;
+    }
+
+    h1, h2, h3 {
+        text-align: center;
+    }
+
+    h1 {
+        color: #000000;
+        font-family: Ubuntu;
+        font-size: 40px;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 44px;
+        text-align: center;
+        margin-top: 50px;
+
+        @media screen and (max-width: @breakpoint-md) {
+            margin-top: 20px;
+        }
+    }
+
+    h2 {
+        color: #000000;
+        font-family: Ubuntu;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 44px;
+        text-align: center;
+    }
+
+    p.bold {
+        color: #000000;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 23px;
+        text-align: center;
+        max-width: 52ch;
+        margin: 0 auto 40px auto;
+    }
+
+    p.description {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 90%;
+        }
+    }
+
+    .signup-reasons {
+        font-size: 1em;
+        max-width: 500px;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+
+            label {
+                margin-left: 5px;
+                display: inline;
+            }
+
+            .extra-reason-details {
+                display: none;
+            }
+        }
+    }
+
+    .btn-complex {
+        color: black;
+        background-color: white;
+        border: 1px solid #D8D8D8;
+        text-decoration: none;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px 0 #D8D8D8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 400px;
+        height: 60px;
+        padding: 5px;
+        margin: 10px auto;
+        text-align: center;
+        cursor: pointer;
+        transition: background 250ms ease-in-out, transform 150ms ease;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 95%;
+        }
+
+        .button-image {
+            height: 40px;
+            width: 40px;
+            max-width: 40px;
+            margin-left: 4px;
+        }
+
+        .button-text {
+            font-weight: bold;
+            font-size: 17px;
+            flex: 1;
+            margin-right: 10%;
+        }
+
+        &:active {
+            transform: scale(0.99);
+        }
+
+        &:hover {
+            transform: scale(1.02);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .btn {
+        font-size: 18px;
+        text-decoration: none;
+        border-style: none;
+        border-radius: 4px;
+        padding: 5px;
+        width: 417px;
+        height: 40px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        cursor: pointer;
+        font-weight: 700;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        transition: background 250ms ease-in-out, transform 150ms ease;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin-bottom: 10px;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 90%;
+        }
+
+        .button-image {
+            height: 30px;
+            width: 30px;
+            float: left;
+            margin-left: 4px;
+
+            img {
+                height: 30px;
+                display: inline-block;
+
+                &.envelope {
+                    padding-top: 3px;
+                    height: 25px;
+                }
+            }
+        }
+
+        .button-text {
+            padding-top: 3px;
+            font-weight: bold;
+            font-size: 17px;
+            float: right;
+            width: 365px;
+            margin-right: 15px;
+        }
+
+        &:active {
+            transform: scale(0.99);
+        }
+
+        &:hover {
+            transform: scale(1.02);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    a.btn {
+        padding-top: 10px;
+    }
+
+    .btn-primary {
+        border-style: none;
+        background-color: #F25215;
+        color: #ffffff;
+
+        &:active {
+            transform: scale(0.99);
+        }
+
+        &:hover {
+            transform: scale(1.02);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &[disabled] {
+            opacity: 0.5;
+
+            &:hover {
+                transform: none;
+            }
+        }
+    }
+
+    .btn-default {
+        background-color: rgb(210, 210, 210);
+        font-size: 16px;
+    }
+
+    input[type=text], input[type=password], input[type=email],
+    input[type=number], select {
+        display: block;
+        width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        background: white;
+        box-shadow: 0px 2px 4px 0px #D8D8D8;
+        border-style: solid;
+        border-color: #D8D8D8;
+        border-radius: 2px;
+        border-width: 1px;
+        object-fit: contain;
+        height: 45px;
+        margin-bottom: 25px;
+        padding-left: 15px;
+        font-size: 15px;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 90%;
+        }
+
+        &::placeholder {
+            font-weight: 600;
+            color: #9b9b9b;
+        }
+    }
+
+    .small-text {
+        text-align: center;
+        margin-top: 40px;
+        // color: #999999;
+        font-size: 16px;
+        font-weight: 600;
+        max-width: 400px;
+        line-height: 1.25;
+        margin-left: auto;
+        margin-right: auto;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 90%;
+        }
+
+        a {
+            // color: #0F72D6;
+            // text-decoration: none;
+        }
+    }
+
+    table.security-notice {
+        margin-top: 30px;
+        vertical-align: top;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 95%;
+        }
+
+        p {
+            margin-top: 0px;
+        }
+
+        .fa {
+            font-size: 2em;
+            padding-right: 10px;
+            color: #003D7B;
+            top: -5px;
+            position: relative;
+        }
+    }
+
+    @media screen and (max-width: @breakpoint-md) {
+        .mobile-split {
+            display: block;
+        }
+    }
+
+    .status-message {
+        color: red;
+        font-size: 15px;
+    }
+
+    .loading-section {
+        text-align: center;
+
+        h1 {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        span {
+            font-size: 125px;
+        }
+    }
+
+    #signup-progress-bar {
+        text-align: center;
+        width: 600px;
+        margin: 0px auto;
+
+        @media screen and (max-width: @breakpoint-md) {
+            width: 90%;
+            margin: 20px auto;
+        }
+        @media screen and (max-width: @breakpoint-sm) {
+            display: none;
+        }
+
+        td.step-name {
+            color: #0B5AA6;
+            font-size: 11px;
+            font-weight: 900;
+
+            &.inactive {
+                color: #D1D1D1;
+            }
+        }
+
+        td.bar {
+            // @media screen and (max-width: @breakpoint-md) {
+            //     display: none;
+            // }
+
+            div {
+                width: 60px;
+                height: 4px;
+                background-color: #F1F1F1;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+
+.btn-important {
+    background-color: @secondary;
+    color: white;
+    font-weight: bold;
+    max-width: 250px;
+
+    &:hover, &:focus {
+        border-color: darken(@secondary, 2%);
+        background-color: darken(@secondary, 2%);
+        color: white;
+    }
+    
+    &[disabled] {
+        cursor: default;
+        opacity: 0.5;
+    }
+}
+
+//replace with v1 class
+.formV1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        font-weight: 400;
+
+        p {
+            font-weight: bold;
+        }
+    }
+
+    // override size change applied on breakpoint, refactor this at some point 
+    input, select {
+        max-width: 100% !important;
+    }
+
+    @media (max-width: @breakpoint-sm) {
+        input, select {
+            width: 90vw !important;
+        }
+    }
+}
+
+* {
+    font-family: 'Nunito', 'Open Sans', 'Franklin Gothic';
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Ubuntu;
+}
+
+.v1 {
+    &.standard-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 0 28%;
+
+        @media screen and (max-width: @breakpoint-md) {
+            margin: 0 5%;
+        }
+
+        * {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        label, label > * {
+            text-align: initial;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        footer {
+            margin-top: 50px;
+        }
+    }
+
+    //a{color:@primary}
+    h1 {
+        font-size: 40px
+    }
+
+    h2 {
+        font-size: 36px
+    }
+
+    h3 {
+        font-size: 32px
+    }
+
+    h4 {
+        font-size: 28px
+    }
+
+    h5 {
+        font-size: 24px
+    }
+
+    h6 {
+        font-size: 20px
+    }
+
+    p {
+        font-size: 16px
+    }
+
+    small {
+        text-decoration-color: rgb(153, 153, 153);
+        font-size: 12px
+    }
+
+    .modal-title {
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 1.42857143;
+    }
+
+    .modal-content {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .btn {
+        font-weight: bold;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 6px 24px;
+    }
+
+    .btn:hover {
+        filter: brightness(.9);
+    }
+
+    .btn-secondary {
+        color: white !important;
+        background: @secondary !important;
+    }
+
+    .btn-success {
+        color: white !important;
+        background: @success !important;
+    }
+
+    input, select, textarea {
+        display: block;
+        width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        background: white;
+        box-shadow: 0px 2px 4px 0px #D8D8D8;
+        border-style: solid;
+        border-color: #D8D8D8;
+        border-radius: 2px;
+        border-width: 1px;
+        object-fit: contain;
+        height: 45px;
+        margin-bottom: 25px;
+        padding-left: 15px;
+        font-size: 15px;
+
+        @media screen and (max-width: @breakpoint-md) {
+            max-width: 90%;
+        }
+
+        &::placeholder {
+            font-weight: 400 !important;
+            color: #9b9b9b;
+            font-style: italic;
+        }
+    }
+
+    input[type=file] {
+        padding: 10px;
+    }
+
+    footer {
+        border: none;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            font-weight: 400;
+
+            p {
+                font-weight: bold;
+            }
+        }
+
+        // override size change applied on breakpoint, refactor this at some point 
+        input, select {
+            max-width: 100% !important;
+        }
+
+        @media (max-width: @breakpoint-sm) {
+            input, select {
+                width: 90vw !important;
+            }
+        }
+    }
+}

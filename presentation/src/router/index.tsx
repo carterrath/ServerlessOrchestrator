@@ -4,6 +4,7 @@ import { Home } from '../pages/Home';
 import { Login } from '../pages/Login';
 import Developer from '../pages/Developer';
 import DeveloperOptions from '../pages/DeveloperOptions';
+import { Microservices } from '../pages/Microservices';
 export function Router() {
   return (
     <BrowserRouter>
@@ -12,6 +13,7 @@ export function Router() {
         <Route path="/Login"  element={<Login />} />
         <Route path="/Developer" element={<Developer />} />
         <Route path="/DeveloperOptions" element={<DeveloperOptions />} />
+        <Route path="/Microservices" element={<Microservices />} />
         
       </Routes>
     </BrowserRouter>
