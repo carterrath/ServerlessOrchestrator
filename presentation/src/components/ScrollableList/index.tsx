@@ -5,19 +5,12 @@ interface IProps{
 export function ScrollableList(props: IProps) {
     return (
         
-        // This is your home page layout with login options
-        <header className="App-header">
-        <h1>Serverless Orchestrator</h1>
-        <div className="login-container">
-            <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '5px' }}>
-                <ul style={{ listStyleType: 'none', padding: 0 }}>
-                    {props.items.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-      </header>
+        <div className="scrollable-list">
+        {/* Map over props.items to generate list items */}
+        {props.items.map((item, index) => (
+            <div className="scrollable-list-item" key={index}>{item}</div>
+        ))}
+    </div>
     );
 }
 

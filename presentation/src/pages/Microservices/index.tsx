@@ -7,7 +7,10 @@ export function Microservices() {
     return (
         <div>
             {microserviceNames == null ? <p>Loading</p>:
+            <>
+            <h1>Microservices</h1>
              <ScrollableList items={microserviceNames} />
+             </>
             }
         </div>
     );

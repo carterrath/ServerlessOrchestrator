@@ -16,6 +16,9 @@ export function UpperNav(){
                 <a href="/Microservices">Microservices</a>
             </li>
             <li>
+                <a href="/Developer">Upload Microservice</a>
+            </li>
+            <li>
                 <a href="/Login">Login</a>
             </li>
         </ul>
