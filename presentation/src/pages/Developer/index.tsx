@@ -1,5 +1,4 @@
 
-import './../../assets/styles/Developer.css'; 
 
 function Developer() {
   return (

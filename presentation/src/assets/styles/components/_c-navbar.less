@@ -1,0 +1,110 @@
+@import "../base/_variables.less";
+User
+.c-nav-container {
+    height: 50px;
+}
+
+.c-nav-left {
+    float: left !important;
+    margin-left: -15px;
+}
+
+.c-nav-right {
+    display: flex;
+    flex-direction: row;
+    float: right !important;
+    margin-right: -15px;
+}
+
+.c-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    min-height: 50px;
+    background-color: @pink;
+    border-bottom-color: transparent;
+    z-index: 2;
+    
+    /* all the a links in the list should be white */
+    a {
+        color: #fff;
+        font-weight: bold;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    
+    &__dropdown-toggle {
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    
+    &__dropdown-menu {
+        top: 50px;
+        position: absolute;
+        background-color:@pink;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        z-index: 100000000;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: left;
+        padding: 5px 0;
+        
+        > li {
+            padding: 0;
+            width: 160px;
+            text-decoration: none;
+            display: block;
+            
+            a {
+                display: block;
+                padding: 3px 20px;
+                width: 100%;
+                color: #fff;
+            }
+        }
+    }
+    
+    &__free-trial-mode a {
+        border-style: solid;
+        background-color: #ee5116;
+        border-color: #ee5116;
+        border-radius: 5px;
+        padding: 5px 7px 5px 7px;
+        margin-top: 7px;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-left: 5px;
+    }
+}
+
+.c-nav-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+    
+    > li {
+        position: relative;
+        display: block;
+        float: left;
+    }
+    
+    > li a {
+        text-decoration: none;
+        position: relative;
+        display: block;
+        padding: 15px;
+
+        /* if it is the brand logo */
+        &.navbar-brand {
+            padding-left: 0;
+            padding-bottom: 0;
+        }
+    }
+    
+    > li a:hover {
+        text-decoration: underline;
+    }
+}
