@@ -8,7 +8,8 @@ import (
 type Microservice struct {
 	gorm.Model         // This includes fields ID, CreatedAt, UpdatedAt, DeletedAt
 	Name        string `gorm:"unique"`
-	ServiceHook string
-	BuildScript string
 	PlaceHolder string
+	Status      string
+	Author      string
+	Inputs      []Input
 }

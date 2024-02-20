@@ -1,16 +1,13 @@
 import { Router } from './router'
-import './assets/styles/main.less'
-import { NavBar } from './components/NavBar';
+//import './assets/styles/main.less'
+import './assets/styles/styles.css'
 
 function App() {
   
   return (
-    <div className="main-container">
-      <NavBar />
-      <div className="main-body" id="body">
+      <div className="h-full">
         <Router />
       </div>
-    </div>
     );
   }
   
