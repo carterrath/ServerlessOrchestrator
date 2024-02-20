@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollableList } from "../../components/ScrollableList";
+import { IMicroservice } from "../../types/microservice";
+
 
 export function Microservices() {
     const data = useMicroservices();
@@ -42,13 +44,3 @@ function useMicroservices() {
   };
 }
 
-interface IMicroservice {
-    ID: number;
-    Name: string;
-    ServiceHook: string;
-    BuildScript: string;
-    PlaceHolder: string;
-    CreatedAt: string;
-    UpdatedAt: string;
-    DeletedAt: string | null;
-  }

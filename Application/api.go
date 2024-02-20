@@ -73,4 +73,8 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq) {
 	router.GET("/microservice", func(c *gin.Context) {
 		microservice.GetAllMicroservices(c, dao)
 	})
+	router.POST("/microservice", func(c *gin.Context) {
+		microservice.UploadMicroservice(c, dao)
+	})
+
 }
