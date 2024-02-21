@@ -1,8 +1,8 @@
 package business
 
 type Input struct {
-	MicroserviceName string
-	Id               uint
-	Name             string
-	Type             string
+	ID             uint
+	MicroserviceID uint // This field represents the foreign key
+	Name           string
+	DataType       string
 }

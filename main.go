@@ -33,7 +33,7 @@ func main() {
 	// 	Name:        "catalog",
 	// 	ServiceHook: "http://my-service-num2.com",
 	// 	BuildScript: "npm run build",
-	// 	PlaceHolder: "placeholder",
+	// 	RepoLink: "placeholder",
 	// }
 
 	// Use the DAO to insert the microservice record
@@ -51,7 +51,7 @@ func main() {
 	// }
 	// fmt.Println("Microservices retrieved successfully:")
 	// for _, ms := range microservices {
-	// 	fmt.Printf("ID: %d, Name: %s, ServiceHook: %s, BuildScript: %s, Placeholder: %s\n", ms.ID, ms.Name, ms.ServiceHook, ms.BuildScript, ms.PlaceHolder)
+	// 	fmt.Printf("ID: %d, Name: %s, ServiceHook: %s, BuildScript: %s, Placeholder: %s\n", ms.ID, ms.Name, ms.ServiceHook, ms.BuildScript, ms.RepoLink)
 	// }
 
 	// for {
@@ -90,11 +90,9 @@ func submitNewMicroservice(dao *dataaccess.MicroservicesDAOpq) {
 	fmt.Print("Enter the name for the new microservice: ")
 	name := readInput()
 	fmt.Print("Enter the repository link for the new microservice: ")
-	repoLink := readInput()
 
 	newMicroservice := business.Microservice{
-		Name:        name,
-		ServiceHook: repoLink,
+		Name: name,
 		// Populate other necessary fields as needed
 	}
 
@@ -138,7 +136,7 @@ func viewAndExecuteMicroservices(dao *dataaccess.MicroservicesDAOpq) {
 		}
 
 		// ServiceHook is the repoLink
-		repoLink := microservice.ServiceHook
+		repoLink := microservice.RepoLink
 		fmt.Printf("Executing %s...\n", serviceName)
 
 		// Temporary local path to clone and store the repository's contents.
