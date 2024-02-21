@@ -9,5 +9,5 @@ export interface IMicroservice {
     RepoLink: string;
     Input: string;
     Author: string; 
-    Inputs   
+    Inputs: IInput[];  
   }

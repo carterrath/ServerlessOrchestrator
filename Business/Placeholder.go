@@ -1,5 +1,5 @@
 package business
 
-type PlaceHolder struct {
+type RepoLink struct {
 	// properties TBD
 }

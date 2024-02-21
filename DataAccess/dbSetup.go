@@ -57,6 +57,12 @@ func CreateDatabase() *gorm.DB {
 	// }
 
 	// AutoMigrate will create or migrate your tables according to the struct
+
+	err = db.AutoMigrate(&business.Input{})
+	if err != nil {
+		log.Fatalf("failed to migrate database: %v", err)
+	}
+
 	err = db.AutoMigrate(&business.Microservice{})
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)

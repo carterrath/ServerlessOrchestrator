@@ -9,9 +9,9 @@ import (
 )
 
 type CreateMicroserviceRequest struct {
-	Name        string `json:"name" binding:"required"`
-	PlaceHolder string `json:"placeholder"`
-	Input       string `json:"input"`
+	Name     string `json:"name" binding:"required"`
+	RepoLink string `json:"placeholder"`
+	Input    string `json:"input"`
 }
 
 func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
@@ -29,8 +29,8 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
 
 	// Create Microservice instance
 	microservice := business.Microservice{
-		Name:        req.Name,
-		PlaceHolder: req.PlaceHolder,
+		Name:     req.Name,
+		RepoLink: req.RepoLink,
 	}
 
 	// Insert the microservice into the database

@@ -1,17 +1,83 @@
 import React, { useEffect, useState } from "react";
-import { ScrollableList } from "../../components/ScrollableList";
 import { IMicroservice } from "../../types/microservice";
+import { MicroserviceCards } from "./MicroserviceCards";
+import FilterSvg from "../../assets/svg/filter.svg";
+import UploadSvg from "../../assets/svg/upload.svg";
+import SearchSvg from "../../assets/svg/search.svg";
 
+const items: IMicroservice[] = 
+[
+    {
+        Name: "Microservice1",
+        Author: "Author1",
+        RepoLink: "RepoLink1",
+        Input: "Input1",
+        ID: 1,
+        CreatedAt: new Date(),
+        UpdatedAt: new Date(),
+        DeletedAt: new Date(),
+        Inputs: [
+            {
+                MicroserviceID: 1,
+                Id: 1,
+                Name: "Name1",
+                DataType: "string"
+            }
+        ]
+    },
+    {
+      Name: "Microservice2",
+      Author: "Author2",
+      RepoLink: "RepoLink2",
+      Input: "Input2",
+      ID: 2,
+      CreatedAt: new Date(),
+      UpdatedAt: new Date(),
+      DeletedAt: new Date(),
+      Inputs: [
+          {
+              MicroserviceID: 2,
+              Id: 1,
+              Name: "Name1",
+              DataType: "string"
+          },
+          {
+            MicroserviceName: 2,
+            Id: 2,
+            Name: "Name2",
+            DataType: "number"
+          }
+      ]
+  }
+];
 
 export function Microservices() {
     const data = useMicroservices();
-    const microserviceNames = data.microservices?.map(microservice => microservice.Name);
     return (
         <div>
-            {microserviceNames == null ? <p>Loading</p>:
+            {//microserviceNames == null ? <p>Loading</p>:
             <>
-            <h1>Microservices</h1>
-             <ScrollableList items={microserviceNames} />
+            <div className="flex justify-between mx-8 items-center">
+              <div className="font-extrabold my-4 text-2xl">
+                Microservices
+              </div>
+              <div className="flex items-center gap-2 w-1/3">
+                <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md">
+                  <img src={UploadSvg} alt="upload" className="w-8 h-8"/>
+                </button>
+                <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md">
+                  <img src={FilterSvg} alt="filter" className="w-8 h-8"/>
+                </button>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="rounded-lg p-2 border w-full border-gray-300 hover:shadow-md"/>
+                <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md">
+                  <img src={SearchSvg} alt="search" className="w-8 h-8"/>
+                </button>              
+              </div>
+            </div>
+             <MicroserviceCards items={items} />
              </>
             }
         </div>

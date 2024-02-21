@@ -1,7 +1,7 @@
 import { Type } from "./type";
 
 export interface IInput {
-    MicroserviceName: string;
+    MicroserviceID: string;
     Id: number;
     Name: string;
     DataType: Type;
