@@ -6,7 +6,8 @@ export interface IMicroservice {
 
     // Microservice specific fields
     Name: string;
-    PlaceHolder: string;
+    RepoLink: string;
     Input: string;
-    Author: string;    
+    Author: string; 
+    Inputs   
   }

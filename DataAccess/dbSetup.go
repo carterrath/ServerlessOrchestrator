@@ -50,6 +50,12 @@ func CreateDatabase() *gorm.DB {
 		dbC.SetConnMaxLifetime(time.Hour)
 	}
 
+	// Drop the table if it exists
+	// err = db.Migrator().DropTable(&business.Microservice{})
+	// if err != nil {
+	// 	log.Fatalf("failed to drop table: %v", err)
+	// }
+
 	// AutoMigrate will create or migrate your tables according to the struct
 	err = db.AutoMigrate(&business.Microservice{})
 	if err != nil {
