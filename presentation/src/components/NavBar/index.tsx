@@ -19,7 +19,7 @@ export function NavBar(props: IProps){
                     Microservices
                 </Link>
                 {props.isDeveloper && (
-                    <Link className="hover:scale-105 transition duration-150 ease-in-out" to="/Developer">
+                    <Link className="hover:scale-105 transition duration-150 ease-in-out" to="/UploadMicroservice">
                         Upload
                     </Link>
                 )}     
