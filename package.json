@@ -1,8 +1,8 @@
 {
   "version": "0.0.0",
   "scripts": {
-      "start": "node index.js",
-      "format": "npx prettier --write ."
+    "start": "node index.js",
+    "format": "npx prettier --write ."
   },
   "husky": {
     "hooks": {
@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
   }
 }
