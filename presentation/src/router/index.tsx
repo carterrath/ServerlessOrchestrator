@@ -6,7 +6,6 @@ import { Developer } from '../pages/Developer';
 import DeveloperOptions from '../pages/DeveloperOptions';
 import { Microservices } from '../pages/Microservices';
 import { NavBar } from '../components/NavBar';
-import Features from '../pages/Features';
 
 export function Router() {
   return (
@@ -18,7 +17,7 @@ export function Router() {
         <Route path="/Developer" element={<Developer />} />
         <Route path="/DeveloperOptions" element={<DeveloperOptions />} />
         <Route path="/Microservices" element={<Microservices />} />
-        <Route path="/Features" element={<Features />} /> 
+    
       </Routes>
     </BrowserRouter>
   );
