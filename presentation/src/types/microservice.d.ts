@@ -7,7 +7,6 @@ export interface IMicroservice {
     // Microservice specific fields
     Name: string;
     RepoLink: string;
-    Input: string;
     Author: string; 
     Inputs: IInput[]; 
     Status: string; 

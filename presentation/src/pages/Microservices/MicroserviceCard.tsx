@@ -9,7 +9,6 @@ export function MicroserviceCard(props: IProps) {
             <h3>{props.item.Name}</h3>
             <p>Author: {props.item.Author}</p>
             <p>RepoLink: {props.item.RepoLink}</p>
-            <p>Input: {props.item.Input}</p>
             <p>ID: {props.item.ID}</p>
             <p>CreatedAt: {props.item.CreatedAt.toString()}</p>
             <p>UpdatedAt: {props.item.UpdatedAt.toString()}</p>
