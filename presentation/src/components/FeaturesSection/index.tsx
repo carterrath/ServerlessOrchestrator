@@ -1,20 +1,20 @@
 export function FeaturesSection() {
     // Assume each feature has a title and description
     const features = [
-        { title: 'Feature 1', description: 'Description 1' },
-        { title: 'Feature 2', description: 'Description 2' },
-        { title: 'Feature 1', description: 'Description 1' },
-        { title: 'Feature 2', description: 'Description 2' },
-        { title: 'Feature 1', description: 'Description 1' },
-        { title: 'Feature 2', description: 'Description 2' },
-        // ... add all features
+        { title: 'Simplifying Full-Stack Development', description: 'Description 1' },
+        { title: 'Monolithic to Microservices', description: 'Description 2' },
+        { title: 'Serverless Orchestration', description: 'Description 1' },
+        { title: 'Developer-Friendly Environment', description: 'Description 2' },
+        { title: 'GitHub Integration', description: 'Description 1' },
+        { title: 'Focus on Code', description: 'Description 2' },
+       
     ];
 
     return (
         <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-screen-xl mx-auto">
                 <div className="text-center">
-                    <h2 className="text-3xl leading-9 font-extrabold text-white">
+                    <h2 className="text-3xl leading-9 font-extrabold text-black">
                         Features
                     </h2>
                     <p className="mt-3 max-w-2xl mx-auto text-xl leading-7 text-gray-500 sm:mt-4">
@@ -25,7 +25,8 @@ export function FeaturesSection() {
                 <div className="mt-10">
                     <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10">
                         {features.map((feature) => (
-                            <li key={feature.title} className="mt-10 md:mt-0 bg-black border-8 border-white rounded-lg p-4 shadow">
+                            <li key={feature.title} className="mt-10 md:mt-0 bg-pink-200 border-8 border-white rounded-lg p-4 shadow">
+
                                 <div className="flex">
                                     <div className="flex-shrink-0">
                                         <div className="h-12 w-12 bg-gray-200"></div> {/* Placeholder box */}
@@ -41,10 +42,10 @@ export function FeaturesSection() {
                 </div>
 
                 <div className="mt-8 text-center">
-                    <a href="#documentation" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-black hover:bg-opacity-90 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                    <a href="#documentation" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-pink-200 hover:bg-opacity-90 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
                         Documentation
                     </a>
-                    <a href="#capstone-poster" className="ml-4 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-black bg-white hover:bg-gray-100 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                    <a href="#documentation" className="ml-4 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-pink-200 hover:bg-opacity-90 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
                         Capstone Poster
                     </a>
                 </div>

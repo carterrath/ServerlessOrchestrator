@@ -12,6 +12,15 @@ export default {
           '50%': { transform: 'none', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' },
         },
       },
+      colors: {
+        'darkPink': "#d04466",
+        'amaranthPink': '#f194b4',
+        'caribbeanCurrent': '#006c67',
+        'lightTeal': '#94ffe2',
+        'midnightGreen': '#003844',
+        'selectiveYellow': '#ffb100',
+        'dutchWhite': '#ffebc6',
+      }
     },
   },
   plugins: [],
