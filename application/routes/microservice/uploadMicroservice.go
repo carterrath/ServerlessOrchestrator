@@ -15,6 +15,7 @@ type CreateMicroserviceRequest struct {
 }
 
 func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
+
 	var req CreateMicroserviceRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

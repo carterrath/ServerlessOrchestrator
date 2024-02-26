@@ -11,7 +11,7 @@ const items: IMicroservice[] =
         Name: "Microservice1",
         Author: "Author1",
         RepoLink: "RepoLink1",
-        Input: "Input1",
+        Status: "Inactive",
         ID: 1,
         CreatedAt: new Date(),
         UpdatedAt: new Date(),
@@ -29,7 +29,7 @@ const items: IMicroservice[] =
       Name: "Microservice2",
       Author: "Author2",
       RepoLink: "RepoLink2",
-      Input: "Input2",
+      Status: "Inactive",
       ID: 2,
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
@@ -62,7 +62,8 @@ export function Microservices() {
                 Microservices
               </div>
               <div className="flex items-center gap-2 w-1/3">
-                <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md">
+                <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md"
+                        onClick={()=>data.handleUploadClick()}>
                   <img src={UploadSvg} alt="upload" className="w-8 h-8"/>
                 </button>
                 <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md">
@@ -86,27 +87,33 @@ export function Microservices() {
 
 function useMicroservices() {
 
-    const [microservices, setMicroservices] = useState<IMicroservice[]>([]);
 
-    const getMicroservices = async () => {
-        try {
-          const response = await fetch('http://localhost:8080/microservice');
-          if (!response.ok) {
-            throw new Error('Failed to fetch microservices');
-          }
-          const data = await response.json();
-          setMicroservices(data);
-        } catch (error) {
-          console.error('Error fetching microservices:', error);
+  const [microservices, setMicroservices] = useState<IMicroservice[]>([]);
+
+  const getMicroservices = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/microservice');
+        if (!response.ok) {
+          throw new Error('Failed to fetch microservices');
         }
-      };
+        const data = await response.json();
+        setMicroservices(data);
+      } catch (error) {
+        console.error('Error fetching microservices:', error);
+      }
+  };
 
-    useEffect(() => {
-        getMicroservices();
-    }, []);
+  function handleUploadClick(){
+    window.location.href = "/UploadMicroservice";
+  }
+
+
+  useEffect(() => {
+  }, []);
 
   return {
     microservices,
+    handleUploadClick
   };
 }
 
