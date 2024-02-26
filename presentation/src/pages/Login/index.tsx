@@ -7,17 +7,17 @@ export function Login() {
     return (
     <>
     <div className="container mx-auto p-4 lg:w-2/5">
-      <div className="p-2 bg-gray-100 my-12 mx-auto rounded-xl drop-shadow-lg">
+      <div className="p-2 bg-gray-200 my-12 mx-auto rounded-xl drop-shadow-lg">
 
-        {/* Developer or Consumer form */}
+        {/* Developer or Consumer buttons */}
         <div className="flex items-center justify-center mb-4">
-            <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md" onClick={data.handleDeveloperSignup}>Developer</button>
-            <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md" onClick={data.handleConsumerSignup}>Consumer</button>
+            <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md" onClick={data.handleDeveloperSignupClick}>Developer</button>
+            <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md" onClick={data.handleConsumerSignupClick}>Consumer</button>
           </div>
 
         {/* Developer signup form here */}
         {data.showDeveloperSignupForm && (
-          <form onSubmit={data.handleLogin}>
+          <form onSubmit={data.handleDeveloperSignup}>
             <div className="flex flex-col items-center mx-auto">
               <div className="font-extrabold m-4 text-2xl">
                 Developer Signup!
@@ -29,6 +29,7 @@ export function Login() {
                   Email
                 </div>
                 <input
+                  name="email"
                   type="email"
                   placeholder=""
                   className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"/>
@@ -40,6 +41,7 @@ export function Login() {
                   Username
                 </div>
                 <input
+                  name="username"
                   type="text"
                   placeholder=""
                   className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"/>
@@ -51,6 +53,7 @@ export function Login() {
                   Password
                 </div>
                 <input
+                name="password"
                   type="password"
                   placeholder=""
                   className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"/>
@@ -66,7 +69,7 @@ export function Login() {
                 Already have an account?
                 <span 
                   className="text-pink-500 hover:underline cursor-pointer" 
-                  onClick={data.showDeveloperLoginForm ? data.handleConsumerLogin : data.handleDeveloperLogin}>
+                  onSubmit={data.showDeveloperLoginForm ? data.handleConsumerLogin : data.handleDeveloperLogin}>
                   Login
                 </span>
               </p>
@@ -126,7 +129,7 @@ export function Login() {
                 Already have an account?
                 <span 
                   className="text-pink-500 hover:underline cursor-pointer" 
-                  onClick={data.showConsumerLoginForm ? data.handleDeveloperLogin : data.handleConsumerLogin}>
+                  onSubmit={data.showConsumerLoginForm ? data.handleDeveloperLogin : data.handleConsumerLogin}>
                   Login
                 </span>
               </p>
@@ -174,7 +177,7 @@ export function Login() {
                 Don't have an account?
                 <span 
                   className="text-pink-500 hover:underline cursor-pointer" 
-                  onClick={data.showDeveloperSignupForm ? data.handleConsumerSignup : data.handleDeveloperSignup}>
+                  onSubmit={data.showDeveloperSignupForm ? data.handleConsumerSignup : data.handleDeveloperSignup}>
                   Signup
                 </span>
               </p>
@@ -222,7 +225,7 @@ export function Login() {
                 Don't have an account?
                 <span 
                   className="text-pink-500 hover:underline cursor-pointer" 
-                  onClick={data.showConsumerSignupForm ? data.handleDeveloperSignup : data.handleConsumerSignup}>
+                  onSubmit={data.showConsumerSignupForm ? data.handleDeveloperSignup : data.handleConsumerSignup}>
                   Signup
                 </span>
               </p>
@@ -243,14 +246,68 @@ function useLogin(){
   const [showDeveloperSignupForm, setShowDeveloperSignupForm] = useState(false);
   const [showConsumerSignupForm, setShowConsumerSignupForm] = useState(false);
 
-  const handleDeveloperSignup = () => {
+  const handleDeveloperSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const email = form.elements.namedItem('email') as HTMLInputElement;
+    const username = form.elements.namedItem('username') as HTMLInputElement;
+    const password = form.elements.namedItem('password') as HTMLInputElement;
+
+    const response = await fetch('/Login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        username: username.value,
+        password: password.value,
+      }),
+    });
+
+    if (response.ok) {
+      navigate('/user/developer');
+    } else {
+      console.error('Failed to create developer account');
+    }
+  };
+
+  const handleConsumerSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const email = form.elements.namedItem('email') as HTMLInputElement;
+    const username = form.elements.namedItem('username') as HTMLInputElement;
+    const password = form.elements.namedItem('password') as HTMLInputElement;
+
+    const response = await fetch('/users/consumer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email.value,
+        username: username.value,
+        password: password.value,
+      }),
+    });
+
+    if (response.ok) {
+      navigate('/Microservices');
+    } else {
+      console.error('Failed to create consumer account');
+    }
+  };
+
+  const handleDeveloperSignupClick = () => {
     setShowDeveloperSignupForm(true);
     setShowConsumerSignupForm(false);
     setShowDeveloperLoginForm(false);
     setShowConsumerLoginForm(false);
   };
 
-  const handleConsumerSignup = () => {
+  const handleConsumerSignupClick = () => {
     setShowConsumerSignupForm(true);
     setShowDeveloperSignupForm(false);
     setShowDeveloperLoginForm(false);
@@ -272,7 +329,7 @@ function useLogin(){
   };
 
   const handleLogin = () => {
-    navigate('/register');
+    navigate('/Login');
   };
 
   return {
@@ -284,6 +341,8 @@ function useLogin(){
     showDeveloperSignupForm,
     showConsumerSignupForm,
     showDeveloperLoginForm,
-    showConsumerLoginForm
+    showConsumerLoginForm,
+    handleDeveloperSignupClick,
+    handleConsumerSignupClick
   }
 }

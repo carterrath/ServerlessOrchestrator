@@ -20,9 +20,11 @@ import (
 func main() {
 	db := dataaccess.CreateDatabase()
 	dao := dataaccess.NewMicroservicesDAO(db)
+	userdb := dataaccess.CreateUserDatabase()
+	userDao := dataaccess.NewUserDB(userdb)
 	// dataaccess.CreateDatabase()
 	// db := dataaccess.CreateDatabase()
-	if err := application.Init(dao); err != nil {
+	if err := application.Init(dao, userDao); err != nil {
 		panic(err)
 	}
 	// Create an instance of MicroservicesDAO
