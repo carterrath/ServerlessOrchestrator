@@ -17,7 +17,7 @@ export function Home() {
         <FeaturesSection />
       </div>
       
-        <AboutSection />
+      <AboutSection />
       
       <OtherMaterialsSection />
       <TeamSection />
