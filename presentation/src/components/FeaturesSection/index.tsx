@@ -17,7 +17,7 @@ export function FeaturesSection() {
 
     return (
         <Fade>
-        <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white py-36 px-4 sm:px-6 lg:px-8">
             <div className="max-w-screen-xl mx-auto">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold leading-9 tracking-tighter sm:text-3xl md:text-6xl">
@@ -28,7 +28,7 @@ export function FeaturesSection() {
                     </p>
                 </div>
 
-                <div className="mt-10">
+                <div className="mt-10 h-full">
                     <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10">
                         {features.map((feature) => (
                             <li key={feature.title} className="mt-10 md:mt-0 bg-caribbeanCurrent border-8 border-white rounded-lg p-4 shadow transform hover:-translate-y-1 transition duration-200">

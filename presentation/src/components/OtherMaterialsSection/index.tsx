@@ -4,7 +4,7 @@ export function OtherMaterialsSection(){
     return(
         <Fade>
         <div className="bg-white text-black text-center p-10">
-            <div className="bg-gradient-to-r from-selectiveYellow to-dutchWhite rounded-lg shadow-lg p-12 w-full max-w-6xl mx-auto">
+            <div className="bg-gradient-to-r from-darkPink to-amaranthPink rounded-lg shadow-lg p-12 w-full max-w-6xl mx-auto">
                 <div className="flex justify-between items-center">
                     <div className="text-left">
                         <h2 className="text-2xl font-semibold mb-4">Want a more detailed look into Serverless Orchestrator?</h2>

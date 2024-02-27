@@ -1,4 +1,3 @@
-import boxIcon from '../../assets/svg/box.svg';
 import updateIcon from '../../assets/svg/update.svg';
 import scaleIcon from '../../assets/svg/scale.svg';
 import shieldIcon from '../../assets/svg/shield.svg';
