@@ -68,6 +68,11 @@ func CreateDatabase() *gorm.DB {
 		log.Fatalf("failed to migrate database: %v", err)
 	}
 
+	err = db.AutoMigrate(&business.User{})
+	if err != nil {
+		log.Fatalf("failed to migrate database: %v", err)
+	}
+
 	return db
 
 }

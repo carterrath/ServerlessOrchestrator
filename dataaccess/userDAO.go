@@ -26,7 +26,7 @@ func (userdao *UserDAO) CreateUser(user *business.User) error {
 // GetUserByUsername retrieves a user from the database by username.
 func (userdao *UserDAO) GetUserByUsername(username string) (*business.User, error) {
 	var user business.User
-	if err := userdao.db.Where("username = ?", username).First(&user).Error; err != nil {
+	if err := userdao.db.Where("Username = ?", username).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
@@ -35,7 +35,7 @@ func (userdao *UserDAO) GetUserByUsername(username string) (*business.User, erro
 // GetUserByEmail retrieves a user from the database by email.
 func (userdao *UserDAO) GetUserByEmail(email string) (*business.User, error) {
 	var user business.User
-	if err := userdao.db.Where("email = ?", email).First(&user).Error; err != nil {
+	if err := userdao.db.Where("Email = ?", email).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
@@ -44,7 +44,7 @@ func (userdao *UserDAO) GetUserByEmail(email string) (*business.User, error) {
 // CheckUsernameAndPassword checks if the provided username and password match in the database.
 func (userdao *UserDAO) CheckUsernameAndPassword(username, password string) (*business.User, error) {
 	var user business.User
-	if err := userdao.db.Where("username = ? AND password = ?", username, password).First(&user).Error; err != nil {
+	if err := userdao.db.Where("Username = ? AND Password = ?", username, password).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil

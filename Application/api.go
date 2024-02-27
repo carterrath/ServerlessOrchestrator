@@ -80,4 +80,7 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq, userda
 	router.POST("/signup/developer", func(c *gin.Context) {
 		users.CreateDeveloper(c, userdao)
 	})
+	router.POST("/signup/consumer", func(c *gin.Context) {
+		users.CreateConsumer(c, userdao)
+	})
 }
