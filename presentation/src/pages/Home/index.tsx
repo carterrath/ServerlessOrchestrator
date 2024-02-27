@@ -10,8 +10,8 @@ export function Home() {
     <div className="flex flex-col">
 
       <HeaderSection />
-      <AboutSection />
       <FeaturesSection />
+      <AboutSection />
       <TeamSection />
       
       <ScrollAssistant />

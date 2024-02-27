@@ -16,7 +16,7 @@ export default {
         'darkPink': "#d04466",
         'amaranthPink': '#f194b4',
         'caribbeanCurrent': '#006c67',
-        'lightTeal': '#94ffe2',
+        'lightTeal': '#41bba6',
         'midnightGreen': '#003844',
         'selectiveYellow': '#ffb100',
         'dutchWhite': '#ffebc6',
