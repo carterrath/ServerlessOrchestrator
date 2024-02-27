@@ -1,5 +1,8 @@
+import { Fade } from 'react-awesome-reveal';
+
 export function OtherMaterialsSection(){
     return(
+        <Fade>
         <div className="bg-white text-black text-center p-10">
             <div className="bg-gradient-to-r from-selectiveYellow to-dutchWhite rounded-lg shadow-lg p-12 w-full max-w-6xl mx-auto">
                 <div className="flex justify-between items-center">
@@ -18,5 +21,6 @@ export function OtherMaterialsSection(){
                 </div>
             </div>
         </div>
+        </Fade>
     );
 }

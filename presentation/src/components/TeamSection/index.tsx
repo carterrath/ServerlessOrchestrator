@@ -1,3 +1,4 @@
+import { Fade } from 'react-awesome-reveal';
 import photoMae from '../../assets/images/photoMae.png';
 import photoRuth from '../../assets/images/photoRuth.png';
 import photoCarter from '../../assets/images/photoCarter.png';
@@ -33,6 +34,7 @@ export function TeamSection() {
     ];
 
     return (
+        <Fade>
         <div className="border-b">
             <div className="flex justify-center">
                 <div className="bg-white p-6 w-full max-w-7xl">
@@ -62,5 +64,6 @@ export function TeamSection() {
                 </div>
             </div>
         </div>
+        </Fade>
     );
 }
