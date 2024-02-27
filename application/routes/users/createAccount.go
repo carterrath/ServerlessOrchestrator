@@ -20,7 +20,7 @@ type CreateConsumerRequest struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func CreateDeveloper(c *gin.Context, userDao *dataaccess.UserDB) {
+func CreateDeveloper(c *gin.Context, userDao *dataaccess.UserDAO) {
 	var req CreateDeveloperRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -45,7 +45,7 @@ func CreateDeveloper(c *gin.Context, userDao *dataaccess.UserDB) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Developer account created successfully", "user": user})
 }
 
-func CreateConsumer(c *gin.Context, userDao *dataaccess.UserDB) {
+func CreateConsumer(c *gin.Context, userDao *dataaccess.UserDAO) {
 	var req CreateConsumerRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

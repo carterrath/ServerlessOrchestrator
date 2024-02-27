@@ -39,7 +39,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Init(dao *dataaccess.MicroservicesDAOpq, userDao *dataaccess.UserDB) error {
+func Init(dao *dataaccess.MicroservicesDAOpq, userdao *dataaccess.UserDAO) error {
 	router := gin.Default()
 
 	// Add CORS middleware to allow requests from http://localhost:5173
@@ -57,7 +57,7 @@ func Init(dao *dataaccess.MicroservicesDAOpq, userDao *dataaccess.UserDB) error 
 		c.Next()
 	})
 
-	handleRoutes(router, dao, userDao)
+	handleRoutes(router, dao, userdao)
 
 	err := router.Run("localhost:8080")
 	if err != nil {
@@ -69,7 +69,7 @@ func Init(dao *dataaccess.MicroservicesDAOpq, userDao *dataaccess.UserDB) error 
 	return nil
 }
 
-func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq, userDao *dataaccess.UserDB) {
+func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq, userdao *dataaccess.UserDAO) {
 	//MicroserviceRouter := router.Group("/microservice")
 	router.GET("/microservice", func(c *gin.Context) {
 		microservice.GetAllMicroservices(c, dao)
@@ -77,12 +77,7 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq, userDa
 	router.POST("/microservice", func(c *gin.Context) {
 		microservice.UploadMicroservice(c, dao)
 	})
-
-	// Define the routes for creating accounts
-	router.POST("/user/developer", func(c *gin.Context) {
-		users.CreateDeveloper(c, userDao)
-	})
-	router.POST("/users/consumer", func(c *gin.Context) {
-		users.CreateConsumer(c, userDao)
+	router.POST("/signup/developer", func(c *gin.Context) {
+		users.CreateDeveloper(c, userdao)
 	})
 }

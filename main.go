@@ -20,66 +20,11 @@ import (
 func main() {
 	db := dataaccess.CreateDatabase()
 	dao := dataaccess.NewMicroservicesDAO(db)
-	userdb := dataaccess.CreateUserDatabase()
-	userDao := dataaccess.NewUserDB(userdb)
-	// dataaccess.CreateDatabase()
-	// db := dataaccess.CreateDatabase()
-	if err := application.Init(dao, userDao); err != nil {
+	userdao := dataaccess.NewUserDAO(db)
+
+	if err := application.Init(dao, userdao); err != nil {
 		panic(err)
 	}
-	// Create an instance of MicroservicesDAO
-	//  microservicesDAOpq := dataaccess.NewMicroservicesDAO(db)
-
-	// Example: Insert a record into the Microservice table
-	// microservice := business.Microservice{
-	// 	Name:        "catalog",
-	// 	ServiceHook: "http://my-service-num2.com",
-	// 	BuildScript: "npm run build",
-	// 	RepoLink: "placeholder",
-	// }
-
-	// Use the DAO to insert the microservice record
-	// err := microservicesDAOpq.Insert(microservice)
-	// if err != nil {
-	// 	log.Fatalf("failed to insert microservice: %v", err)
-	// } else {
-	// 	fmt.Println("Microservice inserted successfully")
-	// }
-
-	// Example: Get all records from the Microservice table
-	// microservices, err := microservicesDAOpq.GetAll()
-	// if err != nil {
-	// 	log.Fatalf("failed to get microservices: %v", err)
-	// }
-	// fmt.Println("Microservices retrieved successfully:")
-	// for _, ms := range microservices {
-	// 	fmt.Printf("ID: %d, Name: %s, ServiceHook: %s, BuildScript: %s, Placeholder: %s\n", ms.ID, ms.Name, ms.ServiceHook, ms.BuildScript, ms.RepoLink)
-	// }
-
-	// for {
-	// 	fmt.Println("\nMain Menu:")
-	// 	fmt.Println("1. Submit a new microservice")
-	// 	fmt.Println("2. View Microservices")
-	// 	fmt.Println("3. Exit")
-	// 	fmt.Print("Enter your choice: ")
-
-	// 	choice := readInput()
-
-	// 	switch choice {
-	// 	case "1":
-	// 		submitNewMicroservice(microservicesDAOpq)
-	// 	case "2":
-	// 		viewAndExecuteMicroservices(microservicesDAOpq)
-	// 	case "3":
-	// 		fmt.Println("Exiting...")
-	// 		return
-	// 	default:
-	// 		fmt.Println("Invalid choice, please try again.")
-	// 	}
-	// }
-
-	//dao := &dataaccess.MicroservicesDAO{}
-	//dao.ConnectToDB()
 }
 
 func readInput() string {
