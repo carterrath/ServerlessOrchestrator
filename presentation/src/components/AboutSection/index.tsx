@@ -15,7 +15,7 @@ export function AboutSection() {
     ];
 
     return (
-      <div className="bg-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+      <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
           
             <div className="max-w-screen-xl mx-auto">
@@ -47,14 +47,6 @@ export function AboutSection() {
                     </ul>
                 </div>
 
-                <div className="mt-8 text-center">
-                    <a href="#documentation" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-caribbeanCurrent hover:bg-lightTeal focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-                        Documentation
-                    </a>
-                    <a href="#documentation" className="ml-4 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-caribbeanCurrent hover:bg-lightTeal focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-                        Capstone Poster
-                    </a>
-                </div>
             </div>
         </div>
         </div>

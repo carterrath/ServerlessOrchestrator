@@ -47,14 +47,7 @@ export function FeaturesSection() {
                     </ul>
                 </div>
 
-                <div className="mt-8 text-center">
-                    <a href="#documentation" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-caribbeanCurrent hover:bg-lightTeal focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-                        Documentation
-                    </a>
-                    <a href="#documentation" className="ml-4 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-caribbeanCurrent hover:bg-lightTeal focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-                        Capstone Poster
-                    </a>
-                </div>
+                
             </div>
         </div>
         </Fade>

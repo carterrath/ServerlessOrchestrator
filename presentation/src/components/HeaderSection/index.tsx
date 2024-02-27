@@ -3,7 +3,7 @@ import microservicesImage from '../../assets/images/icon2.png';
 export function HeaderSection() {
     return (
         <div className="bg-white flex">
-            <div className="w-1/2 border-b border-slate-200">
+            <div className="w-1/2">
                 <div className="relative isolate px-6 pt-14 lg:px-8">
                     <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                         aria-hidden="true">
@@ -57,7 +57,7 @@ export function HeaderSection() {
                     </div>
                 </div>
             </div>
-            <div className="w-1/2 border-b border-slate-200">
+            <div className="w-1/2">
                 <img src={microservicesImage} alt="Microservice Platform Image" />
             </div>
         </div>
