@@ -1,3 +1,4 @@
+import { Fade } from 'react-awesome-reveal';
 import githubIcon from '../../assets/svg/github.svg';
 import boxIcon from '../../assets/svg/box.svg';
 import codeIcon from '../../assets/svg/code.svg';
@@ -15,6 +16,7 @@ export function FeaturesSection() {
     ];
 
     return (
+        <Fade>
         <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-screen-xl mx-auto">
                 <div className="text-center">
@@ -29,7 +31,7 @@ export function FeaturesSection() {
                 <div className="mt-10">
                     <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10">
                         {features.map((feature) => (
-                            <li key={feature.title} className="mt-10 md:mt-0 bg-caribbeanCurrent border-8 border-white rounded-lg p-4 shadow">
+                            <li key={feature.title} className="mt-10 md:mt-0 bg-caribbeanCurrent border-8 border-white rounded-lg p-4 shadow transform hover:-translate-y-1 transition duration-200">
 
                                 <div className="flex">
                                     <div className="flex-shrink-0">
@@ -55,5 +57,6 @@ export function FeaturesSection() {
                 </div>
             </div>
         </div>
+        </Fade>
     );
 }

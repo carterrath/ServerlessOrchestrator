@@ -33,12 +33,13 @@ export function TeamSection() {
     ];
 
     return (
+        <div className="border-b border-slate-200">
         <div className="flex justify-center">
             <div className="bg-white p-6 w-full max-w-7xl">
                 <div className="py-24 sm:py-32">
                     <div className="mx-auto grid gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
                         <div className="max-w-2xl">
-                            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet our team</h2>
+                            <h2 className="text-3xl font-bold leading-9 tracking-tighter sm:text-3xl md:text-6xl">Meet our team</h2>
                             <p className="mt-6 text-lg leading-8 text-gray-600">
                                 Meet the developers behind this CSUSM Capstone Project.
                             </p>
@@ -59,6 +60,7 @@ export function TeamSection() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

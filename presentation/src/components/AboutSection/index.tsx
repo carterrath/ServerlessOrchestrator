@@ -1,59 +1,62 @@
-export function AboutSection() { 
-    const divs = [
-        { text: 'Text 1', icon: <MyComponent /> },
-        { text: 'Text 2', icon: <MyComponent /> },
-        { text: 'Text 3', icon: <MyComponent /> },
-      ];
-    return(
-        <div className="flex justify-center">
-        <div className="bg-white p-6 w-full max-w-7xl text-center">
-          <div className="py-24 sm:py-32">
-            {/* Start of grid container */}
-            <div className="mx-auto grid gap-x-8 gap-y-20 px-6 lg:px-8">
-              {/* About section */}
-              <div className="mx-auto">
-                <h2 className="text-3xl font-bold leading-9 tracking-tighter sm:text-3xl md:text-6xl">About</h2>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Submit your microservice to our platform and we will handle the rest.
-                </p>
-              </div>
-              {/* Start of list */}
-              <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:col-span-3 mx-auto">
-                {divs.map((div, index) => (
-                  <li key={index} className="flex items-center gap-x-6 rounded-lg p-4">
-                    {div.icon}
-                    <p>{div.text}</p>
-                  </li>
-                ))}
-              </ul>
-              {/* End of list */}
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                  href="#"
-                  className="w-50 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Documentation
-                </a>
-                <a
-                  href="#"
-                  className="w-50 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  GitHub
-                </a>
-              </div>
-            </div>
-            {/* End of grid container */}
-          </div>
-        </div>
-      </div>
-    );
+import githubIcon from '../../assets/svg/github.svg';
+import boxIcon from '../../assets/svg/box.svg';
+import codeIcon from '../../assets/svg/code.svg';
 
-}
+export function AboutSection() {
+    // Assume each feature has a title and description
+    const features = [
+        { title: 'Simplifying Full-Stack Development', description: 'Tackle multiple domains without the complexity of managing integrated components.' , icon: <img src={githubIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
+        { title: 'Monolithic to Microservices', description: 'Transition from monolithic architectures to scalable, serverless models.', icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
+        { title: 'Serverless Orchestration', description: 'Automate serverless functions and microservices with a container orchestration platform.' , icon: <img src={codeIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
+        { title: 'Developer-Friendly Environment', description: 'Supports various programming languages.' , icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
+        { title: 'GitHub Integration', description: 'Easy cloning from GitHub repository for seamless collaboration.' , icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />}, 
+        { title: 'Focus on Code', description: 'Empowers developers to concentrate on business logic rather than infrastructure management.' , icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
+       
+    ];
 
-function MyComponent() {
     return (
-      <div>
-        Hello, this is my component!
-      </div>
+      <div className="bg-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
+        <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+          
+            <div className="max-w-screen-xl mx-auto">
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold leading-9 tracking-tighter sm:text-3xl md:text-6xl">
+                        Features
+                    </h2>
+                    <p className="mt-3 max-w-2xl mx-auto text-xl leading-7 text-gray-500 sm:mt-4">
+                        Here are some of the features that Serverless Orchestrator offers.
+                    </p>
+                </div>
+
+                <div className="mt-10">
+                    <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-10">
+                        {features.map((feature) => (
+                            <li key={feature.title} className="mt-10 md:mt-0 bg-caribbeanCurrent border-8 border-white rounded-lg p-4 shadow">
+
+                                <div className="flex">
+                                    <div className="flex-shrink-0">
+                                        {feature.icon} 
+                                    </div>
+                                    <div className="ml-4">
+                                        <h5 className="text-lg leading-6 font-medium text-white">{feature.title}</h5>
+                                        <p className="mt-2 text-base leading-6 text-white">{feature.description}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="mt-8 text-center">
+                    <a href="#documentation" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-caribbeanCurrent hover:bg-lightTeal focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                        Documentation
+                    </a>
+                    <a href="#documentation" className="ml-4 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-caribbeanCurrent hover:bg-lightTeal focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                        Capstone Poster
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
     );
-  }
+}
