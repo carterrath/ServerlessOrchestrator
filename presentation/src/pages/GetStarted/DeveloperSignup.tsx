@@ -58,8 +58,16 @@ const DeveloperSignup = () => {
                 Already have an account?
                 <span 
                   className="text-pink-500 hover:underline cursor-pointer" 
-                  onSubmit={data.handleLoginClick}>
+                  onClick={data.handleLoginClick}>
                   Login
+                </span>
+              </p>
+              <p className="text-sm mt-1">
+                Are you a Consumer?
+                <span 
+                  className="text-pink-500 hover:underline cursor-pointer" 
+                  onClick={data.handleConSignupClick}>
+                  Consumer Signup
                 </span>
               </p>
             </div>
@@ -119,11 +127,16 @@ function useDevSignup() {
     navigate('/developer-login'); // need to create this page
   };
 
+  const handleConSignupClick = () => {
+    navigate('/consumer-signup'); // need to create this page
+  };
+
   return{
     formData,
     handleChange,
     handleSubmit,
     handleLoginClick,
+    handleConSignupClick,
   }
 }
 
