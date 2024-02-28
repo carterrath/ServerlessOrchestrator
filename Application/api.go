@@ -34,11 +34,12 @@ import (
 	"fmt"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/microservice"
+	"github.com/GoKubes/ServerlessOrchestrator/application/routes/users"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/gin-gonic/gin"
 )
 
-func Init(dao *dataaccess.MicroservicesDAOpq) error {
+func Init(dao *dataaccess.MicroservicesDAOpq, userdao *dataaccess.UserDAO) error {
 	router := gin.Default()
 
 	// Add CORS middleware to allow requests from http://localhost:5173
@@ -56,7 +57,7 @@ func Init(dao *dataaccess.MicroservicesDAOpq) error {
 		c.Next()
 	})
 
-	handleRoutes(router, dao)
+	handleRoutes(router, dao, userdao)
 
 	err := router.Run("localhost:8080")
 	if err != nil {
@@ -68,7 +69,7 @@ func Init(dao *dataaccess.MicroservicesDAOpq) error {
 	return nil
 }
 
-func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq) {
+func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq, userdao *dataaccess.UserDAO) {
 	//MicroserviceRouter := router.Group("/microservice")
 	router.GET("/microservice", func(c *gin.Context) {
 		microservice.GetAllMicroservices(c, dao)
@@ -76,5 +77,16 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAOpq) {
 	router.POST("/microservice", func(c *gin.Context) {
 		microservice.UploadMicroservice(c, dao)
 	})
-
+	router.POST("/signup/developer", func(c *gin.Context) {
+		users.CreateDeveloper(c, userdao)
+	})
+	router.POST("/signup/consumer", func(c *gin.Context) {
+		users.CreateConsumer(c, userdao)
+	})
+	router.POST("/login/developer", func(c *gin.Context) {
+		users.Login(c, userdao)
+	})
+	router.POST("/login/consumer", func(c *gin.Context) {
+		users.Login(c, userdao)
+	})
 }
