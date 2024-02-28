@@ -9,7 +9,7 @@ export function UploadMicroservice() {
 
   return (
     <div className="items-center">
-      <div className="p-2 bg-gray-100 my-12 mx-32 rounded-xl drop-shadow-lg">
+      <div className="p-2 bg-gray-200 my-12 mx-32 rounded-xl drop-shadow-lg">
         <form onSubmit={data.handleSubmit}>
           <div className="flex items-center mx-4">
             <div className="font-extrabold m-4 text-2xl">
@@ -45,13 +45,15 @@ export function UploadMicroservice() {
               />
             </div>
           </div>
-          {data.microservice.Inputs.length === 0 && (
-            <div className="flex items-center mx-4">
-              <button onClick={data.handleAddInput} className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
-                Add Input
-              </button>
-            </div>
-          )}
+          {
+          // data.microservice.Inputs.length === 0 && (
+          //   <div className="flex items-center mx-4">
+          //     <button onClick={data.handleAddInput} className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
+          //       Add Input
+          //     </button>
+          //   </div>
+          // )
+          }
           {data.microservice.Inputs.map((input, index) => (
             <div className="flex items-center mx-4" key={index}>
               <div className="w-1/2">
@@ -144,6 +146,31 @@ function useUploadMicroservice(){
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(microservice);
+    // Convert the microservice object to JSON
+    const microserviceJson = JSON.stringify(microservice);
+
+    // Make a POST request to the endpoint
+    fetch('http://localhost:8080/microservice', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: microserviceJson
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to upload microservice');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Microservice uploaded successfully:', data);
+        // Optionally, you can reset the form or perform any other actions here
+    })
+    .catch(error => {
+        console.error('Error uploading microservice:', error);
+        // Optionally, you can handle the error and display a message to the user
+    });
   };
 
   return {
