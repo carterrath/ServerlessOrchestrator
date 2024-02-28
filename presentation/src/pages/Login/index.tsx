@@ -59,7 +59,13 @@ export function Login() {
               </div>
             </div>
             <div className="flex flex-col items-center mx-auto">
-              <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
+              <button className="flex items-center bg-white -300 rounded-lg m-4 py-2 px-8 hover:shadow-md">
+                <img className="w-8 h-8" src="/src/assets/images/google.png" alt="Logo"/> 
+              Sign-In with Google
+              </button>
+            </div>
+            <div className="flex flex-col items-center mx-auto">
+              <button className=" bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
                 Signup
               </button>
               <p className="text-sm mt-1">
@@ -119,6 +125,12 @@ export function Login() {
               </div>
             </div>
             <div className="flex flex-col items-center mx-auto">
+              <button className="flex items-center bg-white -300 rounded-lg m-4 py-2 px-8 hover:shadow-md">
+                <img className="w-8 h-8" src="/src/assets/images/google.png" alt="Logo"/> 
+              Sign-In with Google
+              </button>
+            </div>
+            <div className="flex flex-col items-center mx-auto">
               <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
                 Signup
               </button>
@@ -167,6 +179,12 @@ export function Login() {
               </div>
             </div>
             <div className="flex flex-col items-center mx-auto">
+              <button className="flex items-center bg-white -300 rounded-lg m-4 py-2 px-8 hover:shadow-md">
+                <img className="w-8 h-8" src="/src/assets/images/google.png" alt="Logo"/> 
+              Login with Google
+              </button>
+            </div>
+            <div className="flex flex-col items-center mx-auto">
               <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
                 Login
               </button>
@@ -213,6 +231,12 @@ export function Login() {
               </div>
               <div className="w-full">         
               </div>
+            </div>
+            <div className="flex flex-col items-center mx-auto">
+              <button className="flex items-center bg-white -300 rounded-lg m-4 py-2 px-8 hover:shadow-md">
+                <img className="w-8 h-8" src="/src/assets/images/google.png" alt="Logo"/> 
+              Login with Google
+              </button>
             </div>
             <div className="flex flex-col items-center mx-auto">
               <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
