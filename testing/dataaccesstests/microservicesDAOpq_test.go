@@ -38,7 +38,7 @@ func setupTestDatabase() *gorm.DB {
 	Password := ""
 	Host := os.Getenv("POSTGRES_HOST")
 	Port := os.Getenv("POSTGRES_PORT")
-	DB := os.Getenv("POSTGRES_DB")
+	DB := os.Getenv("POSTGRES_TEST_DB")
 
 	// Construct the data source name (DSN) for connecting to PostgreSQL
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", Host, Username, Password, DB, Port)
