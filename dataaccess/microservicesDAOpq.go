@@ -24,10 +24,35 @@ func (dao *MicroservicesDAOpq) GetAll() ([]business.Microservice, error) {
 	return microservices, nil
 }
 
-// Insert adds a new microservice record to the database.
+// Insert inserts a microservice and its associated inputs into the database transactionally
 func (dao *MicroservicesDAOpq) Insert(micro business.Microservice) error {
-	result := dao.db.Create(&micro)
-	return result.Error
+	// Start a transaction
+	tx := dao.db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	// Insert the microservice into the database
+	if err := tx.Create(&micro).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	// Insert the inputs associated with the microservice into the database
+	for _, input := range micro.Inputs {
+		input.MicroserviceID = micro.ID // Assign the MicroserviceID
+		if err := tx.Create(&input).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
+	}
+
+	// Commit the transaction
+	if err := tx.Commit().Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // Delete removes a microservice record from the database by ID.
