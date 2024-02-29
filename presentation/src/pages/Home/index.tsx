@@ -26,5 +26,5 @@ export function Home() {
       <ScrollAssistant />
 
     </div>
-  )
+  );
 }
