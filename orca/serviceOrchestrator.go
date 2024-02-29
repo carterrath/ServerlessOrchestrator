@@ -20,22 +20,22 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	// return error to api if repo link is not public
 
 	// call CloneRepo
-	CloneRepo(microservice.RepoLink)
+	//CloneRepo(microservice.RepoLink)
 	// return any error to api
 
 	// call CheckConfigs
-	CheckConfigs()
+	//CheckConfigs()
 	// return error to api if missing dockerfile, yaml file, buildscript
 
 	// call BuildImage, should return image ID
-	BuildImage()
+	//BuildImage()
 	// return error to api if build fails
 	// get user ID from userDAO
-	GetUserID()
+	//GetUserID()
 	// add image ID and user ID to microservice struct
 
 	// call Insert to MicroservicesDAOpq
-	Insert(microservice)
+	//Insert(microservice)
 	// return error to api if insert fails
 
 	// return success to api
@@ -59,6 +59,7 @@ func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) error {
 func CheckAccess(repoLink string) error {
 	// call CheckAccess to GitHubAPI
 	// return error if not public
+
 	return nil
 }
 
