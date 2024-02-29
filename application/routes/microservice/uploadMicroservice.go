@@ -5,6 +5,7 @@ import (
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
+	"github.com/GoKubes/ServerlessOrchestrator/orca"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,15 +39,10 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
 		return
 	}
 
-	// Check if microservice with the given name already exists
-	_, err := dao.GetByName(microserviceDto.Name)
-	if err == nil {
-		c.JSON(http.StatusConflict, gin.H{"error": "Microservice with the same name already exists"})
-		return
-	}
-
 	// Convert MicroserviceDto to Microservice entity model
 	microservice := MapDtoToEntity(microserviceDto)
+
+	orca.SaveMicroservice(microservice)
 
 	// Insert microservice into the database
 	if err := dao.Insert(microservice); err != nil {
