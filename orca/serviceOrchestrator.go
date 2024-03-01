@@ -10,13 +10,25 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
-func SaveMicroservice(microservice business.Microservice, dao *dataaccess.MicroservicesDAOpq) {
+func SaveMicroservice(microservice business.Microservice, dao *dataaccess.MicroservicesDAOpq) error {
 	// call CheckIfExists to MicroservicesDAOpq
-	CheckIfExists(microservice.Name, dao)
+	exists, err := CheckIfExists(microservice.Name, dao)
+	if err != nil {
+		return fmt.Errorf("failed to check if microservice exists: %w", err)
+	}
+	if exists {
+		return errors.New("microservice with the same name already exists")
+	}
 	// return error if exists
 
 	// call CheckAccess to GitHubAPI with Github repo link
-	CheckAccess(microservice.RepoLink)
+	isPublic, err := CheckAccess(microservice.RepoLink)
+	if err != nil {
+		return fmt.Errorf("failed to check repo access: %w", err)
+	}
+	if !isPublic {
+		return errors.New("repository is private")
+	}
 	// return error to api if repo link is not public
 
 	// call CloneRepo
@@ -38,29 +50,36 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	//Insert(microservice)
 	// return error to api if insert fails
 
-	// return success to api
+	// delete cloned repo from the directory
 
+	// return success to api
+	return nil
 }
 
-func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) error {
+func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) (bool, error) {
 	_, err := dao.GetByName(name)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			// If no microservice is found, return nil indicating it's safe to proceed
-			return nil
+			// If no microservice is found, return false indicating it's safe to proceed
+			return false, nil
 		}
 		// If there's another error querying the database, return it
-		return fmt.Errorf("error querying database for name %s: %w", name, err)
+		return false, fmt.Errorf("error querying database for name %s: %w", name, err)
 	}
-	// If a microservice is found, return an error indicating a microservice with this name already exists
-	return errors.New("microservice with the same name already exists")
+	// If a microservice is found, return true to indicate it exists
+	return true, nil
 }
 
-func CheckAccess(repoLink string) error {
-	// call CheckAccess to GitHubAPI
-	// return error if not public
-
-	return nil
+func CheckAccess(repoLink string) (bool, error) {
+	// call IsPublicRepo to check if the repository is public
+	isPublic, err := dataaccess.IsPublicRepo(repoLink)
+	if err != nil {
+		return false, err // Return the error immediately if IsPublicRepo returns an error
+	}
+	if !isPublic {
+		return false, nil
+	}
+	return true, nil
 }
 
 func CloneRepo(repoLink string) error {
