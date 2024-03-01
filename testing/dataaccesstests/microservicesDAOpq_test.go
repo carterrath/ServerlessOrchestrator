@@ -13,14 +13,14 @@ import (
 )
 
 var (
-	db  *gorm.DB
-	dao *dataaccess.MicroservicesDAOpq
+	dbMicroservice  *gorm.DB
+	daoMicroservice *dataaccess.MicroservicesDAOpq
 )
 
 func TestMicroservicesDAOpqSuite(t *testing.T) {
 	// Setup
-	db = setupTestDatabase()
-	dao = dataaccess.NewMicroservicesDAO(db)
+	dbMicroservice = setupMicroTestDatabase()
+	daoMicroservice = dataaccess.NewMicroservicesDAO(dbMicroservice)
 
 	// Run tests
 	t.Run("TestMicroservicesDAOpq_GetAll", TestMicroservicesDAOpq_GetAll)
@@ -31,7 +31,7 @@ func TestMicroservicesDAOpqSuite(t *testing.T) {
 	t.Run("TestMicroservicesDAOpq_Update", TestMicroservicesDAOpq_Update)
 }
 
-func setupTestDatabase() *gorm.DB {
+func setupMicroTestDatabase() *gorm.DB {
 	// Fetch environment variables
 	Username := os.Getenv("POSTGRES_USERNAME")
 	//Password := os.Getenv("POSTGRES_PASSWORD")
@@ -44,17 +44,17 @@ func setupTestDatabase() *gorm.DB {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", Host, Username, Password, DB, Port)
 
 	// Open a GORM database connection
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	dbMicroservice, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect to database")
 	}
 
-	return db
+	return dbMicroservice
 }
 
 func TestMicroservicesDAOpq_GetAll(t *testing.T) {
 	// Test
-	microservices, err := dao.GetAll()
+	microservices, err := daoMicroservice.GetAll()
 
 	// Assert
 	assert.NoError(t, err)
@@ -67,7 +67,7 @@ func TestMicroservicesDAOpq_Insert(t *testing.T) {
 	micro := business.Microservice{
 		// create a test microservice object
 	}
-	err := dao.Insert(micro)
+	err := daoMicroservice.Insert(micro)
 
 	// Assert
 	assert.NoError(t, err)
@@ -76,7 +76,7 @@ func TestMicroservicesDAOpq_Insert(t *testing.T) {
 
 func TestMicroservicesDAOpq_Delete(t *testing.T) {
 	// Test
-	err := dao.Delete(1)
+	err := daoMicroservice.Delete(1)
 
 	// Assert
 	assert.NoError(t, err)
@@ -85,7 +85,7 @@ func TestMicroservicesDAOpq_Delete(t *testing.T) {
 
 func TestMicroservicesDAOpq_GetByID(t *testing.T) {
 	// Test
-	micro, err := dao.GetByID(1)
+	micro, err := daoMicroservice.GetByID(1)
 
 	// Assert
 	assert.NoError(t, err)
@@ -95,7 +95,7 @@ func TestMicroservicesDAOpq_GetByID(t *testing.T) {
 
 func TestMicroservicesDAOpq_GetByName(t *testing.T) {
 	// Test
-	micro, err := dao.GetByName("test")
+	micro, err := daoMicroservice.GetByName("test")
 
 	// Assert
 	assert.NoError(t, err)
@@ -108,7 +108,7 @@ func TestMicroservicesDAOpq_Update(t *testing.T) {
 	micro := business.Microservice{
 		// create a test microservice object
 	}
-	err := dao.Update(micro)
+	err := daoMicroservice.Update(micro)
 
 	// Assert
 	assert.NoError(t, err)
