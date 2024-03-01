@@ -42,7 +42,7 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
 	// Convert MicroserviceDto to Microservice entity model
 	microservice := MapDtoToEntity(microserviceDto)
 
-	orca.SaveMicroservice(microservice)
+	orca.SaveMicroservice(microservice, dao)
 
 	// Insert microservice into the database
 	if err := dao.Insert(microservice); err != nil {
