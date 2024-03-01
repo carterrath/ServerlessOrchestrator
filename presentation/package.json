@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.17",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "less": "^4.1.2",
     "react": "^18.2.0",
+    "react-awesome-reveal": "^4.2.8",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0"
   },
