@@ -1,8 +1,10 @@
 package dataaccesstests
 
 import (
+	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
@@ -22,9 +24,17 @@ func TestUserDAOSuite(t *testing.T) {
 	// Setup
 	dbUser = setupTestDatabase()
 	daoUser = dataaccess.NewUserDAO(dbUser)
+	lastID, err := getLastUserID(dbUser)
+	if err != nil {
+		t.Fatalf("Failed to get last user ID: %v", err)
+	}
+
+	username := "testuser" + strconv.Itoa(lastID+1)
+	email := "test" + strconv.Itoa(lastID+1) + "@example.com"
+
 	testUser = &business.User{
-		Username: "testuser1",
-		Email:    "test1@example.com",
+		Username: username,
+		Email:    email,
 		Password: "password",
 	}
 
@@ -54,6 +64,18 @@ func setupTestDatabase() *gorm.DB {
 	}
 
 	return dbUser
+}
+
+func getLastUserID(db *gorm.DB) (int, error) {
+	var user business.User
+	result := db.Order("id desc").First(&user)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return 0, nil
+		}
+		return 0, result.Error
+	}
+	return int(user.ID), nil
 }
 
 func TestUserDAO_CreateUser(t *testing.T) {
