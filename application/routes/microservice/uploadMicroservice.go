@@ -2,6 +2,7 @@ package microservice
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
@@ -39,24 +40,23 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
 		return
 	}
 
+	// Validate RepoLink URL
+	if _, err := url.ParseRequestURI(microserviceDto.RepoLink); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid RepoLink URL"})
+	}
 	// Convert MicroserviceDto to Microservice entity model
 	microservice := MapDtoToEntity(microserviceDto)
 
-	orca.SaveMicroservice(microservice, dao)
-
-	// Insert microservice into the database
-	if err := dao.Insert(microservice); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert microservice into database"})
+	// Attempt to save the microservice
+	if err := orca.SaveMicroservice(microservice, dao); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	// // Insert inputs into the database
-	// for _, inputDto := range microserviceDto.Inputs {
-	// 	input := MapInputDtoToEntity(inputDto, microservice.ID) // Assuming Microservice.ID is set after insertion
-	// 	if err := dao.InsertInput(input); err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert input into database"})
-	// 		return
-	// 	}
+	// Insert microservice into the database
+	// if err := dao.Insert(microservice); err != nil {
+	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert microservice into database"})
+	// 	return
 	// }
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Microservice created successfully"})

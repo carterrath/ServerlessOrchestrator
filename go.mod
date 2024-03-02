@@ -4,7 +4,9 @@ go 1.21.3
 
 require (
 	github.com/go-git/go-git/v5 v5.11.0
+	github.com/google/go-github/v38 v38.1.0
 	github.com/stretchr/testify v1.8.4
+	golang.org/x/oauth2 v0.17.0
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/gorm v1.25.5
 )
