@@ -3,6 +3,8 @@ package orca
 import (
 	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"gorm.io/gorm"
 
@@ -19,25 +21,21 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	if exists {
 		return errors.New("microservice with the same name already exists")
 	}
-	// return error if exists
-
-	// call CheckAccess to GitHubAPI with Github repo link
-	isPublic, err := CheckAccess(microservice.RepoLink)
-	if err != nil {
-		return fmt.Errorf("failed to check repo access: %w", err)
-	}
-	if !isPublic {
-		return errors.New("repository is private")
-	}
-	// return error to api if repo link is not public
 
 	// call CloneRepo
-	//CloneRepo(microservice.RepoLink)
-	// return any error to api
+	if err := CloneRepo(microservice.RepoLink); err != nil {
+		return fmt.Errorf("failed to clone repository: %w, Make sure the repository is public", err)
+	}
 
 	// call CheckConfigs
-	//CheckConfigs()
-	// return error to api if missing dockerfile, yaml file, buildscript
+	containsFiles, err := CheckConfigs()
+	if err != nil {
+		return fmt.Errorf("error when checking repo: %w", err)
+	}
+
+	if !containsFiles {
+		return fmt.Errorf("the directory does not contain both Dockerfile and YAML file")
+	}
 
 	// call BuildImage, should return image ID
 	//BuildImage()
@@ -70,28 +68,56 @@ func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) (bool, error
 	return true, nil
 }
 
-func CheckAccess(repoLink string) (bool, error) {
-	// call IsPublicRepo to check if the repository is public
-	isPublic, err := dataaccess.IsPublicRepo(repoLink)
-	if err != nil {
-		return false, err // Return the error immediately if IsPublicRepo returns an error
-	}
-	if !isPublic {
-		return false, nil
-	}
-	return true, nil
-}
-
 func CloneRepo(repoLink string) error {
-	// call CloneRepo to GitHubAPI
-	// return error if fails
+	err := dataaccess.CloneRepository(repoLink)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-func CheckConfigs() error {
-	// call CheckConfigs to GitHubAPI
-	// return error if missing
-	return nil
+func CheckConfigs() (bool, error) {
+	var dockerfileExists, yamlFileExists bool
+	destinationPath := "application/microholder"
+	// Walk through the directory and check for Dockerfile and YAML file
+	err := filepath.Walk(destinationPath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Check if it's a regular file
+		if !info.Mode().IsRegular() {
+			return nil
+		}
+
+		// Check if it's a Dockerfile
+		if info.Name() == "Dockerfile" {
+			dockerfileExists = true
+		}
+
+		// Check if it's a YAML file
+		if filepath.Ext(info.Name()) == ".yaml" || filepath.Ext(info.Name()) == ".yml" {
+			yamlFileExists = true
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return false, err
+	}
+
+	// Check if both Dockerfile and YAML file exist
+	if err != nil || !dockerfileExists || !yamlFileExists {
+		fmt.Println("Dockerfile or YAML file not found or error occurred during directory check:", err)
+		fmt.Println("Deleting the directory:", destinationPath)
+		if removeErr := os.RemoveAll(destinationPath); removeErr != nil {
+			fmt.Println("Error deleting directory:", removeErr)
+		}
+		return false, err
+	}
+
+	return true, nil
 }
 
 func BuildImage() (string, error) {
