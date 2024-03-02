@@ -43,9 +43,7 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
 	// Validate RepoLink URL
 	if _, err := url.ParseRequestURI(microserviceDto.RepoLink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid RepoLink URL"})
-		return
 	}
-
 	// Convert MicroserviceDto to Microservice entity model
 	microservice := MapDtoToEntity(microserviceDto)
 
@@ -54,6 +52,12 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAOpq) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	// Insert microservice into the database
+	// if err := dao.Insert(microservice); err != nil {
+	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert microservice into database"})
+	// 	return
+	// }
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Microservice created successfully"})
 }
