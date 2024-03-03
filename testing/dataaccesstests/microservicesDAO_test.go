@@ -1,8 +1,10 @@
 package dataaccesstests
 
 import (
+	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
@@ -15,6 +17,9 @@ import (
 var (
 	dbMicroservice  *gorm.DB
 	daoMicroservice *dataaccess.MicroservicesDAO
+	testName        string
+	testName2       string
+	lastID          uint
 )
 
 func TestMicroservicesDAOSuite(t *testing.T) {
@@ -22,13 +27,21 @@ func TestMicroservicesDAOSuite(t *testing.T) {
 	dbMicroservice = setupMicroTestDatabase()
 	daoMicroservice = dataaccess.NewMicroservicesDAO(dbMicroservice)
 
+	lastID, err := getLastMicroserviceID(dbMicroservice)
+	if err != nil {
+		t.Fatalf("Failed to get last microservice ID: %v", err)
+	}
+
+	testName = "testmicroservice" + strconv.Itoa(int(lastID+1))
+	testName2 = "testmicroservice" + strconv.Itoa(int(lastID+2))
+
 	// Run tests
 	t.Run("TestMicroservicesDAO_GetAll", TestMicroservicesDAO_GetAll)
 	t.Run("TestMicroservicesDAO_Insert", TestMicroservicesDAO_Insert)
-	t.Run("TestMicroservicesDAO_Delete", TestMicroservicesDAO_Delete)
 	t.Run("TestMicroservicesDAO_GetByID", TestMicroservicesDAO_GetByID)
 	t.Run("TestMicroservicesDAO_GetByName", TestMicroservicesDAO_GetByName)
 	t.Run("TestMicroservicesDAO_Update", TestMicroservicesDAO_Update)
+	t.Run("TestMicroservicesDAO_Delete", TestMicroservicesDAO_Delete)
 }
 
 func setupMicroTestDatabase() *gorm.DB {
@@ -52,6 +65,18 @@ func setupMicroTestDatabase() *gorm.DB {
 	return dbMicroservice
 }
 
+func getLastMicroserviceID(db *gorm.DB) (uint, error) {
+	var microservice business.Microservice
+	result := db.Order("id desc").First(&microservice)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return 0, nil
+		}
+		return 0, result.Error
+	}
+	return microservice.ID, nil
+}
+
 func TestMicroservicesDAO_GetAll(t *testing.T) {
 	// Test
 	microservices, err := daoMicroservice.GetAll()
@@ -65,18 +90,28 @@ func TestMicroservicesDAO_GetAll(t *testing.T) {
 func TestMicroservicesDAO_Insert(t *testing.T) {
 	// Test
 	micro := business.Microservice{
-		// create a test microservice object
+		FriendlyName: testName,
+		RepoLink:     "https://github.com/example/repo",
+		Status:       "active",
+		UserID:       1,
+		Inputs:       nil,
+		OutputLink:   "https://output.link",
 	}
 	err := daoMicroservice.Insert(micro)
 
 	// Assert
 	assert.NoError(t, err)
-	// Add more assertions based on your requirements
+	// Get the newly inserted record
+	newMicro, err := daoMicroservice.GetByName(testName)
+	assert.NoError(t, err)
+	assert.NotNil(t, newMicro)
+
+	lastID = newMicro.ID // Update lastID to the ID of the newly inserted record
 }
 
 func TestMicroservicesDAO_Delete(t *testing.T) {
 	// Test
-	err := daoMicroservice.Delete(1)
+	err := daoMicroservice.Delete(lastID)
 
 	// Assert
 	assert.NoError(t, err)
@@ -85,7 +120,7 @@ func TestMicroservicesDAO_Delete(t *testing.T) {
 
 func TestMicroservicesDAO_GetByID(t *testing.T) {
 	// Test
-	micro, err := daoMicroservice.GetByID(1)
+	micro, err := daoMicroservice.GetByID(lastID)
 
 	// Assert
 	assert.NoError(t, err)
@@ -95,7 +130,7 @@ func TestMicroservicesDAO_GetByID(t *testing.T) {
 
 func TestMicroservicesDAO_GetByName(t *testing.T) {
 	// Test
-	micro, err := daoMicroservice.GetByName("test")
+	micro, err := daoMicroservice.GetByName(testName)
 
 	// Assert
 	assert.NoError(t, err)
@@ -107,6 +142,12 @@ func TestMicroservicesDAO_Update(t *testing.T) {
 	// Test
 	micro := business.Microservice{
 		// create a test microservice object
+		FriendlyName: testName2,
+		RepoLink:     "https://github.com/example/repo",
+		Status:       "active",
+		UserID:       1,
+		Inputs:       []business.Input{{Name: "input1", DataType: "string"}},
+		OutputLink:   "https://output.link",
 	}
 	err := daoMicroservice.Update(micro)
 
