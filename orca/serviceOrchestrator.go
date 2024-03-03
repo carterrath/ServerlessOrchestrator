@@ -69,7 +69,7 @@ func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) (bool, error
 }
 
 func CloneRepo(repoLink string) error {
-	err := dataaccess.CloneRepository(repoLink)
+	err := dataaccess.CloneRepositoryUsingCommand(repoLink)
 	if err != nil {
 		return err
 	}
