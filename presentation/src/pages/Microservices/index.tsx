@@ -8,8 +8,8 @@ import SearchSvg from "../../assets/svg/search.svg";
 const items: IMicroservice[] = 
 [
     {
-        Name: "Microservice1",
-        Author: "Author1",
+        FriendlyName: "Microservice1",
+        UserID: 0,
         RepoLink: "RepoLink1",
         Status: "Inactive",
         ID: 1,

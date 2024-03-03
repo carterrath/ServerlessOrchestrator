@@ -5,7 +5,7 @@ import './assets/styles/styles.css'
 function App() {
   
   return (
-      <div className="h-full">
+      <div className="min-h-svh">
         <Router />
       </div>
     );

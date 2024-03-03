@@ -8,9 +8,10 @@ import (
 	git "gopkg.in/src-d/go-git.v4"
 )
 
-func CloneRepositoryUsingCommand(repoURL string) error {
-	destinationPath := "application/microholder"
+func CloneRepositoryUsingCommand(repoURL, backendName string) error {
+	destinationPath := "application/microholder/" + backendName
 	// Check if the destination directory already exists
+
 	if _, err := os.Stat(destinationPath); err == nil {
 		return errors.New("destination directory already exists")
 	}
@@ -19,8 +20,13 @@ func CloneRepositoryUsingCommand(repoURL string) error {
 	cmd := exec.Command("git", "clone", repoURL, destinationPath)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	return cmd.Run()
 
+	// Execute the command and check for errors
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func CloneRepositoryUsingGit(url string) error {

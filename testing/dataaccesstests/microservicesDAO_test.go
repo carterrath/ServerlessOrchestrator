@@ -14,21 +14,21 @@ import (
 
 var (
 	dbMicroservice  *gorm.DB
-	daoMicroservice *dataaccess.MicroservicesDAOpq
+	daoMicroservice *dataaccess.MicroservicesDAO
 )
 
-func TestMicroservicesDAOpqSuite(t *testing.T) {
+func TestMicroservicesDAOSuite(t *testing.T) {
 	// Setup
 	dbMicroservice = setupMicroTestDatabase()
 	daoMicroservice = dataaccess.NewMicroservicesDAO(dbMicroservice)
 
 	// Run tests
-	t.Run("TestMicroservicesDAOpq_GetAll", TestMicroservicesDAOpq_GetAll)
-	t.Run("TestMicroservicesDAOpq_Insert", TestMicroservicesDAOpq_Insert)
-	t.Run("TestMicroservicesDAOpq_Delete", TestMicroservicesDAOpq_Delete)
-	t.Run("TestMicroservicesDAOpq_GetByID", TestMicroservicesDAOpq_GetByID)
-	t.Run("TestMicroservicesDAOpq_GetByName", TestMicroservicesDAOpq_GetByName)
-	t.Run("TestMicroservicesDAOpq_Update", TestMicroservicesDAOpq_Update)
+	t.Run("TestMicroservicesDAO_GetAll", TestMicroservicesDAO_GetAll)
+	t.Run("TestMicroservicesDAO_Insert", TestMicroservicesDAO_Insert)
+	t.Run("TestMicroservicesDAO_Delete", TestMicroservicesDAO_Delete)
+	t.Run("TestMicroservicesDAO_GetByID", TestMicroservicesDAO_GetByID)
+	t.Run("TestMicroservicesDAO_GetByName", TestMicroservicesDAO_GetByName)
+	t.Run("TestMicroservicesDAO_Update", TestMicroservicesDAO_Update)
 }
 
 func setupMicroTestDatabase() *gorm.DB {
@@ -52,7 +52,7 @@ func setupMicroTestDatabase() *gorm.DB {
 	return dbMicroservice
 }
 
-func TestMicroservicesDAOpq_GetAll(t *testing.T) {
+func TestMicroservicesDAO_GetAll(t *testing.T) {
 	// Test
 	microservices, err := daoMicroservice.GetAll()
 
@@ -62,7 +62,7 @@ func TestMicroservicesDAOpq_GetAll(t *testing.T) {
 	// Add more assertions based on your requirements
 }
 
-func TestMicroservicesDAOpq_Insert(t *testing.T) {
+func TestMicroservicesDAO_Insert(t *testing.T) {
 	// Test
 	micro := business.Microservice{
 		// create a test microservice object
@@ -74,7 +74,7 @@ func TestMicroservicesDAOpq_Insert(t *testing.T) {
 	// Add more assertions based on your requirements
 }
 
-func TestMicroservicesDAOpq_Delete(t *testing.T) {
+func TestMicroservicesDAO_Delete(t *testing.T) {
 	// Test
 	err := daoMicroservice.Delete(1)
 
@@ -83,7 +83,7 @@ func TestMicroservicesDAOpq_Delete(t *testing.T) {
 	// Add more assertions based on your requirements
 }
 
-func TestMicroservicesDAOpq_GetByID(t *testing.T) {
+func TestMicroservicesDAO_GetByID(t *testing.T) {
 	// Test
 	micro, err := daoMicroservice.GetByID(1)
 
@@ -93,7 +93,7 @@ func TestMicroservicesDAOpq_GetByID(t *testing.T) {
 	// Add more assertions based on your requirements
 }
 
-func TestMicroservicesDAOpq_GetByName(t *testing.T) {
+func TestMicroservicesDAO_GetByName(t *testing.T) {
 	// Test
 	micro, err := daoMicroservice.GetByName("test")
 
@@ -103,7 +103,7 @@ func TestMicroservicesDAOpq_GetByName(t *testing.T) {
 	// Add more assertions based on your requirements
 }
 
-func TestMicroservicesDAOpq_Update(t *testing.T) {
+func TestMicroservicesDAO_Update(t *testing.T) {
 	// Test
 	micro := business.Microservice{
 		// create a test microservice object

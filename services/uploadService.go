@@ -1,10 +1,12 @@
-package orca
+package services
 
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"gorm.io/gorm"
 
@@ -12,9 +14,18 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
-func SaveMicroservice(microservice business.Microservice, dao *dataaccess.MicroservicesDAOpq) error {
-	// call CheckIfExists to MicroservicesDAOpq
-	exists, err := CheckIfExists(microservice.Name, dao)
+func SaveMicroservice(microservice business.Microservice, dao *dataaccess.MicroservicesDAO) error {
+
+	// Validate Github URL
+	if err := ValidateGithubURL(microservice.RepoLink); err != nil {
+		return fmt.Errorf("invalid repository link: %w", err)
+	}
+
+	// Generate backend name
+	microservice.BackendName = GenerateBackendName(microservice.RepoLink)
+
+	// call CheckIfExists to MicroservicesDAO
+	exists, err := CheckIfExists(microservice.BackendName, dao)
 	if err != nil {
 		return fmt.Errorf("failed to check if microservice exists: %w", err)
 	}
@@ -23,8 +34,8 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	}
 
 	// call CloneRepo
-	if err := CloneRepo(microservice.RepoLink); err != nil {
-		return fmt.Errorf("failed to clone repository: %w, Make sure the repository is public", err)
+	if err := CloneRepo(microservice.RepoLink, microservice.BackendName); err != nil {
+		return fmt.Errorf("failed to upload microservice: make sure the repository is public")
 	}
 
 	// call CheckConfigs
@@ -44,7 +55,7 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	//GetUserID()
 	// add image ID and user ID to microservice struct
 
-	// call Insert to MicroservicesDAOpq
+	// call Insert to MicroservicesDAO
 	//Insert(microservice)
 	// return error to api if insert fails
 
@@ -54,7 +65,61 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	return nil
 }
 
-func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) (bool, error) {
+func ValidateGithubURL(repoLink string) error {
+	// Parse the URL
+	u, err := url.ParseRequestURI(repoLink)
+	if err != nil {
+		return fmt.Errorf("the repository link is not a valid URL: %w", err)
+	}
+
+	// Check if the host is GitHub
+	if !strings.Contains(u.Host, "github.com") {
+		return fmt.Errorf("the repository link does not belong to GitHub")
+	}
+
+	// Check if the path contains at least two components (username/repo)
+	pathComponents := strings.Split(strings.Trim(u.Path, "/"), "/")
+	if len(pathComponents) < 2 {
+		return fmt.Errorf("the repository link is not in the format username/repo")
+	}
+
+	// Check if the last component contains ".git"
+	repoName := pathComponents[len(pathComponents)-1]
+	if !strings.HasSuffix(repoName, ".git") {
+		return fmt.Errorf("the repository name should end with .git")
+	}
+
+	return nil
+}
+
+func GenerateBackendName(repoLink string) string {
+	// Parse the repository link URL
+	repoURL, err := url.Parse(repoLink)
+	if err != nil {
+		return "" // Return empty string on error
+	}
+
+	// Extract the path component
+	repoPath := repoURL.Path
+
+	// Remove the leading slash
+	repoPath = strings.TrimPrefix(repoPath, "/")
+
+	// Split the path into components
+	pathComponents := strings.Split(repoPath, "/")
+
+	// If there are at least two components (username/repo), return them
+	if len(pathComponents) >= 2 {
+		// Remove the .git extension from the repository name
+		repoName := strings.TrimSuffix(pathComponents[1], ".git")
+		return pathComponents[0] + "-" + repoName
+	}
+
+	// If there are fewer than two components, return the path as is
+	return repoPath
+}
+
+func CheckIfExists(name string, dao *dataaccess.MicroservicesDAO) (bool, error) {
 	_, err := dao.GetByName(name)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -68,8 +133,8 @@ func CheckIfExists(name string, dao *dataaccess.MicroservicesDAOpq) (bool, error
 	return true, nil
 }
 
-func CloneRepo(repoLink string) error {
-	err := dataaccess.CloneRepositoryUsingCommand(repoLink)
+func CloneRepo(repoLink, backendName string) error {
+	err := dataaccess.CloneRepositoryUsingCommand(repoLink, backendName)
 	if err != nil {
 		return err
 	}
@@ -127,13 +192,13 @@ func BuildImage() (string, error) {
 }
 
 func GetUserID() (uint, error) {
-	// call GetUserID to UserDAOpq
+	// call GetUserID to UserDAO
 	// return user ID
 	return 0, nil
 }
 
 func Insert(microservice business.Microservice) error {
-	// call Insert to MicroservicesDAOpq
+	// call Insert to MicroservicesDAO
 	// return error if fails
 	return nil
 }

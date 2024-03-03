@@ -50,5 +50,5 @@ func (userdao *UserDAO) CheckUsernameAndPassword(username, password string) (*bu
 	return &user, nil
 }
 
-// Ensure that MicroservicesDAOpq implements the MicroservicesDAO_IF interface.
+// Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
 //var _ business.DAO_IF = &UserDAO{}

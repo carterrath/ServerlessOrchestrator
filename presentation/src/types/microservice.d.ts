@@ -1,13 +1,13 @@
 export interface IMicroservice {
     ID: number;
     CreatedAt: Date;
-    UpdatedAt: Date;
+    updatedAt: Date | null;
     DeletedAt: Date | null;
-
-    // Microservice specific fields
-    Name: string;
+    FriendlyName: string;
     RepoLink: string;
-    Author: string; 
-    Inputs: IInput[]; 
-    Status: string; 
+    Status: string;
+    UserID: number;
+    Inputs: Input[];
+    OutputLink: string;
+    BackendName: string;
   }
