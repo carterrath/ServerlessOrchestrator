@@ -13,18 +13,20 @@ import ConsumerLogin from '../pages/GetStarted/ConsumerLogin';
 export function Router() {
   return (
     <BrowserRouter>
-    <NavBar isDeveloper={true} />
-      <Routes>
-        <Route path="/*"  element={<Home />} />
-        <Route path="/UploadMicroservice" element={<UploadMicroservice />} />
-        <Route path="/DeveloperOptions" element={<DeveloperOptions />} />
-        <Route path="/Microservices" element={<Microservices />} />
-        <Route path="/GetStarted" element={<MainChoice />} />
-        <Route path="/developer-signup" element={<DeveloperSignup />} />
-        <Route path="/consumer-signup" element={<ConsumerSignup />} />
-        <Route path="/developer-login" element={<DeveloperLogin />} />
-        <Route path="/consumer-login" element={<ConsumerLogin />} />
-      </Routes>
+      <NavBar isDeveloper={true} />
+      <div className="min-h-[calc(100svh-64px)] w-full absolute top-22">
+          <Routes>
+            <Route path="/*"  element={<Home />} />
+            <Route path="/UploadMicroservice" element={<UploadMicroservice />} />
+            <Route path="/DeveloperOptions" element={<DeveloperOptions />} />
+            <Route path="/Microservices" element={<Microservices />} />
+            <Route path="/GetStarted" element={<MainChoice />} />
+            <Route path="/developer-signup" element={<DeveloperSignup />} />
+            <Route path="/consumer-signup" element={<ConsumerSignup />} />
+            <Route path="/developer-login" element={<DeveloperLogin />} />
+            <Route path="/consumer-login" element={<ConsumerLogin />} />
+          </Routes>
+      </div>
     </BrowserRouter>
   );
 }

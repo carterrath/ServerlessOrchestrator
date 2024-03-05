@@ -33,13 +33,13 @@ func readInput() string {
 	return strings.TrimSpace(input)
 }
 
-func submitNewMicroservice(dao *dataaccess.MicroservicesDAOpq) {
+func submitNewMicroservice(dao *dataaccess.MicroservicesDAO) {
 	fmt.Print("Enter the name for the new microservice: ")
 	name := readInput()
 	fmt.Print("Enter the repository link for the new microservice: ")
 
 	newMicroservice := business.Microservice{
-		Name: name,
+		FriendlyName: name,
 		// Populate other necessary fields as needed
 	}
 
@@ -50,7 +50,7 @@ func submitNewMicroservice(dao *dataaccess.MicroservicesDAOpq) {
 	}
 }
 
-func viewAndExecuteMicroservices(dao *dataaccess.MicroservicesDAOpq) {
+func viewAndExecuteMicroservices(dao *dataaccess.MicroservicesDAO) {
 	microservices, err := dao.GetAll()
 	if err != nil {
 		log.Printf("Failed to get microservices: %v", err)
@@ -64,7 +64,7 @@ func viewAndExecuteMicroservices(dao *dataaccess.MicroservicesDAOpq) {
 
 	fmt.Println("Microservices:")
 	for _, m := range microservices {
-		fmt.Printf("- %s\n", m.Name)
+		fmt.Printf("- %s\n", m.FriendlyName)
 	}
 
 	fmt.Println("Would you like to execute any of the microservices listed? (yes/no)")

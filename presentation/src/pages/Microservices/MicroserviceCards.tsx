@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { IMicroservice } from "../../types/microservice";
+import { IMicroserviceUpload } from "../../types/microservice";
 import { MicroserviceCard } from "./MicroserviceCard";
 interface IProps{
-    items: IMicroservice[];
+    items: IMicroserviceUpload[];
 }
 export function MicroserviceCards(props: IProps) {
     return (
         <div className="m-2">
         {/* Map over props.items to generate list items */}
-        {props.items.map((item: IMicroservice, index: number) => (
+        {props.items.map((item: IMicroserviceUpload, index: number) => (
             <div className="mb-4 mx-4" key={index}>
                 <MicroserviceCard item={item} />
             </div>
