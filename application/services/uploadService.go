@@ -10,6 +10,7 @@ import (
 
 	"gorm.io/gorm"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application/dockerhub"
 	"github.com/GoKubes/ServerlessOrchestrator/application/github"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
@@ -50,7 +51,10 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	}
 
 	// call BuildImage, should return image ID
-	//BuildImage()
+	if err := BuildImage(microservice.BackendName); err != nil {
+		return fmt.Errorf("failed to build image: %w", err)
+	}
+
 	// return error to api if build fails
 	// get user ID from userDAO
 	//GetUserID()
@@ -186,10 +190,12 @@ func CheckConfigs() (bool, error) {
 	return true, nil
 }
 
-func BuildImage() (string, error) {
-	// call BuildImage to DockerAPI
-	// return image ID
-	return "", nil
+func BuildImage(backendName string) error {
+	err := dockerhub.CreateAndPushImage(backendName)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func GetUserID() (uint, error) {
