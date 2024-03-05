@@ -3,9 +3,9 @@ package microservice
 import (
 	"net/http"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application/services"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
-	"github.com/GoKubes/ServerlessOrchestrator/services"
 	"github.com/gin-gonic/gin"
 )
 

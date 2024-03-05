@@ -23,6 +23,14 @@ func (userdao *UserDAO) CreateUser(user *business.User) error {
 	return nil
 }
 
+func (userdao *UserDAO) GetUserByID(userID uint) (*business.User, error) {
+	var user business.User
+	if err := userdao.db.First(&user, userID).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
 // GetUserByUsername retrieves a user from the database by username.
 func (userdao *UserDAO) GetUserByUsername(username string) (*business.User, error) {
 	var user business.User

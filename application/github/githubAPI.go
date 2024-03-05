@@ -1,4 +1,4 @@
-package dataaccess
+package github
 
 import (
 	"errors"

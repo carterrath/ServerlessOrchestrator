@@ -10,6 +10,7 @@ import (
 
 	"gorm.io/gorm"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application/github"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
@@ -134,7 +135,7 @@ func CheckIfExists(name string, dao *dataaccess.MicroservicesDAO) (bool, error) 
 }
 
 func CloneRepo(repoLink, backendName string) error {
-	err := dataaccess.CloneRepositoryUsingCommand(repoLink, backendName)
+	err := github.CloneRepositoryUsingCommand(repoLink, backendName)
 	if err != nil {
 		return err
 	}

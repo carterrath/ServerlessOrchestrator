@@ -72,7 +72,7 @@ func Init(dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) error {
 func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) {
 	//MicroserviceRouter := router.Group("/microservice")
 	router.GET("/microservice", func(c *gin.Context) {
-		microservice.GetAllMicroservices(c, dao)
+		microservice.GetAllMicroservices(c, dao, userdao)
 	})
 	router.POST("/microservice", func(c *gin.Context) {
 		microservice.UploadMicroservice(c, dao)

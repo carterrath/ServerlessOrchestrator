@@ -3,7 +3,7 @@ package servicestests
 import (
 	"testing"
 
-	"github.com/GoKubes/ServerlessOrchestrator/services"
+	"github.com/GoKubes/ServerlessOrchestrator/application/services"
 	"github.com/stretchr/testify/assert"
 )
 
