@@ -1,6 +1,8 @@
 package dataaccess
 
 import (
+	"errors"
+
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"gorm.io/gorm"
 )
@@ -24,8 +26,13 @@ func (dao *MicroservicesDAO) GetAll() ([]business.Microservice, error) {
 	return microservices, nil
 }
 
-// Insert inserts a microservice and its associated inputs into the database transactionally
-func (dao *MicroservicesDAO) Insert(micro business.Microservice) error {
+// Insert adds a new microservice entity record to the database.
+func (dao *MicroservicesDAO) Insert(entity interface{}) error {
+	micro, ok := entity.(business.Microservice)
+	if !ok {
+		return errors.New("entity is not of type business.Microservice")
+	}
+
 	// Start a transaction
 	tx := dao.db.Begin()
 	if tx.Error != nil {
@@ -61,12 +68,12 @@ func (dao *MicroservicesDAO) Delete(id uint) error {
 	return result.Error
 }
 
-// GetByID retrieves a microservice by its ID.
-func (dao *MicroservicesDAO) GetByID(id uint) (business.Microservice, error) {
+// GetByID retrieves a microservice entity by its ID.
+func (dao *MicroservicesDAO) GetByID(id uint) (interface{}, error) {
 	var micro business.Microservice
 	result := dao.db.First(&micro, id)
 	if result.Error != nil {
-		return business.Microservice{}, result.Error
+		return nil, result.Error
 	}
 	return micro, nil
 }
@@ -75,7 +82,7 @@ func (dao *MicroservicesDAO) GetByID(id uint) (business.Microservice, error) {
 func (dao *MicroservicesDAO) GetByName(name string) (business.Microservice, error) {
 	var micro business.Microservice
 	// Using ILIKE for PostgreSQL for case-insensitive comparison
-	result := dao.db.Where("LOWER(name) = LOWER(?)", name).First(&micro)
+	result := dao.db.Where("LOWER(backend_name) = LOWER(?)", name).First(&micro)
 	if result.Error != nil {
 		return business.Microservice{}, result.Error
 	}
@@ -89,4 +96,4 @@ func (dao *MicroservicesDAO) Update(micro business.Microservice) error {
 }
 
 // Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
-var _ business.DAO_IF = &MicroservicesDAO{}
+var _ business.DAO_IF = (*MicroservicesDAO)(nil)

@@ -1,6 +1,8 @@
 package dataaccess
 
 import (
+	"errors"
+
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"gorm.io/gorm"
 )
@@ -16,16 +18,20 @@ func NewUserDAO(db *gorm.DB) *UserDAO {
 }
 
 // CreateUser creates a new user in the database.
-func (userdao *UserDAO) CreateUser(user *business.User) error {
-	if err := userdao.db.Create(user).Error; err != nil {
-		return err
+// was CreateUser
+func (userdao *UserDAO) Insert(entity interface{}) error {
+	user, ok := entity.(*business.User)
+	if !ok {
+		return errors.New("entity is not of type *business.User")
 	}
-	return nil
+	return userdao.db.Create(user).Error
 }
 
-func (userdao *UserDAO) GetUserByID(userID uint) (*business.User, error) {
+// was GetUserByID
+// GetByID retrieves an entity (User) by its ID.
+func (userdao *UserDAO) GetByID(id uint) (interface{}, error) {
 	var user business.User
-	if err := userdao.db.First(&user, userID).Error; err != nil {
+	if err := userdao.db.First(&user, id).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
@@ -58,5 +64,10 @@ func (userdao *UserDAO) CheckUsernameAndPassword(username, password string) (*bu
 	return &user, nil
 }
 
+// Delete removes an entity (User) record from the database by ID.
+func (userdao *UserDAO) Delete(id uint) error {
+	return userdao.db.Delete(&business.User{}, id).Error
+}
+
 // Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
-//var _ business.DAO_IF = &UserDAO{}
+var _ business.DAO_IF = (*UserDAO)(nil)
