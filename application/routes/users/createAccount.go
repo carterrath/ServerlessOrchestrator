@@ -20,7 +20,7 @@ type CreateConsumerRequest struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func CreateDeveloper(c *gin.Context, userDao *dataaccess.UserDAO) {
+func CreateDeveloper(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	var req CreateDeveloperRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -36,7 +36,7 @@ func CreateDeveloper(c *gin.Context, userDao *dataaccess.UserDAO) {
 	}
 
 	// Insert the user into the database
-	if err := userDao.CreateUser(&user); err != nil {
+	if err := userDAO.CreateUser(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create developer account", "details": err.Error()})
 		return
 	}
@@ -45,7 +45,7 @@ func CreateDeveloper(c *gin.Context, userDao *dataaccess.UserDAO) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Developer account created successfully", "user": user})
 }
 
-func CreateConsumer(c *gin.Context, userDao *dataaccess.UserDAO) {
+func CreateConsumer(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	var req CreateConsumerRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -61,7 +61,7 @@ func CreateConsumer(c *gin.Context, userDao *dataaccess.UserDAO) {
 	}
 
 	// Insert the user into the database
-	if err := userDao.CreateUser(&user); err != nil {
+	if err := userDAO.CreateUser(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create consumer account"})
 		return
 	}

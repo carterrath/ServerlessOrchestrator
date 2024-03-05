@@ -1,6 +1,12 @@
 import microservicesImage from '../../assets/images/icon2.png';
 
 export function HeaderSection() {
+    const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        const aboutSection = document.getElementById('about');
+        aboutSection?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <div className="bg-white flex">
             <div className="w-1/2">
@@ -9,7 +15,7 @@ export function HeaderSection() {
                         <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                                 Tell me more about microservices! {' '}
-                                <a href="#" className="font-semibold text-selectiveYellow">
+                                <a className="font-semibold text-selectiveYellow" onClick={handleClick}>
                                     <span className="absolute inset-0" aria-hidden="true" />
                                     Read more <span aria-hidden="true">&rarr;</span>
                                 </a>

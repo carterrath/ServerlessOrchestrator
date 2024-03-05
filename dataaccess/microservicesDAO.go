@@ -5,17 +5,17 @@ import (
 	"gorm.io/gorm"
 )
 
-type MicroservicesDAOpq struct {
+type MicroservicesDAO struct {
 	db *gorm.DB
 }
 
 // NewMicroservicesDAO creates a new instance of MicroservicesDAO with a database connection.
-func NewMicroservicesDAO(db *gorm.DB) *MicroservicesDAOpq {
-	return &MicroservicesDAOpq{db: db}
+func NewMicroservicesDAO(db *gorm.DB) *MicroservicesDAO {
+	return &MicroservicesDAO{db: db}
 }
 
 // GetAll retrieves all microservices from the database.
-func (dao *MicroservicesDAOpq) GetAll() ([]business.Microservice, error) {
+func (dao *MicroservicesDAO) GetAll() ([]business.Microservice, error) {
 	var microservices []business.Microservice
 	result := dao.db.Find(&microservices)
 	if result.Error != nil {
@@ -25,7 +25,7 @@ func (dao *MicroservicesDAOpq) GetAll() ([]business.Microservice, error) {
 }
 
 // Insert inserts a microservice and its associated inputs into the database transactionally
-func (dao *MicroservicesDAOpq) Insert(micro business.Microservice) error {
+func (dao *MicroservicesDAO) Insert(micro business.Microservice) error {
 	// Start a transaction
 	tx := dao.db.Begin()
 	if tx.Error != nil {
@@ -56,13 +56,13 @@ func (dao *MicroservicesDAOpq) Insert(micro business.Microservice) error {
 }
 
 // Delete removes a microservice record from the database by ID.
-func (dao *MicroservicesDAOpq) Delete(id uint) error {
+func (dao *MicroservicesDAO) Delete(id uint) error {
 	result := dao.db.Delete(&business.Microservice{}, id)
 	return result.Error
 }
 
 // GetByID retrieves a microservice by its ID.
-func (dao *MicroservicesDAOpq) GetByID(id uint) (business.Microservice, error) {
+func (dao *MicroservicesDAO) GetByID(id uint) (business.Microservice, error) {
 	var micro business.Microservice
 	result := dao.db.First(&micro, id)
 	if result.Error != nil {
@@ -72,7 +72,7 @@ func (dao *MicroservicesDAOpq) GetByID(id uint) (business.Microservice, error) {
 }
 
 // GetByName retrieves a microservice by its name, case-insensitively.
-func (dao *MicroservicesDAOpq) GetByName(name string) (business.Microservice, error) {
+func (dao *MicroservicesDAO) GetByName(name string) (business.Microservice, error) {
 	var micro business.Microservice
 	// Using ILIKE for PostgreSQL for case-insensitive comparison
 	result := dao.db.Where("LOWER(name) = LOWER(?)", name).First(&micro)
@@ -83,10 +83,10 @@ func (dao *MicroservicesDAOpq) GetByName(name string) (business.Microservice, er
 }
 
 // Update modifies an existing microservice record.
-func (dao *MicroservicesDAOpq) Update(micro business.Microservice) error {
+func (dao *MicroservicesDAO) Update(micro business.Microservice) error {
 	result := dao.db.Save(&micro)
 	return result.Error
 }
 
-// Ensure that MicroservicesDAOpq implements the MicroservicesDAO_IF interface.
-var _ business.DAO_IF = &MicroservicesDAOpq{}
+// Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
+var _ business.DAO_IF = &MicroservicesDAO{}

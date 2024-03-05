@@ -13,7 +13,7 @@ type LoginRequest struct {
 	UserType string `json:"userType" binding:"required"`
 }
 
-func Login(c *gin.Context, userDao *dataaccess.UserDAO) {
+func Login(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	var req LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -21,7 +21,7 @@ func Login(c *gin.Context, userDao *dataaccess.UserDAO) {
 	}
 
 	// Check the username and password against the database
-	user, err := userDao.CheckUsernameAndPassword(req.Username, req.Password)
+	user, err := userDAO.CheckUsernameAndPassword(req.Username, req.Password)
 	if err != nil {
 		// If there's an error (user not found or password mismatch), return an error response
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
