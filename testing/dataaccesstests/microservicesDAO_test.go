@@ -93,10 +93,12 @@ func TestMicroservicesDAO_Insert(t *testing.T) {
 		FriendlyName:  "name",
 		RepoLink:      "https://github.com/example/repo",
 		StatusMessage: "active",
+		IsActive:      true,
 		UserID:        1,
 		Inputs:        nil,
 		OutputLink:    "https://output.link",
 		BackendName:   testName,
+		ImageID:       "imageid",
 	}
 	err := daoMicroservice.Insert(micro)
 
@@ -151,6 +153,7 @@ func TestMicroservicesDAO_Update(t *testing.T) {
 		Inputs:        []business.Input{{Name: "input1", DataType: "string"}},
 		OutputLink:    "https://output.link",
 		BackendName:   testName2,
+		ImageID:       "imageid",
 	}
 	err := daoMicroservice.Update(micro)
 

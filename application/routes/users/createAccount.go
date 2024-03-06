@@ -6,6 +6,7 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type CreateDeveloperRequest struct {
@@ -27,11 +28,18 @@ func CreateDeveloper(c *gin.Context, userDAO *dataaccess.UserDAO) {
 		return
 	}
 
+	// Hash the password before storing it in the database
+	hashedPassword, err := hashPassword(req.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		return
+	}
+
 	// Create a new developer user instance
 	user := business.User{
 		Email:    req.Email,
 		Username: req.Username,
-		Password: req.Password,
+		Password: hashedPassword,
 		UserType: "Developer",
 	}
 
@@ -52,11 +60,18 @@ func CreateConsumer(c *gin.Context, userDAO *dataaccess.UserDAO) {
 		return
 	}
 
+	// Hash the password before storing it in the database
+	hashedPassword, err := hashPassword(req.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		return
+	}
+
 	// Create a new consumer user instance
 	user := business.User{
 		Email:    req.Email,
 		Username: req.Username,
-		Password: req.Password,
+		Password: hashedPassword,
 		UserType: "Consumer",
 	}
 
@@ -68,4 +83,12 @@ func CreateConsumer(c *gin.Context, userDAO *dataaccess.UserDAO) {
 
 	// Return success response
 	c.JSON(http.StatusCreated, gin.H{"message": "Consumer account created successfully", "user": user})
+}
+
+func hashPassword(password string) (string, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return "", err
+	}
+	return string(hashedPassword), nil
 }
