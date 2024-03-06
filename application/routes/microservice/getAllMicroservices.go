@@ -34,27 +34,33 @@ func GetAllMicroservices(c *gin.Context, dao *dataaccess.MicroservicesDAO, userD
 }
 
 func GetAllMicroservicesData(microservices []business.Microservice, userDAO *dataaccess.UserDAO) []MicroserviceData {
-	microservicesData := []MicroserviceData{}
+	var microservicesData []MicroserviceData
 
-	for i := range microservices {
-		userId := microservices[i].UserID
-		user, err := userDAO.GetUserByID(userId)
-
+	for _, microservice := range microservices {
+		userInterface, err := userDAO.GetByID(microservice.UserID)
 		if err != nil {
-			microservicesData[i] = MicroserviceData{
-				ID:           microservices[i].ID,
-				CreatedAt:    microservices[i].CreatedAt.String(),
-				UpdatedAt:    microservices[i].UpdatedAt.String(),
-				DeletedAt:    microservices[i].DeletedAt.Time.String(),
-				FriendlyName: microservices[i].FriendlyName,
-				RepoLink:     microservices[i].RepoLink,
-				Status:       microservices[i].Status,
-				User:         *user,
-				Inputs:       microservices[i].Inputs,
-				OutputLink:   microservices[i].OutputLink,
-				BackendName:  microservices[i].BackendName,
-			}
+			continue
 		}
+
+		// Assuming GetByID is supposed to return a *business.User
+		user, ok := userInterface.(*business.User)
+		if !ok {
+			continue
+		}
+
+		microservicesData = append(microservicesData, MicroserviceData{
+			ID:           microservice.ID,
+			CreatedAt:    microservice.CreatedAt.String(),
+			UpdatedAt:    microservice.UpdatedAt.String(),
+			DeletedAt:    microservice.DeletedAt.Time.String(),
+			FriendlyName: microservice.FriendlyName,
+			RepoLink:     microservice.RepoLink,
+			Status:       microservice.Status,
+			User:         *user,
+			Inputs:       microservice.Inputs,
+			OutputLink:   microservice.OutputLink,
+			BackendName:  microservice.BackendName,
+		})
 	}
 
 	return microservicesData

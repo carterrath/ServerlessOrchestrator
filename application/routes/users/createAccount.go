@@ -36,7 +36,7 @@ func CreateDeveloper(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	}
 
 	// Insert the user into the database
-	if err := userDAO.CreateUser(&user); err != nil {
+	if err := userDAO.Insert(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create developer account", "details": err.Error()})
 		return
 	}
@@ -61,7 +61,7 @@ func CreateConsumer(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	}
 
 	// Insert the user into the database
-	if err := userDAO.CreateUser(&user); err != nil {
+	if err := userDAO.Insert(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create consumer account"})
 		return
 	}

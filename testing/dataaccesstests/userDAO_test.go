@@ -80,7 +80,7 @@ func getLastUserID(db *gorm.DB) (int, error) {
 
 func TestUserDAO_CreateUser(t *testing.T) {
 	// Test
-	err := daoUser.CreateUser(testUser)
+	err := daoUser.Insert(testUser)
 
 	// Assert
 	assert.NoError(t, err)
