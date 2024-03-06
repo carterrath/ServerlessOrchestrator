@@ -14,6 +14,7 @@ func TestUploadServiceSuite(t *testing.T) {
 	// Run tests
 	t.Run("TestUploadService_ValidateGithubURL", TestUploadService_ValidateGithubURL)
 	t.Run("TestUploadService_GenerateBackendName", TestUploadService_GenerateBackendName)
+	t.Run("TestUploadService_TestDeleteDirectory", TestUploadService_TestDeleteDirectory)
 }
 
 func TestUploadService_ValidateGithubURL(t *testing.T) {
@@ -49,7 +50,7 @@ func TestUploadService_GenerateBackendName(t *testing.T) {
 	assert.Equal(t, "carterrath-WebSnakeGame", backendName)
 }
 
-func TestDeleteDirectory(t *testing.T) {
+func TestUploadService_TestDeleteDirectory(t *testing.T) {
 	github.CloneRepositoryUsingCommand("https://github.com/carterrath/WebSnakeGame.git", "carterrath-WebSnakeGame")
 	err := services.DeleteDirectory("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
 	if err != nil {

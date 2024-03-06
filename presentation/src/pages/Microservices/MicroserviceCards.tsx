@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IMicroserviceUpload } from "../../types/microservice";
+import { IMicroserviceUpload } from "../../types/microservice-data";
 import { MicroserviceCard } from "./MicroserviceCard";
 interface IProps{
     items: IMicroserviceUpload[];
