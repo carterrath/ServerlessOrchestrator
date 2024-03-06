@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { IUser } from '../../types/user';
+import { IUserData } from '../../types/user-data';
 
 const DeveloperLogin = () => {
   const data = useDevLogin();
@@ -68,7 +68,7 @@ const DeveloperLogin = () => {
 function useDevLogin() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<IUser>({
+  const [formData, setFormData] = useState<IUserData>({
     Email: '',
     Username: '',
     Password: '',
