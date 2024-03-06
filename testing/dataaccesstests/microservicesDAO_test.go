@@ -90,13 +90,13 @@ func TestMicroservicesDAO_GetAll(t *testing.T) {
 func TestMicroservicesDAO_Insert(t *testing.T) {
 	// Test
 	micro := business.Microservice{
-		FriendlyName: "name",
-		RepoLink:     "https://github.com/example/repo",
-		Status:       "active",
-		UserID:       1,
-		Inputs:       nil,
-		OutputLink:   "https://output.link",
-		BackendName:  testName,
+		FriendlyName:  "name",
+		RepoLink:      "https://github.com/example/repo",
+		StatusMessage: "active",
+		UserID:        1,
+		Inputs:        nil,
+		OutputLink:    "https://output.link",
+		BackendName:   testName,
 	}
 	err := daoMicroservice.Insert(micro)
 
@@ -143,13 +143,14 @@ func TestMicroservicesDAO_Update(t *testing.T) {
 	// Test
 	micro := business.Microservice{
 		// create a test microservice object
-		FriendlyName: "name",
-		RepoLink:     "https://github.com/example/repo",
-		Status:       "active",
-		UserID:       1,
-		Inputs:       []business.Input{{Name: "input1", DataType: "string"}},
-		OutputLink:   "https://output.link",
-		BackendName:  testName2,
+		FriendlyName:  "name",
+		RepoLink:      "https://github.com/example/repo",
+		StatusMessage: "active",
+		IsActive:      true,
+		UserID:        1,
+		Inputs:        []business.Input{{Name: "input1", DataType: "string"}},
+		OutputLink:    "https://output.link",
+		BackendName:   testName2,
 	}
 	err := daoMicroservice.Update(micro)
 

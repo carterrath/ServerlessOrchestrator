@@ -1,12 +1,12 @@
 import { Fade } from 'react-awesome-reveal';
-import githubIcon from '../../assets/svg/github.svg';
+import githubWhiteIcon from '../../assets/svg/github-white.svg';
 import boxIcon from '../../assets/svg/box.svg';
 import codeIcon from '../../assets/svg/code.svg';
 
 export function FeaturesSection() {
     // Assume each feature has a title and description
     const features = [
-        { title: 'Simplifying Full-Stack Development', description: 'Tackle multiple domains without the complexity of managing integrated components.' , icon: <img src={githubIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
+        { title: 'Simplifying Full-Stack Development', description: 'Tackle multiple domains without the complexity of managing integrated components.' , icon: <img src={githubWhiteIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
         { title: 'Monolithic to Microservices', description: 'Transition from monolithic architectures to scalable, serverless models.', icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
         { title: 'Serverless Orchestration', description: 'Automate serverless functions and microservices with a container orchestration platform.' , icon: <img src={codeIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },
         { title: 'Developer-Friendly Environment', description: 'Supports various programming languages.' , icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} /> },

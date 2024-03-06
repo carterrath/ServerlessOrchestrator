@@ -95,5 +95,81 @@ func (dao *MicroservicesDAO) Update(micro business.Microservice) error {
 	return result.Error
 }
 
+type MicroserviceData struct {
+	ID            uint
+	CreatedAt     string
+	UpdatedAt     string
+	DeletedAt     string
+	FriendlyName  string
+	RepoLink      string
+	StatusMessage string
+	IsActive      bool
+	User          UserData
+	Inputs        []business.Input
+	OutputLink    string
+	BackendName   string `gorm:"unique"`
+	ImageID       string
+}
+
+type UserData struct {
+	ID        uint
+	CreatedAt string
+	UpdatedAt string
+	DeletedAt string
+	Username  string
+	Email     string
+}
+
+// GetAllWithUsers retrieves all microservices with their associated users.
+func (dao *MicroservicesDAO) GetAllWithUsers(userDAO *UserDAO) ([]MicroserviceData, error) {
+	microservices, err := dao.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	// Batch fetch all user IDs
+	userIDs := make([]uint, len(microservices))
+	for i, microservice := range microservices {
+		userIDs[i] = microservice.UserID
+	}
+
+	users, err := userDAO.GetBatchByID(userIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	// Map user IDs to users for quick lookup
+	userMap := make(map[uint]business.User)
+	for _, user := range users {
+		userMap[user.ID] = user
+	}
+
+	var microservicesData []MicroserviceData
+	for _, microservice := range microservices {
+		user, ok := userMap[microservice.UserID]
+		if !ok {
+			continue
+		}
+
+		microservicesData = append(microservicesData, MicroserviceData{
+			ID:            microservice.ID,
+			CreatedAt:     microservice.CreatedAt.String(),
+			UpdatedAt:     microservice.UpdatedAt.String(),
+			DeletedAt:     microservice.DeletedAt.Time.String(),
+			FriendlyName:  microservice.FriendlyName,
+			RepoLink:      microservice.RepoLink,
+			StatusMessage: microservice.StatusMessage,
+			IsActive:      microservice.IsActive,
+			User:          UserData{ID: user.ID, CreatedAt: user.CreatedAt.String(), UpdatedAt: user.UpdatedAt.String(), DeletedAt: user.DeletedAt.Time.String(), Username: user.Username, Email: user.Email},
+			Inputs:        microservice.Inputs,
+			OutputLink:    microservice.OutputLink,
+			BackendName:   microservice.BackendName,
+			ImageID:       microservice.ImageID,
+		})
+	}
+
+	return microservicesData, nil
+}
+
 // Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
 var _ business.DAO_IF = (*MicroservicesDAO)(nil)

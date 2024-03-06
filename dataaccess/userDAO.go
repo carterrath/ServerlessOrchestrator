@@ -69,5 +69,14 @@ func (userdao *UserDAO) Delete(id uint) error {
 	return userdao.db.Delete(&business.User{}, id).Error
 }
 
+func (dao *UserDAO) GetBatchByID(ids []uint) ([]business.User, error) {
+	var users []business.User
+	err := dao.db.Where("id IN (?)", ids).Find(&users).Error
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
 // Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
 var _ business.DAO_IF = (*UserDAO)(nil)
