@@ -14,4 +14,5 @@ type Microservice struct {
 	Inputs       []Input
 	OutputLink   string
 	BackendName  string `gorm:"unique"`
+	ImageID      string
 }

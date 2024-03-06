@@ -1,8 +1,10 @@
 package servicestests
 
 import (
+	"os"
 	"testing"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application/github"
 	"github.com/GoKubes/ServerlessOrchestrator/application/services"
 	"github.com/stretchr/testify/assert"
 )
@@ -45,5 +47,20 @@ func TestUploadService_GenerateBackendName(t *testing.T) {
 	backendName := services.GenerateBackendName("https://github.com/carterrath/WebSnakeGame.git")
 
 	assert.Equal(t, "carterrath-WebSnakeGame", backendName)
+}
+
+func TestDeleteDirectory(t *testing.T) {
+	github.CloneRepositoryUsingCommand("https://github.com/carterrath/WebSnakeGame.git", "carterrath-WebSnakeGame")
+	err := services.DeleteDirectory("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
+	if err != nil {
+		t.Fatalf("failed to delete directory: %v", err)
+	}
+
+	// Check if the directory exists
+	_, err = os.Stat("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
+	if err == nil {
+		// Directory still exists, test failed
+		t.Error("directory still exists after deletion")
+	}
 
 }

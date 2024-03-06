@@ -16,7 +16,7 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
-func SaveMicroservice(microservice business.Microservice, dao *dataaccess.MicroservicesDAO) error {
+func SaveMicroservice(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO) error {
 
 	// Validate Github URL
 	if err := ValidateGithubURL(microservice.RepoLink); err != nil {
@@ -27,7 +27,7 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	microservice.BackendName = GenerateBackendName(microservice.RepoLink)
 
 	// call CheckIfExists to MicroservicesDAO
-	exists, err := CheckIfExists(microservice.BackendName, dao)
+	exists, err := CheckIfExists(microservice.BackendName, microserviceDao)
 	if err != nil {
 		return fmt.Errorf("failed to check if microservice exists: %w", err)
 	}
@@ -47,25 +47,35 @@ func SaveMicroservice(microservice business.Microservice, dao *dataaccess.Micros
 	}
 
 	if !containsFiles {
-		return fmt.Errorf("the directory does not contain both Dockerfile and YAML file")
+		return fmt.Errorf("the directory does not contain Dockerfile")
 	}
 
 	// call BuildImage, should return image ID
-	if err := BuildImage(microservice.BackendName); err != nil {
+	digest, err := BuildImage(microservice.BackendName)
+	if err != nil {
 		return fmt.Errorf("failed to build image: %w", err)
 	}
+	println("Image ID: ", digest)
+	microservice.ImageID = digest
 
 	// return error to api if build fails
 	// get user ID from userDAO
 	//GetUserID()
+	microservice.UserID = 4
 	// add image ID and user ID to microservice struct
 
 	// call Insert to MicroservicesDAO
-	//Insert(microservice)
+	err = Insert(microservice, microserviceDao)
+	if err != nil {
+		return fmt.Errorf("failed to insert microservice: %w", err)
+	}
 	// return error to api if insert fails
 
 	// delete cloned repo from the directory
-
+	err = DeleteDirectory("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/" + microservice.BackendName)
+	if err != nil {
+		return fmt.Errorf("failed to delete directory: %w", err)
+	}
 	// return success to api
 	return nil
 }
@@ -124,8 +134,8 @@ func GenerateBackendName(repoLink string) string {
 	return repoPath
 }
 
-func CheckIfExists(name string, dao *dataaccess.MicroservicesDAO) (bool, error) {
-	_, err := dao.GetByName(name)
+func CheckIfExists(name string, microserviceDao *dataaccess.MicroservicesDAO) (bool, error) {
+	_, err := microserviceDao.GetByName(name)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// If no microservice is found, return false indicating it's safe to proceed
@@ -134,7 +144,6 @@ func CheckIfExists(name string, dao *dataaccess.MicroservicesDAO) (bool, error) 
 		// If there's another error querying the database, return it
 		return false, fmt.Errorf("error querying database for name %s: %w", name, err)
 	}
-	// If a microservice is found, return true to indicate it exists
 	return true, nil
 }
 
@@ -147,9 +156,9 @@ func CloneRepo(repoLink, backendName string) error {
 }
 
 func CheckConfigs() (bool, error) {
-	var dockerfileExists, yamlFileExists bool
+	var dockerfileExists bool
 	destinationPath := "application/microholder"
-	// Walk through the directory and check for Dockerfile and YAML file
+	// Walk through the directory and check for Dockerfile
 	err := filepath.Walk(destinationPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -165,11 +174,6 @@ func CheckConfigs() (bool, error) {
 			dockerfileExists = true
 		}
 
-		// Check if it's a YAML file
-		if filepath.Ext(info.Name()) == ".yaml" || filepath.Ext(info.Name()) == ".yml" {
-			yamlFileExists = true
-		}
-
 		return nil
 	})
 
@@ -178,8 +182,8 @@ func CheckConfigs() (bool, error) {
 	}
 
 	// Check if both Dockerfile and YAML file exist
-	if err != nil || !dockerfileExists || !yamlFileExists {
-		fmt.Println("Dockerfile or YAML file not found or error occurred during directory check:", err)
+	if err != nil || !dockerfileExists {
+		fmt.Println("Dockerfile not found or error occurred during directory check:", err)
 		fmt.Println("Deleting the directory:", destinationPath)
 		if removeErr := os.RemoveAll(destinationPath); removeErr != nil {
 			fmt.Println("Error deleting directory:", removeErr)
@@ -190,12 +194,12 @@ func CheckConfigs() (bool, error) {
 	return true, nil
 }
 
-func BuildImage(backendName string) error {
-	err := dockerhub.CreateAndPushImage(backendName)
+func BuildImage(backendName string) (string, error) {
+	digest, err := dockerhub.CreateAndPushImage(backendName)
 	if err != nil {
-		return err
+		return digest, err
 	}
-	return nil
+	return digest, nil
 }
 
 func GetUserID() (uint, error) {
@@ -204,8 +208,31 @@ func GetUserID() (uint, error) {
 	return 0, nil
 }
 
-func Insert(microservice business.Microservice) error {
-	// call Insert to MicroservicesDAO
-	// return error if fails
+func Insert(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO) error {
+	err := microserviceDao.Insert(microservice)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteDirectory(filePath string) error {
+	// Check if directory exists
+	_, err := os.Stat(filePath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			// Directory doesn't exist
+			return fmt.Errorf("directory %s does not exist", filePath)
+		}
+		// Error occurred while checking directory
+		return err
+	}
+
+	// Attempt to remove directory
+	err = os.RemoveAll(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to delete directory %s: %v", filePath, err)
+	}
+
 	return nil
 }
