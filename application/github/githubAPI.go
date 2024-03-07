@@ -35,7 +35,7 @@ func GetLatestPushDate(repoURL, backendName string) (string, error) {
 	if err := CloneRepositoryUsingCommand(repoURL, backendName); err != nil {
 		return "", err
 	}
-	println("Error: Up here!! ")
+
 	// Get the latest commit date.
 	cmd := exec.Command("git", "-C", destinationPath, "log", "-1", "--format=%cd")
 	output, err := cmd.Output()

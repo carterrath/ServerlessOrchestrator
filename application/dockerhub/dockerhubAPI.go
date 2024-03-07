@@ -57,5 +57,23 @@ func CreateAndPushImage(backendName string) (string, error) {
 	}
 
 	digest := strings.TrimSpace(strings.Trim(string(output), "'"))
+
+	// Remove the local image tagged with backendName
+	removeLocalCmd := exec.Command("docker", "rmi", backendName)
+	removeLocalCmd.Stdout = os.Stdout
+	removeLocalCmd.Stderr = os.Stderr
+	if err := removeLocalCmd.Run(); err != nil {
+		return "", fmt.Errorf("failed to remove local image %s: %v", backendName, err)
+	}
+
+	// Remove the image tagged with the Docker repository name and backendName
+	removeRepoCmd := exec.Command("docker", "rmi", dockerRepository+":"+backendName)
+	removeRepoCmd.Stdout = os.Stdout
+	removeRepoCmd.Stderr = os.Stderr
+	if err := removeRepoCmd.Run(); err != nil {
+		return "", fmt.Errorf("failed to remove image %s: %v", dockerRepository+":"+backendName, err)
+	}
+
 	return digest, nil
+
 }
