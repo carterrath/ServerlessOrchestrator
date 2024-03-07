@@ -42,6 +42,14 @@ func TestMicroservicesDAOSuite(t *testing.T) {
 	t.Run("TestMicroservicesDAO_GetByName", TestMicroservicesDAO_GetByName)
 	t.Run("TestMicroservicesDAO_Update", TestMicroservicesDAO_Update)
 	t.Run("TestMicroservicesDAO_Delete", TestMicroservicesDAO_Delete)
+
+	// Teardown
+	teardownMicroTestDatabase(dbMicroservice)
+}
+
+func teardownMicroTestDatabase(db *gorm.DB) {
+	// Clean up test data from the database
+	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testmicroservice%'")
 }
 
 func setupMicroTestDatabase() *gorm.DB {
