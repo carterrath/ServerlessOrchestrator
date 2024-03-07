@@ -42,6 +42,14 @@ func TestMicroservicesDAOSuite(t *testing.T) {
 	t.Run("TestMicroservicesDAO_GetByName", TestMicroservicesDAO_GetByName)
 	t.Run("TestMicroservicesDAO_Update", TestMicroservicesDAO_Update)
 	t.Run("TestMicroservicesDAO_Delete", TestMicroservicesDAO_Delete)
+
+	// Teardown
+	teardownMicroTestDatabase(dbMicroservice)
+}
+
+func teardownMicroTestDatabase(db *gorm.DB) {
+	// Clean up test data from the database
+	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testmicroservice%'")
 }
 
 func setupMicroTestDatabase() *gorm.DB {
@@ -68,10 +76,11 @@ func setupMicroTestDatabase() *gorm.DB {
 func getLastMicroserviceID(db *gorm.DB) (uint, error) {
 	var microservice business.Microservice
 	result := db.Order("id desc").First(&microservice)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		// No microservice found, return 0, nil
+		return 0, nil
+	}
 	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return 0, nil
-		}
 		return 0, result.Error
 	}
 	return microservice.ID, nil
@@ -93,10 +102,12 @@ func TestMicroservicesDAO_Insert(t *testing.T) {
 		FriendlyName:  "name",
 		RepoLink:      "https://github.com/example/repo",
 		StatusMessage: "active",
+		IsActive:      true,
 		UserID:        1,
 		Inputs:        nil,
 		OutputLink:    "https://output.link",
 		BackendName:   testName,
+		ImageID:       "imageid",
 	}
 	err := daoMicroservice.Insert(micro)
 
@@ -151,6 +162,7 @@ func TestMicroservicesDAO_Update(t *testing.T) {
 		Inputs:        []business.Input{{Name: "input1", DataType: "string"}},
 		OutputLink:    "https://output.link",
 		BackendName:   testName2,
+		ImageID:       "imageid",
 	}
 	err := daoMicroservice.Update(micro)
 

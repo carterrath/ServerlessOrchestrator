@@ -34,6 +34,7 @@ import (
 	"fmt"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/microservice"
+	"github.com/GoKubes/ServerlessOrchestrator/application/routes/runmicroservice"
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/users"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/gin-gonic/gin"
@@ -88,5 +89,8 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao 
 	})
 	router.POST("/login/consumer", func(c *gin.Context) {
 		users.Login(c, userdao)
+	})
+	router.POST("/runmicroservice", func(c *gin.Context) {
+		runmicroservice.RunMicroservice(c, dao)
 	})
 }

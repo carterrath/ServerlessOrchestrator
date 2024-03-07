@@ -4,6 +4,7 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 func CloneRepositoryUsingCommand(repoURL, backendName, filePath string) error {
@@ -25,4 +26,23 @@ func CloneRepositoryUsingCommand(repoURL, backendName, filePath string) error {
 	}
 
 	return nil
+}
+
+// getLatestPushDate fetches the latest push date of a GitHub repo.
+func GetLatestPushDate(repoURL, backendName, filePath string) (string, error) {
+	destinationPath := "/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + backendName
+
+	if err := CloneRepositoryUsingCommand(repoURL, backendName, filePath); err != nil {
+		return "", err
+	}
+
+	// Get the latest commit date.
+	cmd := exec.Command("git", "-C", destinationPath, "log", "-1", "--format=%cd")
+	output, err := cmd.Output()
+	if err != nil {
+		println("Error: I'm here!! ", err)
+		return "", err
+	}
+
+	return strings.TrimSpace(string(output)), nil
 }
