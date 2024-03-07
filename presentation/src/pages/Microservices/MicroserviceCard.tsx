@@ -7,12 +7,13 @@ interface IProps{
     item: IMicroserviceData;
 }
 export function MicroserviceCard(props: IProps) {
+  const data=useMicroserviceCard(props);
   return (
     <div className="p-2 bg-gray-200 rounded-xl drop-shadow-lg hover:scale-[101%] transition duration-150 ease-in-out">
       <div className="flex justify-between mb-4">
         <div className="flex gap-3 justify-start items-center mb-2">
           <h2 className="text-2xl font-semibold">{props.item.FriendlyName}</h2>
-          <button className="bg-green-500 rounded-lg py-1 px-2 hover:shadow-md">
+          <button className="bg-green-500 rounded-lg py-1 px-2 hover:shadow-md" onClick={data.handlePlayClick}>
             <img src={PlaySvg} alt="filter" className="w-4 h-4" />
           </button>
         </div>
@@ -52,5 +53,28 @@ export function MicroserviceCard(props: IProps) {
       </div>
     </div>    
   );
+}
+
+function useMicroserviceCard(props: IProps) {
+  function handlePlayClick() {
+    fetch('http://localhost:8080/runmicroservice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        value: props.item.BackendName,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+  
+  return { handlePlayClick };
 }
 

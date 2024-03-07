@@ -61,7 +61,7 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	// return error to api if build fails
 	// get user ID from userDAO
 	//GetUserID()
-	microservice.UserID = 5
+	microservice.UserID = 1
 	// add image ID and user ID to microservice struct
 
 	// call Insert to MicroservicesDAO
@@ -72,7 +72,7 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	// return error to api if insert fails
 
 	// delete cloned repo from the directory
-	err = DeleteDirectory("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/" + microservice.BackendName)
+	err = DeleteDirectory("/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + microservice.BackendName)
 	if err != nil {
 		return fmt.Errorf("failed to delete directory: %w", err)
 	}
