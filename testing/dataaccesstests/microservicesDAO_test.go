@@ -76,10 +76,11 @@ func setupMicroTestDatabase() *gorm.DB {
 func getLastMicroserviceID(db *gorm.DB) (uint, error) {
 	var microservice business.Microservice
 	result := db.Order("id desc").First(&microservice)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		// No microservice found, return 0, nil
+		return 0, nil
+	}
 	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return 0, nil
-		}
 		return 0, result.Error
 	}
 	return microservice.ID, nil

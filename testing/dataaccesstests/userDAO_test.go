@@ -43,6 +43,14 @@ func TestUserDAOSuite(t *testing.T) {
 	t.Run("TestUserDAO_GetUserByUsername", TestUserDAO_GetUserByUsername)
 	t.Run("TestUserDAO_GetUserByEmail", TestUserDAO_GetUserByEmail)
 	t.Run("TestUserDAO_CheckUsernameAndPassword", TestUserDAO_CheckUsernameAndPassword)
+
+	// Teardown
+	teardownTestDatabase(dbUser)
+}
+
+func teardownTestDatabase(db *gorm.DB) {
+	// Clean up test data from the database
+	db.Exec("DELETE FROM users WHERE username LIKE 'testuser%'")
 }
 
 func setupTestDatabase() *gorm.DB {
