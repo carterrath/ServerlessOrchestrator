@@ -4,12 +4,10 @@ import (
 	"errors"
 	"os"
 	"os/exec"
-
-	git "gopkg.in/src-d/go-git.v4"
 )
 
-func CloneRepositoryUsingCommand(repoURL, backendName string) error {
-	destinationPath := "/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/" + backendName
+func CloneRepositoryUsingCommand(repoURL, backendName, filePath string) error {
+	destinationPath := filePath + backendName
 	// Check if the destination directory already exists
 
 	if _, err := os.Stat(destinationPath); err == nil {
@@ -26,21 +24,5 @@ func CloneRepositoryUsingCommand(repoURL, backendName string) error {
 		return err
 	}
 
-	return nil
-}
-
-func CloneRepositoryUsingGit(url string) error {
-	destinationPath := "application/microholder"
-	if _, err := os.Stat(destinationPath); err == nil {
-		return errors.New("destination directory already exists")
-	}
-	// The PlainClone function clones a repository into the path.
-	_, err := git.PlainClone(destinationPath, false, &git.CloneOptions{
-		URL:      url,       // Repository URL
-		Progress: os.Stdout, // Display progress on standard output
-	})
-	if err != nil {
-		return err
-	}
 	return nil
 }

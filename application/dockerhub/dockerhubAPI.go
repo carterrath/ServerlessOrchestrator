@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-func CreateAndPushImage(backendName string) (string, error) {
-	destinationPath := "/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/" + backendName
+func CreateAndPushImage(backendName, filePath string) (string, error) {
+	destinationPath := filePath + backendName
 
 	dockerfile := filepath.Join(destinationPath, "Dockerfile")
 
@@ -58,4 +58,36 @@ func CreateAndPushImage(backendName string) (string, error) {
 
 	digest := strings.TrimSpace(strings.Trim(string(output), "'"))
 	return digest, nil
+}
+
+func RunImageFromDockerHub(imageDigest string, port int) error {
+	repositoryName := "carterrath/serverless-orchestrator"
+	// Use Docker CLI to inspect the manifest of the image on Docker Hub
+	inspectCmd := exec.Command("docker", "manifest", "inspect", repositoryName)
+	output, err := inspectCmd.CombinedOutput()
+	if err != nil {
+		return err
+	}
+
+	// Convert the output to string
+	manifestJSON := string(output)
+
+	// Check if the image digest is found in the search results
+	if !strings.Contains(manifestJSON, imageDigest) {
+		return fmt.Errorf("image with digest %s not found in Docker Hub repository %s", imageDigest, repositoryName)
+	}
+
+	// Pull the image from Docker Hub
+	pullCmd := exec.Command("docker", "pull", repositoryName)
+	if err := pullCmd.Run(); err != nil {
+		return err
+	}
+
+	// Run the image locally on the specified port
+	runCmd := exec.Command("docker", "run", "-p", fmt.Sprintf("%d:8080", port), repositoryName)
+	if err := runCmd.Run(); err != nil {
+		return err
+	}
+
+	return nil
 }

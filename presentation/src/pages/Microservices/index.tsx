@@ -15,7 +15,7 @@ export function Microservices() {
             <>
             <div className="flex justify-between mx-8 items-center">
               <div className="font-semibold my-4 text-2xl">
-                Microservices ({data.microservices.length})
+                Microservices ({data.microservices !== null ? data.microservices.length: 0})
               </div>
               <div className="flex items-center gap-2 w-1/3">
                 <button className="bg-gray-200 rounded-lg py-1 px-2 hover:shadow-md"
@@ -34,7 +34,9 @@ export function Microservices() {
                 </button>              
               </div>
             </div>
+              {data.microservices !== null && data.microservices.length > 0 &&(
              <MicroserviceCards items={data.microservices} />
+              )}
              </>
             }
         </div>
