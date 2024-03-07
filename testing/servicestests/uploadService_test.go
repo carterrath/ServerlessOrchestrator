@@ -52,13 +52,13 @@ func TestUploadService_GenerateBackendName(t *testing.T) {
 
 func TestUploadService_TestDeleteDirectory(t *testing.T) {
 	github.CloneRepositoryUsingCommand("https://github.com/carterrath/WebSnakeGame.git", "carterrath-WebSnakeGame")
-	err := services.DeleteDirectory("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
+	err := services.DeleteDirectory("/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
 	if err != nil {
 		t.Fatalf("failed to delete directory: %v", err)
 	}
 
 	// Check if the directory exists
-	_, err = os.Stat("/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
+	_, err = os.Stat("/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/carterrath-WebSnakeGame")
 	if err == nil {
 		// Directory still exists, test failed
 		t.Error("directory still exists after deletion")

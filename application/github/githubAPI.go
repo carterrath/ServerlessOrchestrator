@@ -9,7 +9,7 @@ import (
 )
 
 func CloneRepositoryUsingCommand(repoURL, backendName string) error {
-	destinationPath := "/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/" + backendName
+	destinationPath := "/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + backendName
 	// Check if the destination directory already exists
 
 	if _, err := os.Stat(destinationPath); err == nil {
