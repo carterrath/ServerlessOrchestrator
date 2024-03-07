@@ -5,6 +5,7 @@ import (
 
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type LoginRequest struct {
@@ -21,10 +22,25 @@ func Login(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	}
 
 	// Check the username and password against the database
-	user, err := userDAO.CheckUsernameAndPassword(req.Username, req.Password)
+	// user, err := userDAO.CheckUsernameAndPassword(req.Username, req.Password)
+	// if err != nil {
+	// 	// If there's an error (user not found or password mismatch), return an error response
+	// 	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+	// 	return
+	// }
+
+	// Check if the username exists in the database
+	user, err := userDAO.GetUserByUsername(req.Username)
 	if err != nil {
-		// If there's an error (user not found or password mismatch), return an error response
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+		// If there's an error (user not found), return an error response
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username"})
+		return
+	}
+
+	// Compare the hashed password stored in the database with the entered password
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+		// If there's an error (password mismatch), return an error response
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
 		return
 	}
 
