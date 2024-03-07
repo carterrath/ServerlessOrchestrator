@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application/github"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"gorm.io/gorm"
@@ -15,8 +16,13 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 	if err != nil {
 		return fmt.Errorf("error fetching microservice: %w", err)
 	}
-	println("Microservice: ", microservice.BackendName)
+
 	// check if image is the latest update of repo
+	date, err := GetLatestPushDate(microservice.RepoLink, microservice.BackendName)
+	if err != nil {
+		return fmt.Errorf("error getting latest push date: %w", err)
+	}
+	println("Date: ", date)
 	//get repoLink from Microservice object
 	//get date of latest commit to github, if the date is more recent than the updated date on the microservice then delete amd rebuild image.
 	//if the date is not more recent, then run the image
@@ -38,4 +44,12 @@ func FetchMicroservice(name string, microserviceDao *dataaccess.MicroservicesDAO
 	}
 	// Return the found microservice object
 	return &microservice, nil
+}
+
+func GetLatestPushDate(repoURL, backendName string) (string, error) {
+	date, err := github.GetLatestPushDate(repoURL, backendName)
+	if err != nil {
+		return "", err
+	}
+	return date, nil
 }

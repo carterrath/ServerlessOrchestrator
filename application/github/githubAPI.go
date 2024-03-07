@@ -4,8 +4,7 @@ import (
 	"errors"
 	"os"
 	"os/exec"
-
-	git "gopkg.in/src-d/go-git.v4"
+	"strings"
 )
 
 func CloneRepositoryUsingCommand(repoURL, backendName string) error {
@@ -29,18 +28,21 @@ func CloneRepositoryUsingCommand(repoURL, backendName string) error {
 	return nil
 }
 
-func CloneRepositoryUsingGit(url string) error {
-	destinationPath := "application/microholder"
-	if _, err := os.Stat(destinationPath); err == nil {
-		return errors.New("destination directory already exists")
+// getLatestPushDate fetches the latest push date of a GitHub repo.
+func GetLatestPushDate(repoURL, backendName string) (string, error) {
+	destinationPath := "/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + backendName
+
+	if err := CloneRepositoryUsingCommand(repoURL, backendName); err != nil {
+		return "", err
 	}
-	// The PlainClone function clones a repository into the path.
-	_, err := git.PlainClone(destinationPath, false, &git.CloneOptions{
-		URL:      url,       // Repository URL
-		Progress: os.Stdout, // Display progress on standard output
-	})
+	println("Error: Up here!! ")
+	// Get the latest commit date.
+	cmd := exec.Command("git", "-C", destinationPath, "log", "-1", "--format=%cd")
+	output, err := cmd.Output()
 	if err != nil {
-		return err
+		println("Error: I'm here!! ", err)
+		return "", err
 	}
-	return nil
+
+	return strings.TrimSpace(string(output)), nil
 }

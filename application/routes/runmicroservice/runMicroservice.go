@@ -27,7 +27,7 @@ func RunMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
 	err := services.ExecuteMicroservice(input.Value, dao)
 	if err != nil {
 		// Handle error
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Execution failed"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
