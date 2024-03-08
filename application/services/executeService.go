@@ -44,10 +44,10 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 		microservice.ImageID = digest
 	}
 	//if the date is not more recent, then run the image
-	err = RunImage(microservice.ImageID, 3000)
-	if err != nil {
-		return fmt.Errorf("error running image: %w", err)
-	}
+	// err = RunImage(microservice.ImageID, 3000)
+	// if err != nil {
+	// 	return fmt.Errorf("error running image: %w", err)
+	// }
 
 	// run image
 	return nil

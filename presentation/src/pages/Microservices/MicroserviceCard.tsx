@@ -48,7 +48,7 @@ export function MicroserviceCard(props: IProps) {
       {props.item.UpdatedAt && (
         <p className="text-gray-600 text-sm">Updated At: {data.formatDate(props.item.UpdatedAt)}</p>
       )}
-      {props.item.DeletedAt && props.item.DeletedAt !== "" && (
+      {props.item.DeletedAt && props.item.DeletedAt !== "0001-01-01 00:00:00 +0000 UTC" && (
         <p className="text-gray-600 text-sm">Deleted At: {data.formatDate(props.item.DeletedAt)}</p>
       )}
     </div>
