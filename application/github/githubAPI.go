@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-func CloneRepositoryUsingCommand(repoURL, backendName string) error {
-	destinationPath := "/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + backendName
+func CloneRepositoryUsingCommand(repoURL, backendName, filePath string) error {
+	destinationPath := filePath + backendName
 	// Check if the destination directory already exists
 
 	if _, err := os.Stat(destinationPath); err == nil {
@@ -29,10 +29,10 @@ func CloneRepositoryUsingCommand(repoURL, backendName string) error {
 }
 
 // getLatestPushDate fetches the latest push date of a GitHub repo.
-func GetLatestPushDate(repoURL, backendName string) (string, error) {
+func GetLatestPushDate(repoURL, backendName, filePath string) (string, error) {
 	destinationPath := "/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + backendName
 
-	if err := CloneRepositoryUsingCommand(repoURL, backendName); err != nil {
+	if err := CloneRepositoryUsingCommand(repoURL, backendName, filePath); err != nil {
 		return "", err
 	}
 

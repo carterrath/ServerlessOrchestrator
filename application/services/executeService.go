@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/GoKubes/ServerlessOrchestrator/application/dockerhub"
 	"github.com/GoKubes/ServerlessOrchestrator/application/github"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
@@ -19,7 +20,8 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 	}
 
 	// check if image is the latest update of repo
-	dateStr, err := GetLatestPushDate(microservice.RepoLink, microservice.BackendName)
+	filePath := "application/microholder/"
+	dateStr, err := GetLatestPushDate(microservice.RepoLink, microservice.BackendName, filePath)
 	if err != nil {
 		return fmt.Errorf("error getting latest push date: %w", err)
 	}
@@ -34,18 +36,18 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 	// Compare the parsed date with the updatedAt field of the microservice
 	if date.After(microservice.UpdatedAt) {
 		fmt.Println("The repository has been updated more recently than the microservice. Updating microservice...")
-		// Delete the image
-		if err := DeleteImage(); err != nil {
-			return fmt.Errorf("error deleting image: %w", err)
-		}
 		// Rebuild the image
-		digest, err := BuildImage(microservice.BackendName)
+		digest, err := BuildImage(microservice.BackendName, filePath)
 		if err != nil {
 			return fmt.Errorf("error building image: %w", err)
 		}
 		microservice.ImageID = digest
 	}
 	//if the date is not more recent, then run the image
+	// err = RunImage(microservice.ImageID, 3000)
+	// if err != nil {
+	// 	return fmt.Errorf("error running image: %w", err)
+	// }
 
 	// run image
 	return nil
@@ -66,8 +68,8 @@ func FetchMicroservice(name string, microserviceDao *dataaccess.MicroservicesDAO
 	return &microservice, nil
 }
 
-func GetLatestPushDate(repoURL, backendName string) (string, error) {
-	date, err := github.GetLatestPushDate(repoURL, backendName)
+func GetLatestPushDate(repoURL, backendName, filePath string) (string, error) {
+	date, err := github.GetLatestPushDate(repoURL, backendName, filePath)
 	if err != nil {
 		return "", err
 	}
@@ -83,7 +85,11 @@ func ParseDate(dateStr string) (time.Time, error) {
 	return date, nil
 }
 
-func DeleteImage() error {
-	// Delete the image
+func RunImage(imageID string, port int) error {
+	// Run the image locally on the specified port
+	err := dockerhub.RunImageFromDockerHub(imageID, port)
+	if err != nil {
+		return err
+	}
 	return nil
 }

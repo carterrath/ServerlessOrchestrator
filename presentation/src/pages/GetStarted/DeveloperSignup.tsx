@@ -113,7 +113,7 @@ function useDevSignup() {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        navigate('/Microservices'); // Navigate on success
+        navigate('/UploadMicroservice'); // Navigate on success
       } else {
         console.error('Failed to signup');
         // Handle HTTP error responses (e.g., 400, 401, 500)

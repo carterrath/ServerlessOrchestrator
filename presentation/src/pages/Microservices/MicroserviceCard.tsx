@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { IMicroserviceData } from "../../types/microservice-data";
+import { format } from 'date-fns';
 import PlaySvg from "../../assets/svg/play.svg";
 import GithubBlackSvg from "../../assets/svg/github-black.svg";
 import OutputSvg from "../../assets/svg/output.svg";
@@ -43,19 +44,24 @@ export function MicroserviceCard(props: IProps) {
       </div>
     
       <div className="flex justify-between mt-4">
-        <p className="text-gray-600 text-sm">Created At: {new Date(props.item.CreatedAt).toLocaleString()}</p>
-        {props.item.updatedAt && (
-          <p className="text-gray-600 text-sm">Updated At: {new Date(props.item.updatedAt).toLocaleString()}</p>
-        )}
-        {props.item.DeletedAt && (
-          <p className="text-gray-600 text-sm">Deleted At: {new Date(props.item.DeletedAt).toLocaleString()}</p>
-        )}
-      </div>
+      <p className="text-gray-600 text-sm">Created At: {data.formatDate(props.item.CreatedAt)}</p>
+      {props.item.UpdatedAt && (
+        <p className="text-gray-600 text-sm">Updated At: {data.formatDate(props.item.UpdatedAt)}</p>
+      )}
+      {props.item.DeletedAt && props.item.DeletedAt !== "0001-01-01 00:00:00 +0000 UTC" && (
+        <p className="text-gray-600 text-sm">Deleted At: {data.formatDate(props.item.DeletedAt)}</p>
+      )}
+    </div>
     </div>    
   );
 }
 
 function useMicroserviceCard(props: IProps) {
+  function formatDate(dateString: string) {
+    // Assuming the date string is in ISO 8601 format
+    const date = new Date(dateString);
+    return format(date, 'MMMM dd, yyyy HH:mm:ss');
+  }
   function handlePlayClick() {
     fetch('http://localhost:8080/runmicroservice', {
       method: 'POST',
@@ -75,6 +81,9 @@ function useMicroserviceCard(props: IProps) {
     });
   }
   
-  return { handlePlayClick };
+  return { 
+    handlePlayClick,
+    formatDate
+  };
 }
 

@@ -2,9 +2,9 @@ import { IUserData } from "./user-data";
 
 export interface IMicroserviceData {
     ID: number;
-    CreatedAt: Date;
-    updatedAt: Date | null;
-    DeletedAt: Date | null;
+    CreatedAt: string;
+    UpdatedAt: string | null;
+    DeletedAt: string | null;
     FriendlyName: string;
     RepoLink: string;
     StatusMessage: string;

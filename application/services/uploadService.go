@@ -36,45 +36,64 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	}
 
 	// call CloneRepo
-	if err := CloneRepo(microservice.RepoLink, microservice.BackendName); err != nil {
-		return fmt.Errorf("failed to upload microservice: make sure the repository is public")
+	filePath := "application/microholder/"
+	if err := CloneRepo(microservice.RepoLink, microservice.BackendName, filePath); err != nil {
+		// If cloning fails, delete the cloned directory
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		return fmt.Errorf("failed to upload microservice: make sure the repository is public: %w", err)
 	}
 
 	// call CheckConfigs
-	containsFiles, err := CheckConfigs()
+	containsFiles, err := CheckConfigs(filePath + microservice.BackendName)
 	if err != nil {
+		// If error occurs, delete the cloned directory
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("error when checking repo: %w", err)
 	}
 
 	if !containsFiles {
+		// If necessary files are not found, delete the cloned directory
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("the directory does not contain Dockerfile")
 	}
 
 	// call BuildImage, should return image ID
-	digest, err := BuildImage(microservice.BackendName)
+	res, err := BuildImage(microservice.BackendName, filePath)
 	if err != nil {
+		// If building image fails, delete the cloned directory
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("failed to build image: %w", err)
 	}
-	println("Image ID: ", digest)
+	println("Image ID: ", res)
+	digest, err := GetImageDigest(res)
+	if err != nil {
+		// If getting image digest fails, delete the cloned directory
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		return fmt.Errorf("error: %v", err)
+	}
 	microservice.ImageID = digest
 
 	// return error to api if build fails
 	// get user ID from userDAO
 	//GetUserID()
-	microservice.UserID = 1
+	microservice.UserID = 2
 	// add image ID and user ID to microservice struct
 
 	// call Insert to MicroservicesDAO
 	err = Insert(microservice, microserviceDao)
 	if err != nil {
+		// If inserting microservice fails, delete the cloned directory
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("failed to insert microservice: %w", err)
 	}
 	// return error to api if insert fails
 
 	// delete cloned repo from the directory
-	err = DeleteDirectory("/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + microservice.BackendName)
+
+	err = DeleteDirectory(filePath + microservice.BackendName)
 	if err != nil {
-		return fmt.Errorf("failed to delete directory: %w", err)
+		// If deleting cloned directory fails, log the error
+		fmt.Printf("failed to delete directory: %v\n", err)
 	}
 	// return success to api
 	return nil
@@ -127,11 +146,13 @@ func GenerateBackendName(repoLink string) string {
 	if len(pathComponents) >= 2 {
 		// Remove the .git extension from the repository name
 		repoName := strings.TrimSuffix(pathComponents[1], ".git")
-		return pathComponents[0] + "-" + repoName
+		name := pathComponents[0] + "-" + repoName
+		// Convert the name to lowercase before returning
+		return strings.ToLower(name)
 	}
 
 	// If there are fewer than two components, return the path as is
-	return repoPath
+	return strings.ToLower(repoPath)
 }
 
 func CheckIfExists(name string, microserviceDao *dataaccess.MicroservicesDAO) (bool, error) {
@@ -147,17 +168,16 @@ func CheckIfExists(name string, microserviceDao *dataaccess.MicroservicesDAO) (b
 	return true, nil
 }
 
-func CloneRepo(repoLink, backendName string) error {
-	err := github.CloneRepositoryUsingCommand(repoLink, backendName)
+func CloneRepo(repoLink, backendName, filePath string) error {
+	err := github.CloneRepositoryUsingCommand(repoLink, backendName, filePath)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func CheckConfigs() (bool, error) {
+func CheckConfigs(destinationPath string) (bool, error) {
 	var dockerfileExists bool
-	destinationPath := "application/microholder"
 	// Walk through the directory and check for Dockerfile
 	err := filepath.Walk(destinationPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -183,23 +203,29 @@ func CheckConfigs() (bool, error) {
 
 	// Check if both Dockerfile and YAML file exist
 	if err != nil || !dockerfileExists {
-		fmt.Println("Dockerfile not found or error occurred during directory check:", err)
-		fmt.Println("Deleting the directory:", destinationPath)
-		if removeErr := os.RemoveAll(destinationPath); removeErr != nil {
-			fmt.Println("Error deleting directory:", removeErr)
-		}
 		return false, err
 	}
 
 	return true, nil
 }
 
-func BuildImage(backendName string) (string, error) {
-	digest, err := dockerhub.CreateAndPushImage(backendName)
+func BuildImage(backendName, filePath string) (string, error) {
+	digest, err := dockerhub.CreateAndPushImage(backendName, filePath)
 	if err != nil {
 		return digest, err
 	}
 	return digest, nil
+}
+
+func GetImageDigest(input string) (string, error) {
+	// Split the input string by "@" to separate the repository name and image digest
+	parts := strings.Split(input, "@")
+	if len(parts) != 2 {
+		return "", fmt.Errorf("invalid input format")
+	}
+
+	// Return only the image digest part
+	return parts[1], nil
 }
 
 func GetUserID() (uint, error) {
