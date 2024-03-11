@@ -30,7 +30,7 @@ func CloneRepositoryUsingCommand(repoURL, backendName, filePath string) error {
 
 // getLatestPushDate fetches the latest push date of a GitHub repo.
 func GetLatestPushDate(repoURL, backendName, filePath string) (string, error) {
-	destinationPath := "/Users/jwalsh/Dev/CSUSM/SE490 Capstone/ServerlessOrchestrator/application/microholder/" + backendName
+	destinationPath := filePath + backendName
 
 	if err := CloneRepositoryUsingCommand(repoURL, backendName, filePath); err != nil {
 		return "", err
