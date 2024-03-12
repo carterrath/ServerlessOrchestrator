@@ -65,18 +65,18 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 		return fmt.Errorf("failed to build image: %w", err)
 	}
 	println("Image ID: ", res)
-	digest, err := GetImageDigest(res)
-	if err != nil {
-		// If getting image digest fails, delete the cloned directory
-		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
-		return fmt.Errorf("error: %v", err)
-	}
-	microservice.ImageID = digest
+	// digest, err := GetImageDigest(res)
+	// if err != nil {
+	// 	// If getting image digest fails, delete the cloned directory
+	// 	_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+	// 	return fmt.Errorf("error: %v", err)
+	// }
+	microservice.ImageID = res
 
 	// return error to api if build fails
 	// get user ID from userDAO
 	//GetUserID()
-	microservice.UserID = 2
+	microservice.UserID = 1
 	// add image ID and user ID to microservice struct
 
 	// call Insert to MicroservicesDAO
@@ -197,12 +197,7 @@ func CheckConfigs(destinationPath string) (bool, error) {
 		return nil
 	})
 
-	if err != nil {
-		return false, err
-	}
-
-	// Check if both Dockerfile and YAML file exist
-	if err != nil || !dockerfileExists {
+	if !dockerfileExists {
 		return false, err
 	}
 

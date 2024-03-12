@@ -56,7 +56,11 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 		return "", fmt.Errorf("failed to get image digest: %v", err)
 	}
 
-	digest := strings.TrimSpace(strings.Trim(string(output), "'"))
+	// Convert output to a string and trim space for safety
+	outputStr := strings.TrimSpace(string(output))
+
+	// Remove any leading and trailing single quotes or newlines that may encapsulate the output
+	digest := strings.Trim(outputStr, "'\n")
 
 	// Remove the local image tagged with backendName
 	removeLocalCmd := exec.Command("docker", "rmi", backendName)
@@ -79,33 +83,30 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 }
 
 func RunImageFromDockerHub(imageDigest string, port int) error {
-	repositoryName := "carterrath/serverless-orchestrator"
-	// Use Docker CLI to inspect the manifest of the image on Docker Hub
-	inspectCmd := exec.Command("docker", "manifest", "inspect", repositoryName)
-	output, err := inspectCmd.CombinedOutput()
+	// Correctly specifying the repository name and the digest
+	// repositoryName := "carterrath/serverless-orchestrator"
+	// imageNameWithDigest := fmt.Sprintf("%s@%s", repositoryName, imageDigest)
+
+	// Pull the image from Docker Hub using the digest
+	pullCmd := exec.Command("docker", "pull", imageDigest)
+	output, err := pullCmd.CombinedOutput()
 	if err != nil {
-		return err
+		return fmt.Errorf("error pulling docker image: %s, output: %s", err, string(output))
 	}
 
-	// Convert the output to string
-	manifestJSON := string(output)
-
-	// Check if the image digest is found in the search results
-	if !strings.Contains(manifestJSON, imageDigest) {
-		return fmt.Errorf("image with digest %s not found in Docker Hub repository %s", imageDigest, repositoryName)
-	}
-
-	// Pull the image from Docker Hub
-	pullCmd := exec.Command("docker", "pull", repositoryName)
-	if err := pullCmd.Run(); err != nil {
-		return err
-	}
+	// Informing the user about the pull success
+	fmt.Println("Successfully pulled image:", imageDigest)
 
 	// Run the image locally on the specified port
-	runCmd := exec.Command("docker", "run", "-p", fmt.Sprintf("%d:8080", port), repositoryName)
-	if err := runCmd.Run(); err != nil {
-		return err
+	// Note: Docker run command expects the port mapping in the format "hostPort:containerPort"
+	runCmd := exec.Command("docker", "run", "-d", "-p", fmt.Sprintf("%d:3000", port), imageDigest)
+	runOutput, runErr := runCmd.CombinedOutput()
+	if runErr != nil {
+		return fmt.Errorf("error running docker image: %s, output: %s", runErr, string(runOutput))
 	}
+
+	// Informing the user that the image is running
+	fmt.Println("Successfully running image:", imageDigest, "on port", port)
 
 	return nil
 }
