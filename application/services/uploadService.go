@@ -76,7 +76,7 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	// return error to api if build fails
 	// get user ID from userDAO
 	//GetUserID()
-	microservice.UserID = 2
+	microservice.UserID = 1
 	// add image ID and user ID to microservice struct
 
 	// call Insert to MicroservicesDAO
