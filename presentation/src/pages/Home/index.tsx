@@ -10,17 +10,21 @@ export function Home() {
   return (
     <div className="flex flex-col">
       
-      <div className="border-b border-slate-200">
+      <div id="header-section" className="border-b border-slate-200">
         <HeaderSection />
       </div>
-      <div className="border-b border-slate-200">
+      <div id="features-section" className="border-b border-slate-200">
         <FeaturesSection />
       </div>
-      
+      <div id="about-section" >
       <AboutSection />
-      
+      </div>
+      <div id="other-materials-section" >
       <OtherMaterialsSection />
+      </div>
+      <div id="team-section">
       <TeamSection />
+      </div>
     
       
       <ScrollAssistant />
