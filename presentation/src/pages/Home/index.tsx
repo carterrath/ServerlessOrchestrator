@@ -4,6 +4,7 @@ import { AboutSection } from '../../components/AboutSection';
 import { ScrollAssistant } from "../../components/ScrollAssistant";
 import { HeaderSection } from "../../components/HeaderSection";
 import { OtherMaterialsSection } from '../../components/OtherMaterialsSection';
+import { TechStackSection } from '../../components/TechStackSection';
 
 export function Home() {
 
@@ -21,9 +22,12 @@ export function Home() {
       </div>
       <div id="other-materials-section" >
       <OtherMaterialsSection />
-      </div>
-      <div id="team-section">
       <TeamSection />
+      </div>
+
+      <div id="team-section">
+      
+      <TechStackSection />
       </div>
     
       
