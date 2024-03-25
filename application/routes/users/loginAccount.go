@@ -21,14 +21,6 @@ func Login(c *gin.Context, userDAO *dataaccess.UserDAO) {
 		return
 	}
 
-	// Check the username and password against the database
-	// user, err := userDAO.CheckUsernameAndPassword(req.Username, req.Password)
-	// if err != nil {
-	// 	// If there's an error (user not found or password mismatch), return an error response
-	// 	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
-	// 	return
-	// }
-
 	// Check if the username exists in the database
 	user, err := userDAO.GetUserByUsername(req.Username)
 	if err != nil {
@@ -53,8 +45,16 @@ func Login(c *gin.Context, userDAO *dataaccess.UserDAO) {
 		return
 	}
 
-	// Additional authentication checks can be added here, google?
+	// Generate a JWT token
+	token, err := GenerateJWT(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
 
 	// Return success response with user details
-	c.JSON(http.StatusOK, gin.H{"message": "Login successful", "user": user})
+	// c.JSON(http.StatusOK, gin.H{"message": "Login successful", "user": user})
+
+	// Return success response with user details and token
+	c.JSON(http.StatusOK, gin.H{"message": "Login successful", "user": user, "token": token})
 }

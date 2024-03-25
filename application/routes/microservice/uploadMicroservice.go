@@ -34,11 +34,15 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
 		return
 	}
 
+	// Get the user ID from the context
+	// Convert userID from int to uint
+	userID := uint(c.GetInt("userID"))
+
 	// Convert MicroserviceDto to Microservice entity model
-	microservice := MapDtoToEntity(microserviceDto)
+	microservice := MapDtoToEntity(microserviceDto, userID)
 
 	// Attempt to save the microservice
-	if err := services.SaveMicroservice(microservice, dao); err != nil {
+	if err := services.SaveMicroservice(microservice, dao, userID); err != nil {
 		// Return error in a consistent format
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -55,7 +59,7 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
 }
 
 // MapDtoToEntity converts MicroserviceDto to Microservice entity model
-func MapDtoToEntity(dto MicroserviceDto) business.Microservice {
+func MapDtoToEntity(dto MicroserviceDto, userID uint) business.Microservice {
 	var inputs []business.Input
 
 	// Map InputDto slice to business.Input slice
