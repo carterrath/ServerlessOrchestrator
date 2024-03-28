@@ -68,7 +68,15 @@ function useMicroservices() {
         console.error('Error fetching microservices:', error);
       }
     };
+  
+    // Call getMicroservices immediately and then every 5 seconds
     getMicroservices();
+    const intervalId = setInterval(getMicroservices, 5000);
+  
+    // Clean up the interval on unmount
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   return {
