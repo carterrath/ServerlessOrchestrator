@@ -25,7 +25,7 @@ export function NavBar(props: IProps) {
                         Upload
                     </Link>
                 )}
-                <Link className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded" to="/GetStarted">
+                <Link className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded" to="/developer-login">
                     Login
                 </Link>
             </div>
