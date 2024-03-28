@@ -49,6 +49,13 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 		return fmt.Errorf("error running image: %w", err)
 	}
 
+	microservice.IsActive = true
+	// Update the microservice record in the database
+	err = dao.Update(*microservice)
+	if err != nil {
+		return fmt.Errorf("error updating microservice: %w", err)
+	}
+
 	// run image
 	return nil
 }
