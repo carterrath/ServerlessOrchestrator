@@ -5,7 +5,6 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/aws/aws-sdk-go/aws"
@@ -52,7 +51,6 @@ func Recovery(c *gin.Context, userDAO *dataaccess.UserDAO) {
 }
 
 func generateRandomCode(min, max int) int {
-	rand.Seed(time.Now().UnixNano())
 	return rand.Intn(max-min+1) + min
 }
 
