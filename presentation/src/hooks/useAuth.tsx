@@ -93,8 +93,17 @@ export function useAuth() {
   function clearStates() {
     setUserDetails(null);
     setIsAuthenticated(false);
+    if (clearStatesTimeout) {
+      window.clearTimeout(clearStatesTimeout);
+    }
     setClearStatesTimeout(null);
-    localStorage.removeItem('token');
+    localStorage.removeItem('token'); // This ensures the token is removed on logout
+  }
+
+  function logout() {
+    clearStates(); // Reuse clearStates to handle the cleanup
+    // Optionally, navigate the user to the login page or another page as appropriate
+    // navigate('/login'); Uncomment and adjust according to your routing setup
   }
 
   useEffect(() => {
@@ -103,7 +112,7 @@ export function useAuth() {
         window.clearTimeout(clearStatesTimeout);
       }
     };
-  }, []); 
+  }, [clearStatesTimeout]); 
 
-  return { userDetails, isAuthenticated, fetchUserDetails, login };
+  return { userDetails, isAuthenticated, fetchUserDetails, login, logout };
 }

@@ -41,9 +41,9 @@ export function NavBar(props: IProps) {
                     </div>
                 )}
                 {data.isAuthenticated && (
-                    <Link className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded" to="/logout">
+                    <button className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded" onClick={data.handleLogout}>
                         Logout
-                    </Link>
+                    </button>
                 )}
             </div>
         </div>
@@ -55,6 +55,11 @@ function useNavBar(){
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userType, setUserType] = useState<string | undefined>('');
     const [userName, setUserName] = useState<string | undefined>('');
+
+    function handleLogout(){
+        auth.logout();
+        setIsAuthenticated(false);
+    }
 
     useEffect(() => {
         //console.log(auth.isAuthenticated);
@@ -69,5 +74,5 @@ function useNavBar(){
         }
     }, [auth.isAuthenticated]);
 
-    return { isAuthenticated, userType, userName };
+    return { isAuthenticated, userType, userName, handleLogout };
 }
