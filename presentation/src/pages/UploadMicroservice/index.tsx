@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UploadSvg from "../../assets/svg/upload.svg";
 import PlusSvg from "../../assets/svg/plus.svg";
 import MinusSvg from "../../assets/svg/minus.svg";
 import { IMicroserviceUpload } from '../../types/microservice-upload';
+import { useAuth } from '../../hooks/useAuth';
 
 export function UploadMicroservice() {
   const data = useUploadMicroservice();
@@ -132,6 +133,8 @@ function useUploadMicroservice(){
     Inputs: [],
   });
 
+  const auth = useAuth();
+
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setMicroservice(prevMicroservice => ({
@@ -198,6 +201,17 @@ function useUploadMicroservice(){
         setResultMessage({ msg:error.message, type: 'error'});
     });
   };
+
+  useEffect(() => {
+    auth.fetchUserDetails();
+  }, []);
+    
+  useEffect(() => {
+    setMicroservice(prevMicroservice => ({
+      ...prevMicroservice,
+      UserID: auth.userDetails?.ID || 0
+    }));
+  }, [auth.userDetails]);
 
   return {
     handleSubmit,

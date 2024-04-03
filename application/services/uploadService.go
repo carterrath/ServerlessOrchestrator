@@ -16,7 +16,7 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
-func SaveMicroservice(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO, userID uint) error {
+func SaveMicroservice(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO) error {
 
 	// Validate Github URL
 	if err := ValidateGithubURL(microservice.RepoLink); err != nil {
@@ -72,14 +72,6 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	// 	return fmt.Errorf("error: %v", err)
 	// }
 	microservice.ImageID = res
-
-	// return error to api if build fails
-	// get user ID from userDAO
-	// GetUserID()
-	microservice.UserID = 1
-
-	// Assign the current user's ID to the microservice
-	// microservice.UserID = userID
 
 	// add image ID and user ID to microservice struct
 

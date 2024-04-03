@@ -1,6 +1,7 @@
 package microservice
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/services"
@@ -34,32 +35,24 @@ func UploadMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
 		return
 	}
 
-	// Get the user ID from the context
-	// Convert userID from int to uint
-	userID := uint(c.GetInt("userID"))
-
 	// Convert MicroserviceDto to Microservice entity model
-	microservice := MapDtoToEntity(microserviceDto, userID)
+	microservice := MapDtoToEntity(microserviceDto)
+
+	fmt.Println(microservice.UserID) //testing purposes
 
 	// Attempt to save the microservice
-	if err := services.SaveMicroservice(microservice, dao, userID); err != nil {
+	if err := services.SaveMicroservice(microservice, dao); err != nil {
 		// Return error in a consistent format
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
-	// Insert microservice into the database
-	// if err := dao.Insert(microservice); err != nil {
-	//     c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert microservice into database"})
-	//     return
-	// }
 
 	// Return success message in a consistent format
 	c.JSON(http.StatusCreated, gin.H{"message": "Microservice created successfully"})
 }
 
 // MapDtoToEntity converts MicroserviceDto to Microservice entity model
-func MapDtoToEntity(dto MicroserviceDto, userID uint) business.Microservice {
+func MapDtoToEntity(dto MicroserviceDto) business.Microservice {
 	var inputs []business.Input
 
 	// Map InputDto slice to business.Input slice
