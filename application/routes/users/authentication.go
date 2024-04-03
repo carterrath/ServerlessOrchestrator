@@ -14,10 +14,14 @@ import (
 func GenerateJWT(user *business.User) (string, error) {
 	// Define the token claims
 	claims := jwt.MapClaims{
-		"id":       user.ID,
-		"username": user.Username,
-		// Add any other necessary claims here
-		"exp": time.Now().Add(time.Hour * 24).Unix(), // Token expiry time (e.g., 24 hours)
+		"id":        user.ID,
+		"createdAt": user.CreatedAt,
+		"updatedAt": user.UpdatedAt,
+		"deletedAt": user.DeletedAt,
+		"email":     user.Email,
+		"username":  user.Username,
+		"userType":  user.UserType,
+		"exp":       time.Now().Add(time.Hour).Unix(), // Token expiry time (e.g., 24 hours)
 	}
 
 	// Create the JWT token
@@ -25,6 +29,7 @@ func GenerateJWT(user *business.User) (string, error) {
 
 	// Get the secret key from the environment variable
 	secretKey := os.Getenv("JWT_SECRET_KEY")
+	fmt.Println("secret" + secretKey)
 	if secretKey == "" {
 		return "", fmt.Errorf("JWT_SECRET_KEY environment variable not set")
 	}

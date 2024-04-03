@@ -1,7 +1,7 @@
 export interface IUserData {
     ID: number;
     CreatedAt: Date;
-    updatedAt: Date | null;
+    UpdatedAt: Date | null;
     DeletedAt: Date | null;
     Email: string;
     Username: string;

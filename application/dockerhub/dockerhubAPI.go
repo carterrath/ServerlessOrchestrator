@@ -26,7 +26,7 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 	// }
 
 	// Build the Docker image
-	buildCmd := exec.Command("docker", "build", "-t", backendName, "-f", dockerfile, destinationPath)
+	buildCmd := exec.Command("docker", "build", "-t", dockerRepository+":"+backendName, "-f", dockerfile, destinationPath)
 	buildCmd.Stdout = os.Stdout
 	buildCmd.Stderr = os.Stderr
 	if err := buildCmd.Run(); err != nil {
@@ -34,12 +34,12 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 	}
 
 	// Tag the Docker image with the custom tag
-	tagCmd := exec.Command("docker", "tag", backendName, dockerRepository+":"+backendName)
-	tagCmd.Stdout = os.Stdout
-	tagCmd.Stderr = os.Stderr
-	if err := tagCmd.Run(); err != nil {
-		return "", fmt.Errorf("failed to tag Docker image: %v", err)
-	}
+	// tagCmd := exec.Command("docker", "tag", backendName, dockerRepository+":"+backendName)
+	// tagCmd.Stdout = os.Stdout
+	// tagCmd.Stderr = os.Stderr
+	// if err := tagCmd.Run(); err != nil {
+	// 	return "", fmt.Errorf("failed to tag Docker image: %v", err)
+	// }
 
 	// Push the built image to Dockerhub
 	pushCmd := exec.Command("docker", "push", dockerRepository+":"+backendName)
@@ -63,12 +63,12 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 	digest := strings.Trim(outputStr, "'\n")
 
 	// Remove the local image tagged with backendName
-	removeLocalCmd := exec.Command("docker", "rmi", backendName)
-	removeLocalCmd.Stdout = os.Stdout
-	removeLocalCmd.Stderr = os.Stderr
-	if err := removeLocalCmd.Run(); err != nil {
-		return "", fmt.Errorf("failed to remove local image %s: %v", backendName, err)
-	}
+	// removeLocalCmd := exec.Command("docker", "rmi", backendName)
+	// removeLocalCmd.Stdout = os.Stdout
+	// removeLocalCmd.Stderr = os.Stderr
+	// if err := removeLocalCmd.Run(); err != nil {
+	// 	return "", fmt.Errorf("failed to remove local image %s: %v", backendName, err)
+	// }
 
 	// Remove the image tagged with the Docker repository name and backendName
 	removeRepoCmd := exec.Command("docker", "rmi", dockerRepository+":"+backendName)
@@ -99,7 +99,7 @@ func RunImageFromDockerHub(imageDigest string, port int) error {
 
 	// Run the image locally on the specified port
 	// Note: Docker run command expects the port mapping in the format "hostPort:containerPort"
-	runCmd := exec.Command("docker", "run", "-d", "-p", fmt.Sprintf("%d:3000", port), imageDigest)
+	runCmd := exec.Command("docker", "run", "-d", "-p", "3000:3000", imageDigest)
 	runOutput, runErr := runCmd.CombinedOutput()
 	if runErr != nil {
 		return fmt.Errorf("error running docker image: %s, output: %s", runErr, string(runOutput))

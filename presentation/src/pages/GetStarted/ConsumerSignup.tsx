@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { IUserData } from '../../types/user-data';
+import { IUser } from '../../types/user-upload';
 
 const ConsumerSignup = () => {
   const data = useConSignup();
@@ -80,7 +80,7 @@ const ConsumerSignup = () => {
 function useConSignup() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<IUserData>({
+  const [formData, setFormData] = useState<IUser>({
     Email: '',
     Username: '',
     Password: '',
