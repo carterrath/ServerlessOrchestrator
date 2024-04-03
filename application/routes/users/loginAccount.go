@@ -48,7 +48,7 @@ func Login(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	// Generate a JWT token
 	token, err := GenerateJWT(user)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token:" + err.Error()})
 		return
 	}
 
@@ -56,5 +56,5 @@ func Login(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	// c.JSON(http.StatusOK, gin.H{"message": "Login successful", "user": user})
 
 	// Return success response with user details and token
-	c.JSON(http.StatusOK, gin.H{"message": "Login successful", "user": user, "token": token})
+	c.JSON(http.StatusOK, gin.H{"message": "Login successful", "token": token})
 }
