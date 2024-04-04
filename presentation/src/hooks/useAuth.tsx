@@ -1,5 +1,6 @@
 import { IUserData } from "../types/user-data";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 type UserType = 'Developer' | 'Consumer';
 
@@ -8,9 +9,13 @@ export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [clearStatesTimeout, setClearStatesTimeout] = useState<number | null>(null);
 
+  const navigate = useNavigate();
+
   async function login(username: string, password: string, userType: UserType) {
-    try{
-      const response = await fetch('http://localhost:8080/login/developer', {
+    try {
+      if (userType === 'Developer') {
+
+        const response = await fetch('http://localhost:8080/login/developer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -23,16 +28,42 @@ export function useAuth() {
         });
         if (response.ok) {
           const responseData = await response.json();
-          
+
           storeTokenInLocalStorage(responseData.token);
           console.log(responseData);
           fetchUserDetails();
           return "success";
-          // navigate('/Home'); // Navigate on success
+          
         } else {
           const errorData = await response.json();
           return errorData.error;
         }
+      }
+      if (userType === 'Consumer') {
+        const response = await fetch('http://localhost:8080/login/consumer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+            userType: userType,
+          }),
+        });
+        if (response.ok) {
+          const responseData = await response.json();
+
+          storeTokenInLocalStorage(responseData.token);
+          console.log(responseData);
+          fetchUserDetails();
+          return "success";
+          
+        } else {
+          const errorData = await response.json();
+          return errorData.error;
+        }
+      }
     } catch (error) {
       return error;
     }
@@ -44,19 +75,19 @@ export function useAuth() {
 
   async function fetchUserDetails() {
     const token = localStorage.getItem('token');
-    if(!token) {
+    if (!token) {
       // maybe redirect to login page
       console.log("No token found");
       return;
     }
-    try{
+    try {
       const response = await fetch('http://localhost:8080/getuserdetails', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Add the token to the Authorization header
-      },
-      credentials: 'include'
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+        },
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -65,7 +96,7 @@ export function useAuth() {
       console.log("response ok");
       // If response is OK, parse JSON data
       const data = await response.json();
-    
+
       setUserDetails({
         ID: data.id,
         CreatedAt: new Date(data.createdAt),
@@ -83,11 +114,11 @@ export function useAuth() {
       }, 60 * 60 * 1000); // 1 hour in milliseconds
 
       setClearStatesTimeout(timeout);
-  } catch (error) {
-    console.log(error);
-    clearStates();
-  }
-      
+    } catch (error) {
+      console.log(error);
+      clearStates();
+    }
+
   }
 
   function clearStates() {
@@ -102,6 +133,7 @@ export function useAuth() {
 
   function logout() {
     clearStates(); // Reuse clearStates to handle the cleanup
+    navigate('/Home');
     // Optionally, navigate the user to the login page or another page as appropriate
     // navigate('/login'); Uncomment and adjust according to your routing setup
   }
@@ -112,7 +144,7 @@ export function useAuth() {
         window.clearTimeout(clearStatesTimeout);
       }
     };
-  }, [clearStatesTimeout]); 
+  }, [clearStatesTimeout]);
 
   return { userDetails, isAuthenticated, fetchUserDetails, login, logout };
 }
