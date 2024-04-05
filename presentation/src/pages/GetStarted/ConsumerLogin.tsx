@@ -58,6 +58,14 @@ const ConsumerLogin = () => {
                   Developer Login
                 </span>
               </p>
+              <p className="text-sm mt-1">
+                Forgot Password?
+                <span 
+                  className="text-pink-500 hover:underline cursor-pointer" 
+                  onClick={data.handleRecoveryClick}>
+                  Reset
+                </span>
+              </p>
             </div>
           </form>
         </div>
@@ -125,12 +133,17 @@ function useConLogin() {
     navigate('/developer-login');
   };
 
+  const handleRecoveryClick = () => {
+    navigate('/recover-password');
+  };
+
   return{
     formData,
     handleChange,
     handleSubmit,
     handleSignupClick,
     handleDevLoginClick,
+    handleRecoveryClick,
   }
 }
 
