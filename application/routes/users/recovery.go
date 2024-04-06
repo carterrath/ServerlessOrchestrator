@@ -8,6 +8,7 @@ import (
 
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ses"
 	"github.com/gin-gonic/gin"
@@ -58,10 +59,14 @@ func sendRecoveryEmail(email string, code int) error {
 	// Get AWS region from environment variable
 	region := os.Getenv("AWS_REGION")
 
-	// Create a new AWS session
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(region),
-	})
+	// Specify your SES credentials
+	awsConfig := &aws.Config{
+		Credentials: credentials.NewStaticCredentials("AWS_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY", ""),
+		Region:      aws.String(region),
+	}
+
+	// Create a new AWS session with SES credentials
+	sess, err := session.NewSession(awsConfig)
 	if err != nil {
 		return err
 	}
