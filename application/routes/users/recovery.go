@@ -2,6 +2,7 @@ package users
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -42,6 +43,8 @@ func Recovery(c *gin.Context, userDAO *dataaccess.UserDAO) {
 	// Send recovery email with the code
 	err = sendRecoveryEmail(req.Email, code)
 	if err != nil {
+		// Log the error
+		log.Printf("Failed to send recovery email: %v", err)
 		// If there's an error sending the email, return an error response
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send recovery email"})
 		return
@@ -61,7 +64,7 @@ func sendRecoveryEmail(email string, code int) error {
 
 	// Specify your SES credentials
 	awsConfig := &aws.Config{
-		Credentials: credentials.NewStaticCredentials("AWS_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY", ""),
+		Credentials: credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY"), os.Getenv("AWS_SECRET_ACCESS_KEY"), ""),
 		Region:      aws.String(region),
 	}
 
@@ -76,6 +79,7 @@ func sendRecoveryEmail(email string, code int) error {
 
 	// Get sender email address from environment variable
 	sender := os.Getenv("SENDER_EMAIL")
+	log.Println("Sender email address:", sender)
 
 	// Specify the recipient email address
 	recipient := email
