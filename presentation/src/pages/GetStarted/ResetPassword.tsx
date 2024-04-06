@@ -12,12 +12,24 @@ const ResetPassword = () => {
           <form onSubmit={data.handleSubmit}>
             <div className="flex flex-col items-center mx-auto">
               <div className="font-extrabold m-4 text-2xl">
-                Enter a New Password!
+                Re-enter your email and a New Password!
               </div>
             </div>
             <div className="flex flex-col items-center mx-auto w-full">
               <div className="my-2 text-sm">
-                Password
+                Email
+              </div>
+              <input
+                type="email"
+                name="Email"
+                value={data.formData.Email}
+                onChange={data.handleChange}
+                className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
+              />
+            </div>
+            <div className="flex flex-col items-center mx-auto w-full">
+              <div className="my-2 text-sm">
+                New Password
               </div>
               <input
                 type="password"
@@ -42,6 +54,7 @@ function useReset() {
     const navigate = useNavigate();
 
   const [formData, setFormData] = useState<IResetData>({
+    Email: '',
     Password: '',
   });
 
@@ -73,8 +86,12 @@ function useReset() {
         console.log(responseData);
         navigate('/Home'); // Navigate on success
       } else {
-        console.error('Failed to reset password.');
+        // Log the response status
+        console.error("Failed to reset password. Status:", response.status);
         // Handle HTTP error responses (e.g., 400, 401, 500)
+        // Optionally, log the response body
+        const errorData = await response.json();
+        console.error("Error response:", errorData);
       }
     } catch (error) {
       console.error(error);

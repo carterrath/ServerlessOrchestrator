@@ -13,7 +13,7 @@ const RecoverAccount = () => {
             <>
               <div className="flex flex-col items-center mx-auto">
                 <div className="font-extrabold m-4 text-2xl">
-                  Enter Email to Reset Password!
+                  Enter Email to get reset code!
                 </div>
               </div>
               <div className="flex flex-col items-center mx-auto w-full">

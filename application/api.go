@@ -103,6 +103,6 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao 
 		users.Recovery(c, userdao)
 	})
 	router.POST("/reset", func(c *gin.Context) {
-		users.Recovery(c, userdao)
+		users.ResetPassword(c, userdao)
 	})
 }
