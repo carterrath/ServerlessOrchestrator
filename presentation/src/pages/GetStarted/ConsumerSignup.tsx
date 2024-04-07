@@ -79,6 +79,7 @@ const ConsumerSignup = () => {
 
 function useConSignup() {
   const navigate = useNavigate();
+  
 
   const [formData, setFormData] = useState<IUser>({
     Email: '',
@@ -113,7 +114,7 @@ function useConSignup() {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        navigate('/Microservices'); // Navigate on success
+        navigate('/consumer-login');
       } else {
         console.error('Failed to signup');
         // Handle HTTP error responses (e.g., 400, 401, 500)

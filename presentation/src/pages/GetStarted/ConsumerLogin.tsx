@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { IUser } from '../../types/user-upload';
+import { useAuth } from "../../hooks/useAuth";
 
 const ConsumerLogin = () => {
   const data = useConLogin();
@@ -68,6 +69,8 @@ const ConsumerLogin = () => {
 function useConLogin() {
   const navigate = useNavigate();
 
+  const auth = useAuth();
+
   const [formData, setFormData] = useState<IUser>({
     Email: '',
     Username: '',
@@ -89,31 +92,11 @@ function useConLogin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8080/login/consumer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // body: JSON.stringify(formData),
-        body: JSON.stringify({
-          username: formData.Username,
-          password: formData.Password,
-          userType: 'Consumer'
-        }),
-      });
-      
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
-        navigate('/Microservices'); // Navigate on success
-      } else {
-          const errorData = await response.json();
-          console.error(errorData.error);
-        // Handle HTTP error responses (e.g., 400, 401, 500)
-      }
-    } catch (error) {
-      console.error(error);
+    const result = await auth.login(formData.Username, formData.Password, "Consumer");
+    if(result === "success") {
+      navigate('/Home');
+    } else {
+      alert(result);
     }
   };
 
