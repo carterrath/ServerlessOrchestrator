@@ -12,7 +12,7 @@ export function NavBar(props: IProps) {
             <div className="flex gap-6 items-center">
                 <Link className="flex items-center hover:scale-105 transition duration-150 ease-in-out text-xl" to="/Home">
                     <img className="w-8 h-8" src="/src/assets/images/logo.png" alt="Logo" />
-                    &nbsp;<b className="text-white">Serverless Orcastrator</b>
+                    &nbsp;<b className="text-white">Serverless Orchestrator</b>
                 </Link>
 
             </div>
