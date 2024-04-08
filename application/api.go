@@ -96,4 +96,13 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao 
 	router.GET("/getuserdetails", func(c *gin.Context) {
 		users.GetUserDetails(c, userdao)
 	})
+	router.POST("/recovery", func(c *gin.Context) {
+		users.Recovery(c, userdao)
+	})
+	router.POST("/verify-code", func(c *gin.Context) {
+		users.Recovery(c, userdao)
+	})
+	router.POST("/reset", func(c *gin.Context) {
+		users.ResetPassword(c, userdao)
+	})
 }

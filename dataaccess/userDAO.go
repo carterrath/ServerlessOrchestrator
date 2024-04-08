@@ -78,5 +78,21 @@ func (dao *UserDAO) GetBatchByID(ids []uint) ([]business.User, error) {
 	return users, nil
 }
 
+// ResetPassword updates the password for a user in the database.
+func (userdao *UserDAO) UpdatePassword(email, newPassword string) error {
+	var user business.User
+	if err := userdao.db.Where("Email = ?", email).First(&user).Error; err != nil {
+		return err
+	}
+
+	// Update the user's password
+	user.Password = newPassword
+	if err := userdao.db.Save(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
 var _ business.DAO_IF = (*UserDAO)(nil)

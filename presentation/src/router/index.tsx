@@ -10,6 +10,8 @@ import DeveloperSignup from '../pages/GetStarted/DeveloperSignup';
 import ConsumerSignup from '../pages/GetStarted/ConsumerSignup';
 import DeveloperLogin from '../pages/GetStarted/DeveloperLogin';
 import ConsumerLogin from '../pages/GetStarted/ConsumerLogin';
+import ResetPassword from '../pages/GetStarted/ResetPassword';
+import Recover from '../pages/GetStarted/Recover';
 export function Router() {
   return (
     <BrowserRouter>
@@ -25,6 +27,8 @@ export function Router() {
             <Route path="/consumer-signup" element={<ConsumerSignup />} />
             <Route path="/developer-login" element={<DeveloperLogin />} />
             <Route path="/consumer-login" element={<ConsumerLogin />} />
+            <Route path="/recover-account" element={<Recover />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
       </div>
     </BrowserRouter>
