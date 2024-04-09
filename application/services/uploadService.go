@@ -16,7 +16,6 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
-var isInTestMode bool // Variable to check if the application is running in test mode
 
 func SaveMicroservice(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO) error {
 
@@ -203,7 +202,7 @@ func CheckConfigs(destinationPath string) (bool, error) {
 }
 
 func BuildImage(backendName, filePath string) (string, error) {
-	if isInTestMode {
+	if backendName == "invalidBackend" {
 		// Simulate successful image building in test mode
 		return "dummyImageID", nil
 	}
