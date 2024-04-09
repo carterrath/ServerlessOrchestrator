@@ -121,15 +121,6 @@ func TestMicroservicesDAO_Insert(t *testing.T) {
 	lastID = newMicro.ID // Update lastID to the ID of the newly inserted record
 }
 
-func TestMicroservicesDAO_Delete(t *testing.T) {
-	// Test
-	err := daoMicroservice.Delete(lastID)
-
-	// Assert
-	assert.NoError(t, err)
-	// Add more assertions based on your requirements
-}
-
 func TestMicroservicesDAO_GetByID(t *testing.T) {
 	// Test
 	micro, err := daoMicroservice.GetByID(lastID)
@@ -165,6 +156,15 @@ func TestMicroservicesDAO_Update(t *testing.T) {
 		ImageID:       "imageid",
 	}
 	err := daoMicroservice.Update(micro)
+
+	// Assert
+	assert.NoError(t, err)
+	// Add more assertions based on your requirements
+}
+
+func TestMicroservicesDAO_Delete(t *testing.T) {
+	// Test
+	err := daoMicroservice.Delete(lastID)
 
 	// Assert
 	assert.NoError(t, err)
