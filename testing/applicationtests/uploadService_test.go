@@ -1,4 +1,4 @@
-package servicestests
+package applicationtests
 
 import (
 	"testing"
