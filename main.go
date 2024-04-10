@@ -13,11 +13,17 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/go-git/go-git/v5"
+	"github.com/joho/godotenv"
 )
 
 // Define a struct to hold dependencies
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("failed to load .env file: %v", err)
+	}
+
 	db := dataaccess.CreateDatabase()
 	dao := dataaccess.NewMicroservicesDAO(db)
 	userdao := dataaccess.NewUserDAO(db)

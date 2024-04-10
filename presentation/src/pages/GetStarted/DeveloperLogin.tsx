@@ -100,7 +100,7 @@ function useDevLogin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await auth.login(formData.Username, formData.Password, "Developer");
+    const result = await auth?.login(formData.Username, formData.Password, "Developer");
     if(result === "success") {
       navigate('/Home');
     } else {

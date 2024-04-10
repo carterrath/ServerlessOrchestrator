@@ -203,15 +203,15 @@ function useUploadMicroservice(){
   };
 
   useEffect(() => {
-    auth.fetchUserDetails();
+    auth?.fetchUserDetails();
   }, []);
     
   useEffect(() => {
     setMicroservice(prevMicroservice => ({
       ...prevMicroservice,
-      UserID: auth.userDetails?.ID || 0
+      UserID: auth?.userDetails?.ID || 0
     }));
-  }, [auth.userDetails]);
+  }, [auth?.userDetails]);
 
   return {
     handleSubmit,

@@ -11,7 +11,7 @@ export function Microservices() {
     const data = useMicroservices();
     return (
         <div>
-            {//microserviceNames == null ? <p>Loading</p>:
+            {
             <>
             <div className="flex justify-between mx-8 items-center">
               <div className="font-semibold my-4 text-2xl">
