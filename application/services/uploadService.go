@@ -39,7 +39,7 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	filePath := "application/microholder/"
 	if err := CloneRepo(microservice.RepoLink, microservice.BackendName, filePath); err != nil {
 		// If cloning fails, delete the cloned directory
-		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		_ = DeleteDirectory(filePath + microservice.BackendName)
 		return fmt.Errorf("failed to upload microservice: make sure the repository is public: %w", err)
 	}
 
@@ -47,13 +47,13 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	containsFiles, err := CheckConfigs(filePath + microservice.BackendName)
 	if err != nil {
 		// If error occurs, delete the cloned directory
-		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		_ = DeleteDirectory(filePath + microservice.BackendName)
 		return fmt.Errorf("error when checking repo: %w", err)
 	}
 
 	if !containsFiles {
 		// If necessary files are not found, delete the cloned directory
-		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		_ = DeleteDirectory(filePath + microservice.BackendName)
 		return fmt.Errorf("the directory does not contain Dockerfile")
 	}
 
@@ -61,28 +61,20 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 	res, err := BuildImage(microservice.BackendName, filePath)
 	if err != nil {
 		// If building image fails, delete the cloned directory
-		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		_ = DeleteDirectory(filePath + microservice.BackendName)
 		return fmt.Errorf("failed to build image: %w", err)
 	}
 	println("Image ID: ", res)
-	// digest, err := GetImageDigest(res)
-	// if err != nil {
-	// 	// If getting image digest fails, delete the cloned directory
-	// 	_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
-	// 	return fmt.Errorf("error: %v", err)
-	// }
-	microservice.ImageID = res
 
-	// add image ID and user ID to microservice struct
+	microservice.ImageID = res
 
 	// call Insert to MicroservicesDAO
 	err = Insert(microservice, microserviceDao)
 	if err != nil {
 		// If inserting microservice fails, delete the cloned directory
-		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		_ = DeleteDirectory(filePath + microservice.BackendName)
 		return fmt.Errorf("failed to insert microservice: %w", err)
 	}
-	// return error to api if insert fails
 
 	// delete cloned repo from the directory
 
@@ -217,12 +209,6 @@ func GetImageDigest(input string) (string, error) {
 
 	// Return only the image digest part
 	return parts[1], nil
-}
-
-func GetUserID() (uint, error) {
-	// call GetUserID to UserDAO
-	// return user ID
-	return 0, nil
 }
 
 func Insert(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO) error {

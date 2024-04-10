@@ -35,6 +35,7 @@ import (
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/microservice"
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/runmicroservice"
+	"github.com/GoKubes/ServerlessOrchestrator/application/routes/stopmicroservice"
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/users"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 	"github.com/gin-gonic/gin"
@@ -92,6 +93,9 @@ func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao 
 	})
 	router.POST("/runmicroservice", func(c *gin.Context) {
 		runmicroservice.RunMicroservice(c, dao)
+	})
+	router.POST("/stopmicroservice", func(c *gin.Context) {
+		stopmicroservice.StopMicroservice(c, dao)
 	})
 	router.GET("/getuserdetails", func(c *gin.Context) {
 		users.GetUserDetails(c, userdao)

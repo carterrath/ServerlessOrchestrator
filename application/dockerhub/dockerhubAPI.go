@@ -82,13 +82,12 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 
 }
 
-func RunImageFromDockerHub(imageDigest string, port int) error {
-	// Correctly specifying the repository name and the digest
-	// repositoryName := "carterrath/serverless-orchestrator"
-	// imageNameWithDigest := fmt.Sprintf("%s@%s", repositoryName, imageDigest)
+func RunImageFromDockerHub(imageDigest, backendName string, port int) error {
+	repositoryName := "carterrath/serverless-orchestrator"
 
-	// Pull the image from Docker Hub using the digest
-	pullCmd := exec.Command("docker", "pull", imageDigest)
+	image := repositoryName + ":" + backendName
+
+	pullCmd := exec.Command("docker", "pull", image)
 	output, err := pullCmd.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("error pulling docker image: %s, output: %s", err, string(output))
@@ -99,14 +98,45 @@ func RunImageFromDockerHub(imageDigest string, port int) error {
 
 	// Run the image locally on the specified port
 	// Note: Docker run command expects the port mapping in the format "hostPort:containerPort"
-	runCmd := exec.Command("docker", "run", "-d", "-p", "3000:3000", imageDigest)
+	runCmd := exec.Command("docker", "run", "-d", "-p", fmt.Sprintf("%d:3000", port), "--name", backendName, image)
 	runOutput, runErr := runCmd.CombinedOutput()
 	if runErr != nil {
 		return fmt.Errorf("error running docker image: %s, output: %s", runErr, string(runOutput))
 	}
 
 	// Informing the user that the image is running
-	fmt.Println("Successfully running image:", imageDigest, "on port", port)
+	fmt.Println("Successfully running image:", image, "on port", port)
+
+	return nil
+}
+
+func StopImage(backendName string) error {
+	repositoryName := "carterrath/serverless-orchestrator"
+
+	image := repositoryName + ":" + backendName
+	// Stop the running container
+	stopCmd := exec.Command("docker", "stop", backendName)
+	stopOutput, stopErr := stopCmd.CombinedOutput()
+	if stopErr != nil {
+		return fmt.Errorf("error stopping container: %s, output: %s", stopErr, string(stopOutput))
+	}
+	fmt.Println("Successfully stopped container:", backendName)
+
+	// Remove the stopped container
+	removeCmd := exec.Command("docker", "rm", backendName)
+	removeOutput, removeErr := removeCmd.CombinedOutput()
+	if removeErr != nil {
+		return fmt.Errorf("error removing container: %s, output: %s", removeErr, string(removeOutput))
+	}
+	fmt.Println("Successfully removed container:", backendName)
+
+	// Remove the image
+	removeImageCmd := exec.Command("docker", "rmi", image)
+	removeImageOutput, removeImageErr := removeImageCmd.CombinedOutput()
+	if removeImageErr != nil {
+		return fmt.Errorf("error removing image: %s, output: %s", removeImageErr, string(removeImageOutput))
+	}
+	fmt.Println("Successfully removed image:", image)
 
 	return nil
 }

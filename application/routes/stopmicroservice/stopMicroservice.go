@@ -1,4 +1,4 @@
-package runmicroservice
+package stopmicroservice
 
 import (
 	"net/http"
@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Define a variable to hold the input string
 type BackendNameDto struct {
 	Value string `json:"value"`
 }
 
-func RunMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
+func StopMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
+
 	var input BackendNameDto
 
 	// Bind the incoming JSON to the variable
@@ -23,8 +23,8 @@ func RunMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
 		return
 	}
 
-	// Call executeMicroservice with the string
-	err := services.ExecuteService(input.Value, dao)
+	// Call stopMicroservice with the string
+	err := services.StopService(input.Value, dao)
 	if err != nil {
 		// Handle error
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -33,4 +33,5 @@ func RunMicroservice(c *gin.Context, dao *dataaccess.MicroservicesDAO) {
 
 	// Respond with the result
 	c.JSON(http.StatusOK, gin.H{"result": "Microservice executed successfully"})
+
 }

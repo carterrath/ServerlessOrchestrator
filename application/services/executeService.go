@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO) error {
+func ExecuteService(backendNameStr string, dao *dataaccess.MicroservicesDAO) error {
 	// get microservice object from database
 	microservice, err := FetchMicroservice(backendNameStr, dao)
 	if err != nil {
@@ -23,6 +23,7 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 	filePath := "application/microholder/"
 	dateStr, err := GetLatestPushDate(microservice.RepoLink, microservice.BackendName, filePath)
 	if err != nil {
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("error getting latest push date: %w", err)
 	}
 	println("Date: ", dateStr)
@@ -30,8 +31,12 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 	//get date of latest commit to github, if the date is more recent than the updated date on the microservice then delete amd rebuild image.
 	date, err := ParseDate(dateStr)
 	if err != nil {
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("error parsing date: %w", err)
 	}
+
+	fmt.Println("Date: ", date)
+	fmt.Println("UpdatedAt: ", microservice.UpdatedAt)
 
 	// Compare the parsed date with the updatedAt field of the microservice
 	if date.After(microservice.UpdatedAt) {
@@ -39,13 +44,15 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 		// Rebuild the image
 		digest, err := BuildImage(microservice.BackendName, filePath)
 		if err != nil {
+			_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 			return fmt.Errorf("error building image: %w", err)
 		}
 		microservice.ImageID = digest
 	}
 	//if the date is not more recent, then run the image
-	err = RunImage(microservice.ImageID, 3000)
+	err = RunImage(microservice.ImageID, microservice.BackendName, 3000)
 	if err != nil {
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("error running image: %w", err)
 	}
 
@@ -53,7 +60,14 @@ func ExecuteMicroservice(backendNameStr string, dao *dataaccess.MicroservicesDAO
 	// Update the microservice record in the database
 	err = dao.Update(*microservice)
 	if err != nil {
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("error updating microservice: %w", err)
+	}
+
+	err = DeleteDirectory(filePath + microservice.BackendName)
+	if err != nil {
+		// If deleting cloned directory fails, log the error
+		fmt.Printf("failed to delete directory: %v\n", err)
 	}
 
 	// run image
@@ -92,9 +106,9 @@ func ParseDate(dateStr string) (time.Time, error) {
 	return date, nil
 }
 
-func RunImage(imageID string, port int) error {
+func RunImage(imageID, backendName string, port int) error {
 	// Run the image locally on the specified port
-	err := dockerhub.RunImageFromDockerHub(imageID, port)
+	err := dockerhub.RunImageFromDockerHub(imageID, backendName, port)
 	if err != nil {
 		return err
 	}

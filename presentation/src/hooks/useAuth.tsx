@@ -1,10 +1,24 @@
 import { IUserData } from "../types/user-data";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 type UserType = 'Developer' | 'Consumer';
 
-export function useAuth() {
+interface IAuthContext {
+  userDetails: IUserData | null;
+  isAuthenticated: boolean;
+  fetchUserDetails: () => void;
+  login: (username: string, password: string, userType: UserType) => Promise<string>;
+  logout: () => void;
+}
+
+export const AuthContext = createContext<IAuthContext | null>(null);
+
+interface IAuthProviderProps {
+  children: React.ReactNode;
+}
+
+export function AuthProvider(props: IAuthProviderProps) {
   const [userDetails, setUserDetails] = useState<IUserData | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [clearStatesTimeout, setClearStatesTimeout] = useState<number | null>(null);
@@ -146,5 +160,34 @@ export function useAuth() {
     };
   }, [clearStatesTimeout]);
 
-  return { userDetails, isAuthenticated, fetchUserDetails, login, logout };
+  //return { userDetails, isAuthenticated, fetchUserDetails, login, logout };
+
+  const contextValue = useMemo(
+    () => ({
+
+      userDetails,
+      isAuthenticated,
+      fetchUserDetails,
+      login,
+      logout,
+    
+  }), 
+  [
+    userDetails,
+    isAuthenticated,
+    fetchUserDetails,
+    login,
+    logout,
+  ]
+);
+
+  return (
+    <AuthContext.Provider value={contextValue}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  return useContext<IAuthContext | null>(AuthContext);
 }
