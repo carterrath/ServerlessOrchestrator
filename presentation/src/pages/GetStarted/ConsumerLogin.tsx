@@ -100,7 +100,7 @@ function useConLogin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await auth.login(formData.Username, formData.Password, "Consumer");
+    const result = await auth?.login(formData.Username, formData.Password, "Consumer");
     if(result === "success") {
       navigate('/Home');
     } else {

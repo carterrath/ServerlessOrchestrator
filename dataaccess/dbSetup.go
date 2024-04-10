@@ -26,14 +26,14 @@ func CreateDatabase() *gorm.DB {
 
 	// Fetch environment variables
 	Username := os.Getenv("POSTGRES_USERNAME")
-	//Password := os.Getenv("POSTGRES_PASSWORD")
-	Password := ""
+	Password := os.Getenv("POSTGRES_PASSWORD")
 	Host := os.Getenv("POSTGRES_HOST")
 	Port := os.Getenv("POSTGRES_PORT")
 	DB := os.Getenv("POSTGRES_DB")
 
 	// Construct the data source name (DSN) for connecting to PostgreSQL
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", Host, Username, Password, DB, Port)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=UTC",
+		Host, Username, Password, DB, Port)
 
 	// Open a GORM database connection
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

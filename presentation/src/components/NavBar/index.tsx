@@ -51,28 +51,16 @@ export function NavBar(props: IProps) {
 }
 
 function useNavBar(){
-    const auth = useAuth()
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [userType, setUserType] = useState<string | undefined>('');
-    const [userName, setUserName] = useState<string | undefined>('');
+    const auth = useAuth();
+
+    const isAuthenticated = auth?.isAuthenticated;
+    const userType = auth?.userDetails?.UserType;
+    const userName = auth?.userDetails?.Username;
 
     function handleLogout(){
-        auth.logout();
-        setIsAuthenticated(false);
+        auth?.logout();
     }
 
-    useEffect(() => {
-        //console.log(auth.isAuthenticated);
-        auth.fetchUserDetails();
-    }, []);
-
-    useEffect(() => {
-        if(auth.isAuthenticated){
-            setIsAuthenticated(true);
-            setUserType(auth.userDetails?.UserType);
-            setUserName(auth.userDetails?.Username);
-        }
-    }, [auth.isAuthenticated]);
 
     return { isAuthenticated, userType, userName, handleLogout };
 }
