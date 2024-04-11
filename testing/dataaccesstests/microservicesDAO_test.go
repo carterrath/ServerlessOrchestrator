@@ -3,12 +3,14 @@ package dataaccesstests
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -23,6 +25,13 @@ var (
 )
 
 func TestMicroservicesDAOSuite(t *testing.T) {
+	// Load environment variables from .env file
+	err := godotenv.Load("../../.env")
+	fmt.Println("passed")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// Setup
 	dbMicroservice = setupMicroTestDatabase()
 	daoMicroservice = dataaccess.NewMicroservicesDAO(dbMicroservice)
