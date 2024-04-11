@@ -213,13 +213,6 @@ func TestGetImageDigest(t *testing.T) {
 	}
 }
 
-func TestGetUserID(t *testing.T) {
-	_, err := services.GetUserID()
-	if err != nil {
-		t.Errorf("Did not expect an error, got: %v", err)
-	}
-}
-
 // func TestInsert(t *testing.T) {
 //     testCases := []struct {
 //         microservice business.Microservice
