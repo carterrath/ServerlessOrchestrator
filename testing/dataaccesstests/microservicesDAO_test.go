@@ -3,12 +3,14 @@ package dataaccesstests
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -23,6 +25,13 @@ var (
 )
 
 func TestMicroservicesDAOSuite(t *testing.T) {
+	// Load environment variables from .env file
+	err := godotenv.Load("../../.env")
+	fmt.Println("passed")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// Setup
 	dbMicroservice = setupMicroTestDatabase()
 	daoMicroservice = dataaccess.NewMicroservicesDAO(dbMicroservice)
@@ -55,8 +64,7 @@ func teardownMicroTestDatabase(db *gorm.DB) {
 func setupMicroTestDatabase() *gorm.DB {
 	// Fetch environment variables
 	Username := os.Getenv("POSTGRES_USERNAME")
-	//Password := os.Getenv("POSTGRES_PASSWORD")
-	Password := ""
+	Password := os.Getenv("POSTGRES_PASSWORD")
 	Host := os.Getenv("POSTGRES_HOST")
 	Port := os.Getenv("POSTGRES_PORT")
 	DB := os.Getenv("POSTGRES_TEST_DB")
@@ -121,15 +129,6 @@ func TestMicroservicesDAO_Insert(t *testing.T) {
 	lastID = newMicro.ID // Update lastID to the ID of the newly inserted record
 }
 
-func TestMicroservicesDAO_Delete(t *testing.T) {
-	// Test
-	err := daoMicroservice.Delete(lastID)
-
-	// Assert
-	assert.NoError(t, err)
-	// Add more assertions based on your requirements
-}
-
 func TestMicroservicesDAO_GetByID(t *testing.T) {
 	// Test
 	micro, err := daoMicroservice.GetByID(lastID)
@@ -165,6 +164,15 @@ func TestMicroservicesDAO_Update(t *testing.T) {
 		ImageID:       "imageid",
 	}
 	err := daoMicroservice.Update(micro)
+
+	// Assert
+	assert.NoError(t, err)
+	// Add more assertions based on your requirements
+}
+
+func TestMicroservicesDAO_Delete(t *testing.T) {
+	// Test
+	err := daoMicroservice.Delete(lastID)
 
 	// Assert
 	assert.NoError(t, err)

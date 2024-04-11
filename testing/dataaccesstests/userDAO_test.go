@@ -3,12 +3,14 @@ package dataaccesstests
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -21,6 +23,13 @@ var (
 )
 
 func TestUserDAOSuite(t *testing.T) {
+	// Load environment variables from .env file
+	err := godotenv.Load("../../.env")
+	fmt.Println("passed")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// Setup
 	dbUser = setupTestDatabase()
 	daoUser = dataaccess.NewUserDAO(dbUser)
@@ -56,8 +65,7 @@ func teardownTestDatabase(db *gorm.DB) {
 func setupTestDatabase() *gorm.DB {
 	// Fetch environment variables
 	Username := os.Getenv("POSTGRES_USERNAME")
-	//Password := os.Getenv("POSTGRES_PASSWORD")
-	Password := ""
+	Password := os.Getenv("POSTGRES_PASSWORD")
 	Host := os.Getenv("POSTGRES_HOST")
 	Port := os.Getenv("POSTGRES_PORT")
 	DB := os.Getenv("POSTGRES_TEST_DB")
