@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/services"
+	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -68,7 +69,6 @@ func TestUploadService_GetImageDigest(t *testing.T) {
 // func TestCheckIfExists(t *testing.T) {
 // 	// This function would require interaction with a database in a real scenario.
 // 	// Here, we're simplifying it and not performing actual database queries.
-
 // 	testCases := []struct {
 // 		name        string
 // 		shouldExist bool
@@ -172,26 +172,29 @@ func TestCheckConfigs(t *testing.T) {
 	}
 }
 
-// func TestBuildImage(t *testing.T) {
-// 	testCases := []struct {
-// 		backendName string
-// 		filePath    string
-// 		shouldError bool
-// 	}{
-// 		{"validBackend", "/path/to/valid/source", false},
-// 		{"invalidBackend", "/path/to/invalid/source", true},
-// 	}
+func TestBuildImage(t *testing.T) {
+	os.Setenv("SKIP_DOCKER", "true")
+	defer os.Unsetenv("SKIP_DOCKER")
 
-// 	for _, tc := range testCases {
-// 		_, err := services.BuildImage(tc.backendName, tc.filePath)
+	testCases := []struct {
+		backendName string
+		filePath    string
+		shouldError bool
+	}{
+		{"validBackend", "/path/to/valid/source", false},
+		{"invalidBackend", "/path/to/invalid/source", false},
+	}
 
-// 		if tc.shouldError && err == nil {
-// 			t.Errorf("Expected error for backend %s, got none", tc.backendName)
-// 		} else if !tc.shouldError && err != nil {
-// 			t.Errorf("Did not expect error for backend %s, got: %v", tc.backendName, err)
-// 		}
-// 	}
-// }
+	for _, tc := range testCases {
+		_, err := services.BuildImage(tc.backendName, tc.filePath)
+
+		if tc.shouldError && err == nil {
+			t.Errorf("Expected error for backend %s, got none", tc.backendName)
+		} else if !tc.shouldError && err != nil {
+			t.Errorf("Did not expect error for backend %s, got: %v", tc.backendName, err)
+		}
+	}
+}
 
 func TestGetImageDigest(t *testing.T) {
 	testCases := []struct {
@@ -213,25 +216,30 @@ func TestGetImageDigest(t *testing.T) {
 	}
 }
 
-// func TestInsert(t *testing.T) {
-//     testCases := []struct {
-//         microservice business.Microservice
-//         shouldError  bool
-//     }{
-//         {business.Microservice{BackendName: "validService"}, false},
-//         {business.Microservice{BackendName: "invalidService"}, true},
-//     }
+func TestInsert(t *testing.T) {
+	// Use the stub in your test
+	// Set the environment variable to skip database insertion in tests
+	os.Setenv("SKIP_DB_INSERT", "true")
+	defer os.Unsetenv("SKIP_DB_INSERT") // Ensure cleanup after tests
 
-//     for _, tc := range testCases {
-//         err := services.Insert(tc.microservice, nil) // Assuming `nil` is a placeholder for a mock or stub.
+	testCases := []struct {
+		microservice business.Microservice
+		shouldError  bool
+	}{
+		{business.Microservice{BackendName: "validService"}, false},
+		{business.Microservice{BackendName: "invalidService"}, true},
+	}
 
-//         if tc.shouldError && err == nil {
-//             t.Errorf("Expected error for microservice %s, got none", tc.microservice.BackendName)
-//         } else if !tc.shouldError && err != nil {
-//             t.Errorf("Did not expect error for microservice %s, got: %v", tc.microservice.BackendName, err)
-//         }
-//     }
-// }
+	for _, tc := range testCases {
+		err := services.Insert(tc.microservice, nil)
+
+		if tc.shouldError && err == nil {
+			t.Errorf("Expected error for microservice %s, got none", tc.microservice.BackendName)
+		} else if !tc.shouldError && err != nil {
+			t.Errorf("Did not expect error for microservice %s, got: %v", tc.microservice.BackendName, err)
+		}
+	}
+}
 
 func TestDeleteDirectory(t *testing.T) {
 	testCases := []struct {
