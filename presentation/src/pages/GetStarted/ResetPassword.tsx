@@ -1,57 +1,49 @@
 // this will prompt user to enter a new password
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { IResetData } from '../../types/password-reset';
 
 const ResetPassword = () => {
   const data = useReset();
-  
+
   return (
     <div className="container mx-auto p-4 lg:w-2/5">
       <div className="p-2 bg-gray-200 my-12 mx-auto rounded-xl drop-shadow-lg">
-          <form onSubmit={data.handleSubmit}>
-            <div className="flex flex-col items-center mx-auto">
-              <div className="font-extrabold m-4 text-2xl">
-                Re-enter your email and a New Password!
-              </div>
-            </div>
-            <div className="flex flex-col items-center mx-auto w-full">
-              <div className="my-2 text-sm">
-                Email
-              </div>
-              <input
-                type="email"
-                name="Email"
-                value={data.formData.Email}
-                onChange={data.handleChange}
-                className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
-              />
-            </div>
-            <div className="flex flex-col items-center mx-auto w-full">
-              <div className="my-2 text-sm">
-                New Password
-              </div>
-              <input
-                type="password"
-                name="Password"
-                value={data.formData.Password}
-                onChange={data.handleChange}
-                className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
-              />
-            </div>
-            <div className="flex flex-col items-center mx-auto">
-              <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
-                Reset
-              </button>
-            </div>
-          </form>
-        </div>
+        <form onSubmit={data.handleSubmit}>
+          <div className="flex flex-col items-center mx-auto">
+            <div className="font-extrabold m-4 text-2xl">Re-enter your email and a New Password!</div>
+          </div>
+          <div className="flex flex-col items-center mx-auto w-full">
+            <div className="my-2 text-sm">Email</div>
+            <input
+              type="email"
+              name="Email"
+              value={data.formData.Email}
+              onChange={data.handleChange}
+              className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
+            />
+          </div>
+          <div className="flex flex-col items-center mx-auto w-full">
+            <div className="my-2 text-sm">New Password</div>
+            <input
+              type="password"
+              name="Password"
+              value={data.formData.Password}
+              onChange={data.handleChange}
+              className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
+            />
+          </div>
+          <div className="flex flex-col items-center mx-auto">
+            <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">Reset</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
 
 function useReset() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<IResetData>({
     Email: '',
@@ -80,30 +72,29 @@ function useReset() {
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
         navigate('/Home'); // Navigate on success
       } else {
         // Log the response status
-        console.error("Failed to reset password. Status:", response.status);
+        console.error('Failed to reset password. Status:', response.status);
         // Handle HTTP error responses (e.g., 400, 401, 500)
         // Optionally, log the response body
         const errorData = await response.json();
-        console.error("Error response:", errorData);
+        console.error('Error response:', errorData);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-
-  return{
+  return {
     formData,
     handleChange,
     handleSubmit,
-  }
+  };
 }
 
 export default ResetPassword;

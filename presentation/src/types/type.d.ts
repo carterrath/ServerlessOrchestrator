@@ -1,1 +1,1 @@
-export type Type = "string" | "number" | "boolean";
+export type Type = 'string' | 'number' | 'boolean';

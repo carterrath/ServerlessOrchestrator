@@ -1,7 +1,9 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "start": "node index.js",
+    "start": "concurrently --kill-others \"npm run start-frontend\" \"npm run start-backend\"",
+    "start-frontend": "cd presentation && npm run dev",
+    "start-backend": "go run main.go",
     "format": "npx prettier --write ."
   },
   "husky": {
@@ -14,6 +16,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.29.0",
+    "concurrently": "^8.2.2",
     "tailwindcss": "^3.4.1"
   }
 }

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       animation: {
@@ -13,15 +13,15 @@ export default {
         },
       },
       colors: {
-        'darkPink': "#d04466",
-        'amaranthPink': '#f194b4',
-        'caribbeanCurrent': '#006c67',
-        'lightTeal': '#41bba6',
-        'midnightGreen': '#003844',
-        'selectiveYellow': '#ffb100',
-        'dutchWhite': '#ffebc6',
-      }
+        darkPink: '#d04466',
+        amaranthPink: '#f194b4',
+        caribbeanCurrent: '#006c67',
+        lightTeal: '#41bba6',
+        midnightGreen: '#003844',
+        selectiveYellow: '#ffb100',
+        dutchWhite: '#ffebc6',
+      },
     },
   },
   plugins: [],
-}
+};
