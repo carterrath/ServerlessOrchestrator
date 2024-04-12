@@ -1,8 +1,8 @@
-import { Type } from "./type";
+import { Type } from './type';
 
 export interface IInput {
-    MicroserviceID: string;
-    Id: number;
-    Name: string;
-    DataType: Type;
+  MicroserviceID: string;
+  Id: number;
+  Name: string;
+  DataType: Type;
 }

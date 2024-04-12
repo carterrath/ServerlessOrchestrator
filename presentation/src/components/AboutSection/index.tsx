@@ -6,7 +6,10 @@ import { Fade } from 'react-awesome-reveal';
 export function AboutSection() {
   return (
     <Fade>
-      <div id='about' className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+      <div
+        id="about"
+        className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0"
+      >
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <svg
             className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
@@ -38,13 +41,14 @@ export function AboutSection() {
             <div className="lg:pr-4">
               <div className="lg:max-w-lg">
                 <p className="text-base font-semibold leading-7 text-selectiveYellow">Microservices</p>
-                <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Flexible, robust systems</h1>
+                <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                  Flexible, robust systems
+                </h1>
                 <p className="mt-6 text-xl leading-8 text-gray-700">
-                  Microservices are a way of breaking up large applications into smaller,
-                  more manageable pieces. Each piece is designed to be a self-contained
-                  unit of functionality, which can be developed, tested, and deployed independently.
-                  This makes it easier to understand, develop, and maintain complex systems,
-                  and can also help to improve scalability and resilience.
+                  Microservices are a way of breaking up large applications into smaller, more manageable pieces. Each
+                  piece is designed to be a self-contained unit of functionality, which can be developed, tested, and
+                  deployed independently. This makes it easier to understand, develop, and maintain complex systems, and
+                  can also help to improve scalability and resilience.
                 </p>
               </div>
             </div>
@@ -66,50 +70,48 @@ export function AboutSection() {
             <div className="lg:pr-4">
               <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
                 <p>
-                  The shift from monolithic architectures to microservices represents a significant
-                  evolution in software development. Monoliths are characterized by their single,
-                  unified codebase, which can simplify development and deployment in the early
-                  stages but becomes increasingly cumbersome as applications grow.
-                  Microservices, on the other hand, offer greater flexibility and
-                  scalability by decomposing applications into smaller, independently deployable services.
+                  The shift from monolithic architectures to microservices represents a significant evolution in
+                  software development. Monoliths are characterized by their single, unified codebase, which can
+                  simplify development and deployment in the early stages but becomes increasingly cumbersome as
+                  applications grow. Microservices, on the other hand, offer greater flexibility and scalability by
+                  decomposing applications into smaller, independently deployable services.
                 </p>
                 <ul role="list" className="mt-8 space-y-8 text-gray-600">
                   <li className="flex gap-x-3">
                     <img src={scaleIcon} className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-gray-900">Scalability.</strong> Automatically scales with demand, 
-                      ensuring that applications can handle varying loads without manual intervention.
+                      <strong className="font-semibold text-gray-900">Scalability.</strong> Automatically scales with
+                      demand, ensuring that applications can handle varying loads without manual intervention.
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <img src={updateIcon} className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-gray-900">Rapid Deployment and Updates.</strong> Allows for quicker 
-                      updates and deployments, enabling a faster response to market changes or customer needs.
+                      <strong className="font-semibold text-gray-900">Rapid Deployment and Updates.</strong> Allows for
+                      quicker updates and deployments, enabling a faster response to market changes or customer needs.
                     </span>
                   </li>
                   <li className="flex gap-x-3">
                     <img src={shieldIcon} className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                     <span>
-                      <strong className="font-semibold text-gray-900">Resilience and Isolation.</strong> Failures in one service 
-                      do not directly impact others, enhancing the overall stability of the application.
+                      <strong className="font-semibold text-gray-900">Resilience and Isolation.</strong> Failures in one
+                      service do not directly impact others, enhancing the overall stability of the application.
                     </span>
                   </li>
                 </ul>
                 <p className="mt-8">
-                Serverless microservices offer a compelling model for developing modern, cloud-native applications. 
-                By leveraging serverless computing, organizations can build applications that are more scalable, 
-                resilient, and cost-effective. However, the adoption of this architecture requires careful 
-                consideration of its challenges, particularly around service granularity, performance optimization, 
-                and comprehensive monitoring. With the right approach and tools, serverless microservices can 
-                significantly enhance an organization's ability to deliver innovative and responsive applications.
+                  Serverless microservices offer a compelling model for developing modern, cloud-native applications. By
+                  leveraging serverless computing, organizations can build applications that are more scalable,
+                  resilient, and cost-effective. However, the adoption of this architecture requires careful
+                  consideration of its challenges, particularly around service granularity, performance optimization,
+                  and comprehensive monitoring. With the right approach and tools, serverless microservices can
+                  significantly enhance an organization's ability to deliver innovative and responsive applications.
                 </p>
-              
               </div>
             </div>
           </div>
         </div>
       </div>
     </Fade>
-  )
+  );
 }

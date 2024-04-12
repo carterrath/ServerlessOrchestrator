@@ -1,20 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { IRecoveryData } from '../../types/recovery-data';
 
 const RecoverAccount = () => {
   const data = useRecovery();
-  
+
   return (
     <div className="container mx-auto p-4 lg:w-2/5">
       <div className="p-2 bg-gray-200 my-12 mx-auto rounded-xl drop-shadow-lg">
         <form onSubmit={data.handleSubmit}>
-          {data.step === "email" && (
+          {data.step === 'email' && (
             <>
               <div className="flex flex-col items-center mx-auto">
-                <div className="font-extrabold m-4 text-2xl">
-                  Enter Email to get reset code!
-                </div>
+                <div className="font-extrabold m-4 text-2xl">Enter Email to get reset code!</div>
               </div>
               <div className="flex flex-col items-center mx-auto w-full">
                 <div className="my-2 text-sm">Email</div>
@@ -28,7 +26,7 @@ const RecoverAccount = () => {
               </div>
             </>
           )}
-          {data.step === "code" && (
+          {data.step === 'code' && (
             <>
               <div className="flex flex-col items-center mx-auto w-full">
                 <div className="my-2 text-sm">Verification Code</div>
@@ -42,14 +40,10 @@ const RecoverAccount = () => {
               </div>
             </>
           )}
-          {data.errorMessage && (
-            <div className="text-red-600 text-sm text-center my-4">
-              {data.errorMessage}
-            </div>
-          )}
+          {data.errorMessage && <div className="text-red-600 text-sm text-center my-4">{data.errorMessage}</div>}
           <div className="flex flex-col items-center mx-auto">
             <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
-              {data.step === "email" ? "Send Reset Code" : "Verify Code"}
+              {data.step === 'email' ? 'Send Reset Code' : 'Verify Code'}
             </button>
           </div>
         </form>
@@ -59,13 +53,13 @@ const RecoverAccount = () => {
 };
 
 function useRecovery() {
-    const [formData, setFormData] = useState<IRecoveryData>({
-    Email: "",
-    Code: "",
+  const [formData, setFormData] = useState<IRecoveryData>({
+    Email: '',
+    Code: '',
   });
 
-  const [step, setStep] = useState<"email" | "code">("email");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [step, setStep] = useState<'email' | 'code'>('email');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -83,21 +77,21 @@ function useRecovery() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      let url = "";
+      let url = '';
       let body = {};
 
-      if (step === "email") {
-        url = "http://localhost:8080/recovery";
+      if (step === 'email') {
+        url = 'http://localhost:8080/recovery';
         body = { email: formData.Email };
-      } else if (step === "code") {
-        url = "http://localhost:8080/verify-code";
+      } else if (step === 'code') {
+        url = 'http://localhost:8080/verify-code';
         body = { email: formData.Email, code: formData.Code };
       }
 
       const response = await fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
       });
@@ -105,10 +99,10 @@ function useRecovery() {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        if (step === "email") {
-          setStep("code");
-        } else if (step === "code") {
-          navigate("/reset-password");
+        if (step === 'email') {
+          setStep('code');
+        } else if (step === 'code') {
+          navigate('/reset-password');
         }
       } else {
         const errorData = await response.json();
@@ -117,17 +111,17 @@ function useRecovery() {
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to recover account");
+      setErrorMessage('Failed to recover account');
     }
   };
 
-  return{
+  return {
     step,
     formData,
     handleChange,
     handleSubmit,
     errorMessage,
-  }
+  };
 }
 
 export default RecoverAccount;

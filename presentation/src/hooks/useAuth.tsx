@@ -1,6 +1,6 @@
-import { IUserData } from "../types/user-data";
-import { useState, useEffect, createContext, useMemo, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { IUserData } from '../types/user-data';
+import { useState, useEffect, createContext, useMemo, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type UserType = 'Developer' | 'Consumer';
 
@@ -28,7 +28,6 @@ export function AuthProvider(props: IAuthProviderProps) {
   async function login(username: string, password: string, userType: UserType) {
     try {
       if (userType === 'Developer') {
-
         const response = await fetch('http://localhost:8080/login/developer', {
           method: 'POST',
           headers: {
@@ -46,8 +45,7 @@ export function AuthProvider(props: IAuthProviderProps) {
           storeTokenInLocalStorage(responseData.token);
           console.log(responseData);
           fetchUserDetails();
-          return "success";
-          
+          return 'success';
         } else {
           const errorData = await response.json();
           return errorData.error;
@@ -71,8 +69,7 @@ export function AuthProvider(props: IAuthProviderProps) {
           storeTokenInLocalStorage(responseData.token);
           console.log(responseData);
           fetchUserDetails();
-          return "success";
-          
+          return 'success';
         } else {
           const errorData = await response.json();
           return errorData.error;
@@ -91,7 +88,7 @@ export function AuthProvider(props: IAuthProviderProps) {
     const token = localStorage.getItem('token');
     if (!token) {
       // maybe redirect to login page
-      console.log("No token found");
+      console.log('No token found');
       return;
     }
     try {
@@ -99,15 +96,15 @@ export function AuthProvider(props: IAuthProviderProps) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Add the token to the Authorization header
+          Authorization: `Bearer ${token}`, // Add the token to the Authorization header
         },
-        credentials: 'include'
+        credentials: 'include',
       });
 
       if (!response.ok) {
         throw new Error('Failed to fetch user details');
       }
-      console.log("response ok");
+      console.log('response ok');
       // If response is OK, parse JSON data
       const data = await response.json();
 
@@ -123,16 +120,18 @@ export function AuthProvider(props: IAuthProviderProps) {
       setIsAuthenticated(true);
 
       // Start the timeout when the states are set
-      const timeout = window.setTimeout(() => {
-        clearStates();
-      }, 60 * 60 * 1000); // 1 hour in milliseconds
+      const timeout = window.setTimeout(
+        () => {
+          clearStates();
+        },
+        60 * 60 * 1000,
+      ); // 1 hour in milliseconds
 
       setClearStatesTimeout(timeout);
     } catch (error) {
       console.log(error);
       clearStates();
     }
-
   }
 
   function clearStates() {
@@ -164,28 +163,16 @@ export function AuthProvider(props: IAuthProviderProps) {
 
   const contextValue = useMemo(
     () => ({
-
       userDetails,
       isAuthenticated,
       fetchUserDetails,
       login,
       logout,
-    
-  }), 
-  [
-    userDetails,
-    isAuthenticated,
-    fetchUserDetails,
-    login,
-    logout,
-  ]
-);
-
-  return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
-    </AuthContext.Provider>
+    }),
+    [userDetails, isAuthenticated, fetchUserDetails, login, logout],
   );
+
+  return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

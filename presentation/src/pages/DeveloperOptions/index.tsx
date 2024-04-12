@@ -2,14 +2,14 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 //import DeveloperPage from './DeveloperPage';
 
 export default function DeveloperOptions() {
-    const data = useDeveloperOptions();
-    const navigate = useNavigate();
-    const handleUpload = () => {
-        navigate('/developer');
-    };
-    
-    return (
-      <div className="App">
+  const data = useDeveloperOptions();
+  const navigate = useNavigate();
+  const handleUpload = () => {
+    navigate('/developer');
+  };
+
+  return (
+    <div className="App">
       <Routes>
         <Route
           path="/"
@@ -19,15 +19,11 @@ export default function DeveloperOptions() {
               <h1>Serverless Orchestrator</h1>
               <div className="login-container">
                 <div className="login developer-login">
-                  <button onClick={handleUpload}>
-                    Upload Microservice
-                  </button>
+                  <button onClick={handleUpload}>Upload Microservice</button>
                 </div>
                 <div className="login user-login">
                   <div className="dropdown">
-                    <button onClick={data.handleBrowseMicroservices}>
-                      Browse Microservices
-                    </button>
+                    <button onClick={data.handleBrowseMicroservices}>Browse Microservices</button>
                   </div>
                 </div>
               </div>
@@ -36,17 +32,15 @@ export default function DeveloperOptions() {
         />
       </Routes>
     </div>
-        );
-    }
-    
-   export function useDeveloperOptions() {
+  );
+}
 
-    function handleBrowseMicroservices() {
-        window.location.href = '/Microservices';
-    }
+export function useDeveloperOptions() {
+  function handleBrowseMicroservices() {
+    window.location.href = '/Microservices';
+  }
 
-    return {
-      handleBrowseMicroservices
-    }
-   }
-    
+  return {
+    handleBrowseMicroservices,
+  };
+}
