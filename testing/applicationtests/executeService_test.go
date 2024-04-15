@@ -1,9 +1,11 @@
 package applicationtests
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/services"
@@ -17,9 +19,10 @@ import (
 var (
 	dbMicroservice  *gorm.DB
 	daoMicroservice *dataaccess.MicroservicesDAO
+	backendname     string
 )
 
-func testExecuteServiceSuite(t *testing.T) {
+func TestExecuteServiceSuite(t *testing.T) {
 	// Load environment variables from .env file
 	err := godotenv.Load("../../.env")
 	fmt.Println("passed")
@@ -30,6 +33,13 @@ func testExecuteServiceSuite(t *testing.T) {
 	// Setup
 	dbMicroservice = setupExecTestDatabase()
 	daoMicroservice = dataaccess.NewMicroservicesDAO(dbMicroservice)
+
+	lastID, err := getLastID(dbMicroservice)
+	if err != nil {
+		t.Fatalf("Failed to get last microservice ID: %v", err)
+	}
+
+	backendname = "testbackendname" + strconv.Itoa(int(lastID+1))
 
 	// Run tests
 	t.Run("TestExecuteService_ErrorConditions", TestExecuteService_ErrorConditions)
@@ -52,12 +62,12 @@ func TestExecuteService_ErrorConditions(t *testing.T) {
 		UserID:        1,
 		Inputs:        nil,
 		OutputLink:    "https://output.link",
-		BackendName:   "backendname",
+		BackendName:   backendname,
 		ImageID:       "imageid",
 	}
 
 	// Insert the microservice object into the database
-	err := daoMicroservice.Insert(&microservice)
+	err := daoMicroservice.Insert(microservice)
 	if err != nil {
 		t.Fatalf("Failed to insert microservice: %v", err)
 	}
@@ -74,7 +84,7 @@ func TestExecuteService_ErrorConditions(t *testing.T) {
 
 func teardownMicroTestDatabase(db *gorm.DB) {
 	// Clean up test data from the database
-	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testmicroserviceexec'")
+	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testbackendname%'")
 }
 
 func setupExecTestDatabase() *gorm.DB {
@@ -95,4 +105,16 @@ func setupExecTestDatabase() *gorm.DB {
 	}
 
 	return dbMicroExec
+}
+
+func getLastID(db *gorm.DB) (int, error) {
+	var user business.User
+	result := db.Order("id desc").First(&user)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return 0, nil
+		}
+		return 0, result.Error
+	}
+	return int(user.ID), nil
 }

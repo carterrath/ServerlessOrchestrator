@@ -9,6 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//var dockerhubCreateAndPushImage func(backendName, filePath string) (string, error)
+
 func TestUploadServiceSuite(t *testing.T) {
 
 	// Run tests
@@ -171,25 +173,18 @@ func TestCheckConfigs(t *testing.T) {
 	}
 }
 
-// func TestBuildImage(t *testing.T) {
-// 	testCases := []struct {
-// 		backendName string
-// 		filePath    string
-// 		shouldError bool
-// 	}{
-// 		{"validBackend", "/path/to/valid/source", false},
-// 		{"invalidBackend", "/path/to/invalid/source", false},
+// func TestBuildImageFailure(t *testing.T) {
+// 	// Mocking the behavior of dockerhub.CreateAndPushImage to return an error
+// 	expectedError := errors.New("error creating and pushing image")
+// 	dockerhubCreateAndPushImage = func(backendName, filePath string) (string, error) {
+// 		return "", expectedError
 // 	}
 
-// 	for _, tc := range testCases {
-// 		_, err := services.BuildImage(tc.backendName, tc.filePath)
-
-// 		if tc.shouldError && err == nil {
-// 			t.Errorf("Expected error for backend %s, got none", tc.backendName)
-// 		} else if !tc.shouldError && err != nil {
-// 			t.Errorf("Did not expect error for backend %s, got: %v", tc.backendName, err)
-// 		}
-// 	}
+// 	// Test the failure scenario
+// 	digest, err := services.BuildImage("testBackendName", "testFilePath")
+// 	assert.Error(t, err)
+// 	assert.Equal(t, expectedError, err)
+// 	assert.Empty(t, digest, "Digest should be empty when there's an error")
 // }
 
 func TestGetImageDigest(t *testing.T) {
