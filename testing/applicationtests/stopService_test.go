@@ -1,4 +1,4 @@
-package services
+package applicationtests
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func TestStopService(t *testing.T) {
+func TestStopServiceWithError(t *testing.T) {
 	// Load environment variables from .env file
 	err := godotenv.Load("../../.env")
 	fmt.Println("passed")
@@ -36,15 +36,24 @@ func TestStopService(t *testing.T) {
 		UserID:        1,
 		Inputs:        nil,
 		OutputLink:    "https://output.link",
-		BackendName:   "testName",
+		BackendName:   "test",
 		ImageID:       "imageid",
 	}
+
+	// Insert the microservice into the database
 	err = dao.Insert(microservice)
 	assert.Nil(t, err)
 
-	// Stop the service
+	// Simulate an error condition by manually deleting the microservice
+	err = dbMicroservice.Exec("DELETE FROM microservices WHERE backend_name = ?", "test").Error
+	assert.Nil(t, err) // Ensure the deletion was successful
+
+	// Attempt to stop the service
 	err = services.StopService("test", dao)
-	assert.Nil(t, err)
+	assert.Error(t, err, "StopService did not return an error when expected")
+
+	// Teardown: Clean up test data from the database
+	teardownTestDatabase(dbMicroservice)
 }
 
 func setupTestDB() *gorm.DB {
@@ -65,4 +74,9 @@ func setupTestDB() *gorm.DB {
 	}
 
 	return dbMicroservice
+}
+
+func teardownTestDatabase(db *gorm.DB) {
+	// Clean up test data from the database
+	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'test'")
 }
