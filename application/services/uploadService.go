@@ -16,7 +16,6 @@ import (
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
 )
 
-
 func SaveMicroservice(microservice business.Microservice, microserviceDao *dataaccess.MicroservicesDAO) error {
 
 	// Validate Github URL
@@ -194,10 +193,6 @@ func CheckConfigs(destinationPath string) (bool, error) {
 }
 
 func BuildImage(backendName, filePath string) (string, error) {
-	if backendName == "invalidBackend" {
-		// Simulate successful image building in test mode
-		return "dummyImageID", nil
-	}
 
 	digest, err := dockerhub.CreateAndPushImage(backendName, filePath)
 	if err != nil {

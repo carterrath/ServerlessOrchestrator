@@ -1,20 +1,89 @@
 package applicationtests
 
 import (
+	"errors"
+	"fmt"
+	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/services"
+	"github.com/GoKubes/ServerlessOrchestrator/business"
+	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
+var dao *dataaccess.MicroservicesDAO
+
 func TestUploadServiceSuite(t *testing.T) {
+	// Load environment variables from .env file
+	err := godotenv.Load("../../.env")
+	fmt.Println("passed")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// Setup the test database
+	dbMicroservice := setupUploadTestDB()
+	dao = dataaccess.NewMicroservicesDAO(dbMicroservice)
+
+	lastID, err := getLastMicroserviceID(dbMicroservice)
+	if err != nil {
+		t.Fatalf("Failed to get last microservice ID: %v", err)
+	}
+
+	backendname = "testuploadbackend" + strconv.Itoa(int(lastID+1))
 
 	// Run tests
 	t.Run("TestUploadService_ValidateGithubURL", TestUploadService_ValidateGithubURL)
 	t.Run("TestUploadService_GenerateBackendName", TestUploadService_GenerateBackendName)
 	t.Run("TestUploadService_GetImageDigest", TestUploadService_GetImageDigest)
+
+	// Teardown: Clean up test data from the database
+	teardownUploadTestDatabase(dbMicroservice)
+}
+
+func setupUploadTestDB() *gorm.DB {
+	// Fetch environment variables
+	Username := os.Getenv("POSTGRES_USERNAME")
+	Password := os.Getenv("POSTGRES_PASSWORD")
+	Host := os.Getenv("POSTGRES_HOST")
+	Port := os.Getenv("POSTGRES_PORT")
+	DB := os.Getenv("POSTGRES_TEST_DB")
+
+	// Construct the data source name (DSN) for connecting to PostgreSQL
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC", Host, Username, Password, DB, Port)
+
+	// Open a GORM database connection
+	dbMicroservice, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect to database")
+	}
+
+	return dbMicroservice
+}
+
+func teardownUploadTestDatabase(db *gorm.DB) {
+	// Clean up test data from the database
+	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testuploadbackend%'")
+}
+
+func getLastMicroserviceID(db *gorm.DB) (uint, error) {
+	var microservice business.Microservice
+	result := db.Order("id desc").First(&microservice)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		// No microservice found, return 0, nil
+		return 0, nil
+	}
+	if result.Error != nil {
+		return 0, result.Error
+	}
+	return microservice.ID, nil
 }
 
 func TestUploadService_ValidateGithubURL(t *testing.T) {
@@ -65,38 +134,14 @@ func TestUploadService_GetImageDigest(t *testing.T) {
 	assert.Equal(t, "sha256:6ff3b87fc7d866f8a2c0a37886d65317d6ca80b4f655e670769a2b8c5dc2ce16", digest)
 }
 
-// func TestCheckIfExists(t *testing.T) {
-// 	// This function would require interaction with a database in a real scenario.
-// 	// Here, we're simplifying it and not performing actual database queries.
+func TestCheckIfExists(t *testing.T) {
+	// Test if a microservice with a different name exists
+	exists, err := services.CheckIfExists("nonExistingService", dao)
 
-// 	testCases := []struct {
-// 		name        string
-// 		shouldExist bool
-// 		shouldError bool
-// 	}{
-// 		{"existingService", true, false},
-// 		{"nonExistingService", false, false},
-// 		// Assuming "errorService" triggers a database error
-// 		{"errorService", false, true},
-// 	}
-
-// 	for _, tc := range testCases {
-// 		// Since we can't actually interact with the database, we're simulating the expected behavior.
-// 		exists, err := services.CheckIfExists(tc.name, nil) // Passing nil as the DAO for simplification.
-
-// 		if tc.shouldExist && !exists {
-// 			t.Errorf("Expected %s to exist", tc.name)
-// 		} else if !tc.shouldExist && exists {
-// 			t.Errorf("Did not expect %s to exist", tc.name)
-// 		}
-
-// 		if tc.shouldError && err == nil {
-// 			t.Errorf("Expected an error for %s, got none", tc.name)
-// 		} else if !tc.shouldError && err != nil {
-// 			t.Errorf("Did not expect an error for %s, got: %v", tc.name, err)
-// 		}
-// 	}
-// }
+	// Assert that the microservice doesn't exist and no error is returned
+	assert.False(t, exists, "Expected microservice to not exist")
+	assert.Nil(t, err, "Expected no error")
+}
 
 func TestCloneRepo(t *testing.T) {
 	// Acknowledge: This test checks the function's handling of inputs
@@ -172,26 +217,16 @@ func TestCheckConfigs(t *testing.T) {
 	}
 }
 
-// func TestBuildImage(t *testing.T) {
-// 	testCases := []struct {
-// 		backendName string
-// 		filePath    string
-// 		shouldError bool
-// 	}{
-// 		{"validBackend", "/path/to/valid/source", false},
-// 		{"invalidBackend", "/path/to/invalid/source", true},
-// 	}
+func TestBuildImageFailure(t *testing.T) {
+	// Call the BuildImage function with a failing image creation and push
+	digest, err := services.BuildImage("backendName", "filePath")
 
-// 	for _, tc := range testCases {
-// 		_, err := services.BuildImage(tc.backendName, tc.filePath)
+	// Assert that the error is not nil
+	assert.Error(t, err, "BuildImage did not return an error for a failed image creation and push")
 
-// 		if tc.shouldError && err == nil {
-// 			t.Errorf("Expected error for backend %s, got none", tc.backendName)
-// 		} else if !tc.shouldError && err != nil {
-// 			t.Errorf("Did not expect error for backend %s, got: %v", tc.backendName, err)
-// 		}
-// 	}
-// }
+	// Assert that the digest is empty when an error occurs
+	assert.Empty(t, digest, "BuildImage returned a non-empty digest when an error occurred")
+}
 
 func TestGetImageDigest(t *testing.T) {
 	testCases := []struct {
@@ -213,25 +248,23 @@ func TestGetImageDigest(t *testing.T) {
 	}
 }
 
-// func TestInsert(t *testing.T) {
-//     testCases := []struct {
-//         microservice business.Microservice
-//         shouldError  bool
-//     }{
-//         {business.Microservice{BackendName: "validService"}, false},
-//         {business.Microservice{BackendName: "invalidService"}, true},
-//     }
+func TestInsert(t *testing.T) {
+	microInsert := business.Microservice{
+		FriendlyName:  "name",
+		RepoLink:      "https://github.com/example/repo",
+		StatusMessage: "active",
+		IsActive:      true,
+		UserID:        1,
+		Inputs:        nil,
+		OutputLink:    "https://output.link",
+		BackendName:   backendname,
+		ImageID:       "imageid",
+	}
+	err := services.Insert(microInsert, dao)
 
-//     for _, tc := range testCases {
-//         err := services.Insert(tc.microservice, nil) // Assuming `nil` is a placeholder for a mock or stub.
-
-//         if tc.shouldError && err == nil {
-//             t.Errorf("Expected error for microservice %s, got none", tc.microservice.BackendName)
-//         } else if !tc.shouldError && err != nil {
-//             t.Errorf("Did not expect error for microservice %s, got: %v", tc.microservice.BackendName, err)
-//         }
-//     }
-// }
+	// test microservices was inserted in database
+	assert.NoError(t, err)
+}
 
 func TestDeleteDirectory(t *testing.T) {
 	testCases := []struct {
