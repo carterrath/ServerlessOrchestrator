@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/services"
-	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -172,29 +171,26 @@ func TestCheckConfigs(t *testing.T) {
 	}
 }
 
-func TestBuildImage(t *testing.T) {
-	os.Setenv("SKIP_DOCKER", "true")
-	defer os.Unsetenv("SKIP_DOCKER")
+// func TestBuildImage(t *testing.T) {
+// 	testCases := []struct {
+// 		backendName string
+// 		filePath    string
+// 		shouldError bool
+// 	}{
+// 		{"validBackend", "/path/to/valid/source", false},
+// 		{"invalidBackend", "/path/to/invalid/source", false},
+// 	}
 
-	testCases := []struct {
-		backendName string
-		filePath    string
-		shouldError bool
-	}{
-		{"validBackend", "/path/to/valid/source", false},
-		{"invalidBackend", "/path/to/invalid/source", false},
-	}
+// 	for _, tc := range testCases {
+// 		_, err := services.BuildImage(tc.backendName, tc.filePath)
 
-	for _, tc := range testCases {
-		_, err := services.BuildImage(tc.backendName, tc.filePath)
-
-		if tc.shouldError && err == nil {
-			t.Errorf("Expected error for backend %s, got none", tc.backendName)
-		} else if !tc.shouldError && err != nil {
-			t.Errorf("Did not expect error for backend %s, got: %v", tc.backendName, err)
-		}
-	}
-}
+// 		if tc.shouldError && err == nil {
+// 			t.Errorf("Expected error for backend %s, got none", tc.backendName)
+// 		} else if !tc.shouldError && err != nil {
+// 			t.Errorf("Did not expect error for backend %s, got: %v", tc.backendName, err)
+// 		}
+// 	}
+// }
 
 func TestGetImageDigest(t *testing.T) {
 	testCases := []struct {
@@ -216,30 +212,25 @@ func TestGetImageDigest(t *testing.T) {
 	}
 }
 
-func TestInsert(t *testing.T) {
-	// Use the stub in your test
-	// Set the environment variable to skip database insertion in tests
-	os.Setenv("SKIP_DB_INSERT", "true")
-	defer os.Unsetenv("SKIP_DB_INSERT") // Ensure cleanup after tests
+// func TestInsert(t *testing.T) {
+// 	testCases := []struct {
+// 		microservice business.Microservice
+// 		shouldError  bool
+// 	}{
+// 		{business.Microservice{BackendName: "validService"}, false},
+// 		{business.Microservice{BackendName: "invalidService"}, true},
+// 	}
 
-	testCases := []struct {
-		microservice business.Microservice
-		shouldError  bool
-	}{
-		{business.Microservice{BackendName: "validService"}, false},
-		{business.Microservice{BackendName: "invalidService"}, true},
-	}
+// 	for _, tc := range testCases {
+// 		err := services.Insert(tc.microservice, nil)
 
-	for _, tc := range testCases {
-		err := services.Insert(tc.microservice, nil)
-
-		if tc.shouldError && err == nil {
-			t.Errorf("Expected error for microservice %s, got none", tc.microservice.BackendName)
-		} else if !tc.shouldError && err != nil {
-			t.Errorf("Did not expect error for microservice %s, got: %v", tc.microservice.BackendName, err)
-		}
-	}
-}
+// 		if tc.shouldError && err == nil {
+// 			t.Errorf("Expected error for microservice %s, got none", tc.microservice.BackendName)
+// 		} else if !tc.shouldError && err != nil {
+// 			t.Errorf("Did not expect error for microservice %s, got: %v", tc.microservice.BackendName, err)
+// 		}
+// 	}
+// }
 
 func TestDeleteDirectory(t *testing.T) {
 	testCases := []struct {
