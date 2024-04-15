@@ -1,4 +1,4 @@
-package dataaccesstests
+package applicationtests
 
 import (
 	"fmt"
