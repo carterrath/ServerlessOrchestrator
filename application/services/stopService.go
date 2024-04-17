@@ -21,6 +21,7 @@ func StopService(backendNameStr string, dao *dataaccess.MicroservicesDAO) error 
 	}
 
 	microservice.IsActive = false
+	microservice.OutputLink = ""
 	// Update the microservice record in the database
 	err = dao.Update(*microservice)
 	if err != nil {
