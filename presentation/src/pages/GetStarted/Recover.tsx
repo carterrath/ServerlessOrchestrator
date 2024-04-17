@@ -45,6 +45,11 @@ const RecoverAccount = () => {
             <button className="bg-gray-300 rounded-lg m-4 py-2 px-2 hover:shadow-md">
               {data.step === 'email' ? 'Send Reset Code' : 'Verify Code'}
             </button>
+            <p className="text-sm mt-1">
+              <span className="text-pink-500 hover:underline cursor-pointer" onClick={data.handleBackClick}>
+                Back to Login
+              </span>
+            </p>
           </div>
         </form>
       </div>
@@ -115,12 +120,17 @@ function useRecovery() {
     }
   };
 
+  const handleBackClick = () => {
+    navigate('/developer-login');
+  };
+
   return {
     step,
     formData,
     handleChange,
     handleSubmit,
     errorMessage,
+    handleBackClick,
   };
 }
 
