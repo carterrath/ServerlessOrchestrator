@@ -104,7 +104,7 @@ function useConLogin() {
   };
 
   const handleRecoveryClick = () => {
-    navigate('/recover-password');
+    navigate('/recover-account');
   };
 
   return {
