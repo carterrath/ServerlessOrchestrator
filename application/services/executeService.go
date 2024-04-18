@@ -57,6 +57,7 @@ func ExecuteService(backendNameStr string, dao *dataaccess.MicroservicesDAO) err
 	}
 
 	microservice.IsActive = true
+	microservice.OutputLink = "http://serverlessorchestrator.com/" + microservice.BackendName
 	// Update the microservice record in the database
 	err = dao.Update(*microservice)
 	if err != nil {

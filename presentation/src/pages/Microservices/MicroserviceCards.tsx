@@ -17,7 +17,7 @@ export function MicroserviceCards(props: IProps) {
       setSearchedItems(props.items);
     } else {
       // Otherwise, filter items based on search criteria
-      const filtered = props.items.filter(item => {
+      const filtered = props.items.filter((item) => {
         // You can modify this condition based on your search requirements
         return item.FriendlyName.toLowerCase().includes(props.search.toLowerCase());
       });
@@ -28,7 +28,10 @@ export function MicroserviceCards(props: IProps) {
   return (
     <div className="m-2">
       {searchedItems
-        .sort((a: IMicroserviceData, b: IMicroserviceData) => new Date(b.CreatedAt).getTime() - new Date(a.CreatedAt).getTime())
+        .sort(
+          (a: IMicroserviceData, b: IMicroserviceData) =>
+            new Date(b.CreatedAt).getTime() - new Date(a.CreatedAt).getTime(),
+        )
         .map((item: IMicroserviceData, index: number) => (
           <div className="mb-4 mx-4" key={index}>
             <MicroserviceCard item={item} />

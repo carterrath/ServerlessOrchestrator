@@ -18,7 +18,7 @@ export function Router() {
     <BrowserRouter>
       <AuthProvider>
         <NavBar isDeveloper={true} />
-        <div className="min-h-[calc(100svh-64px)] w-full absolute top-22">
+        <div className="min-h-[calc(100svh-80px)] w-full absolute top-22">
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route path="/UploadMicroservice" element={<UploadMicroservice />} />
