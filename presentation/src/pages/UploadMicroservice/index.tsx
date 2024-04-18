@@ -15,9 +15,9 @@ export function UploadMicroservice() {
         <div className="p-4 bg-gray-200 w-2/3 rounded-xl drop-shadow-lg">
           <form onSubmit={data.handleSubmit}>
             <div className="flex items-center justify-between mb-4">
-              <div className="w-8"/>
+              <div className="w-8" />
               <div className="flex">
-                <div className=''></div>
+                <div className=""></div>
                 <div className="font-extrabold text-2xl">Upload Microservice</div>
                 {data.resultMessage && (
                   <div
