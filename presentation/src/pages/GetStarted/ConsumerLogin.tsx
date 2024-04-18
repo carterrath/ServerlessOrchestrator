@@ -96,15 +96,15 @@ function useConLogin() {
   };
 
   const handleSignupClick = () => {
-    navigate('/consumer-signup');
+    navigate('/ConsumerSignup');
   };
 
   const handleDevLoginClick = () => {
-    navigate('/developer-login');
+    navigate('/DeveloperLogin');
   };
 
   const handleRecoveryClick = () => {
-    navigate('/recover-account');
+    navigate('/RecoverAccount');
   };
 
   return {

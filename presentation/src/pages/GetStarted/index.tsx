@@ -5,11 +5,11 @@ function MainChoice() {
   const navigate = useNavigate();
 
   const handleDeveloperSelect = () => {
-    navigate('/developer-signup');
+    navigate('/DeveloperSignup');
   };
 
   const handleConsumerSelect = () => {
-    navigate('/consumer-signup');
+    navigate('/ConsumerSignup');
   };
 
   return (

@@ -38,7 +38,7 @@ export function NavBar(props: IProps) {
         {!data.isAuthenticated && (
           <Link
             className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded"
-            to="/developer-login"
+            to="/DeveloperLogin"
           >
             Login
           </Link>

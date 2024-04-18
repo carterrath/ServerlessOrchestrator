@@ -107,7 +107,7 @@ function useRecovery() {
         if (step === 'email') {
           setStep('code');
         } else if (step === 'code') {
-          navigate('/reset-password');
+          navigate('/ResetPassword');
         }
       } else {
         const errorData = await response.json();
