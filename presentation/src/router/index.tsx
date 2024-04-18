@@ -17,7 +17,7 @@ export function Router() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <NavBar isDeveloper={true} />
+        <NavBar />
         <div className="min-h-[calc(100svh-80px)] w-full absolute top-22">
           <Routes>
             <Route path="/*" element={<Home />} />

@@ -5,6 +5,8 @@ import MinusSvg from '../../assets/svg/minus.svg';
 import { IMicroserviceUpload } from '../../types/microservice-upload';
 import { useAuth } from '../../hooks/useAuth';
 import { BackgroundGradient } from '../../components/BackgroundGradient';
+import { Loading } from '../../components/Loading';
+import { DialogueMessage } from '../../components/DialogueMessage';
 
 export function UploadMicroservice() {
   const data = useUploadMicroservice();
@@ -17,21 +19,18 @@ export function UploadMicroservice() {
             <div className="flex items-center justify-between mb-4">
               <div className="w-8" />
               <div className="flex">
-                <div className=""></div>
+                <div />
                 <div className="font-extrabold text-2xl">Upload Microservice</div>
-                {data.resultMessage && (
-                  <div
-                    className={`
-                    ${data.resultMessage.type === 'success' && 'text-green-600'} 
-                    ${data.resultMessage.type === 'error' && 'text-red-600'}
-                  `}
-                  >
-                    {data.resultMessage.msg}
-                  </div>
-                )}
               </div>
-              <button className="bg-gray-800 rounded-lg py-1 px-2 hover:shadow-md">
-                <img src={UploadSvg} alt="upload" className="w-8 h-8" />
+              <button
+                className={`bg-gray-800 rounded-lg py-1 px-2 hover:shadow-md ${data.isUploading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                disabled={data.isUploading}
+              >
+                {data.isUploading === false ? (
+                  <img src={UploadSvg} alt="upload" className="w-8 h-8" />
+                ) : (
+                  <Loading color="white" />
+                )}
               </button>
             </div>
 
@@ -45,6 +44,7 @@ export function UploadMicroservice() {
                 onChange={data.handleChange}
                 className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
                 required
+                disabled={data.isUploading}
               />
             </div>
             <div className="flex flex-col items-center mx-auto w-full">
@@ -55,8 +55,9 @@ export function UploadMicroservice() {
                 placeholder="https://github.com/janedoe/MyRepository.git"
                 value={data.microservice.RepoLink}
                 onChange={data.handleChange}
-                className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md mb-8"
+                className={`rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md mb-16 ${data.isUploading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 required
+                disabled={data.isUploading}
               />
             </div>
             {
@@ -77,7 +78,7 @@ export function UploadMicroservice() {
                     name={`Inputs[${index}].Name`}
                     value={input.Name}
                     onChange={data.handleInputChange(index)}
-                    className="rounded-lg p-2 border w-full border-gray-300 hover:shadow-md"
+                    className={`rounded-lg p-2 border w-full border-gray-300 hover:shadow-md ${data.isUploading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     required
                   />
                 </div>
@@ -117,6 +118,14 @@ export function UploadMicroservice() {
           </form>
         </div>
       </div>
+
+      <DialogueMessage
+        title={data.resultMessage?.type === 'success' ? 'Success' : 'Error'}
+        message={data.resultMessage?.msg ?? ''}
+        type={data.resultMessage?.type ?? 'error'}
+        show={data.resultMessage !== null}
+        onClose={() => data.setResultMessage(null)}
+      />
     </BackgroundGradient>
   );
 }
@@ -127,6 +136,7 @@ interface IResultMessage {
 }
 
 function useUploadMicroservice() {
+  const [isUploading, setIsUploading] = useState(false);
   const [resultMessage, setResultMessage] = useState<IResultMessage | null>(null);
   const [microservice, setMicroservice] = useState<IMicroserviceUpload>({
     FriendlyName: '',
@@ -174,9 +184,10 @@ function useUploadMicroservice() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log(microservice);
+    setResultMessage(null);
     // Convert the microservice object to JSON
     const microserviceJson = JSON.stringify(microservice);
-
+    setIsUploading(true);
     // Make a POST request to the endpoint
     fetch('http://localhost:8080/microservice', {
       method: 'POST',
@@ -201,6 +212,9 @@ function useUploadMicroservice() {
       .catch((error) => {
         console.log(error);
         setResultMessage({ msg: error.message, type: 'error' });
+      })
+      .finally(() => {
+        setIsUploading(false);
       });
   }
 
@@ -223,5 +237,7 @@ function useUploadMicroservice() {
     handleRemoveInput,
     microservice,
     resultMessage,
+    setResultMessage,
+    isUploading,
   };
 }

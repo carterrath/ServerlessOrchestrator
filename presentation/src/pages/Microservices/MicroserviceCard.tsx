@@ -4,8 +4,11 @@ import PlaySvg from '../../assets/svg/play.svg';
 import StopSvg from '../../assets/svg/stop.svg';
 import GithubBlackSvg from '../../assets/svg/github-black.svg';
 import OutputSvg from '../../assets/svg/output.svg';
+import { useState } from 'react';
+import { Loading } from '../../components/Loading';
 interface IProps {
   item: IMicroserviceData;
+  getMicroservices: () => void;
 }
 export function MicroserviceCard(props: IProps) {
   const data = useMicroserviceCard(props);
@@ -15,10 +18,15 @@ export function MicroserviceCard(props: IProps) {
         <div className="flex gap-3 justify-start items-center mb-2">
           <h2 className="text-2xl font-semibold">{props.item.FriendlyName}</h2>
           <button
-            className={`${props.item.IsActive === true ? 'bg-red-500' : 'bg-green-500'} rounded-lg py-1 px-2 hover:shadow-md`}
+            className={`${props.item.IsActive === true ? 'bg-red-500' : 'bg-green-500'} ${data.isLoading ? 'cursor-not-allowed' : 'cursor-pointer'} rounded-lg py-1 px-2 hover:shadow-md`}
+            disabled={data.isLoading}
             onClick={data.handlePlayClick}
           >
-            <img src={props.item.IsActive === true ? StopSvg : PlaySvg} alt="filter" className="w-4 h-4" />
+            {data.isLoading === false ? (
+              <img src={props.item.IsActive === true ? StopSvg : PlaySvg} alt="filter" className="w-4 h-4" />
+            ) : (
+              <Loading color="black" sm />
+            )}
           </button>
         </div>
         <span
@@ -67,12 +75,15 @@ export function MicroserviceCard(props: IProps) {
 }
 
 function useMicroserviceCard(props: IProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   function formatDate(dateString: string) {
     // Assuming the date string is in ISO 8601 format
     const date = new Date(dateString);
     return format(date, 'MMMM dd, yyyy HH:mm:ss');
   }
   function handlePlayClick() {
+    setIsLoading(true);
     if (props.item.IsActive === false) {
       fetch('http://localhost:8080/runmicroservice', {
         method: 'POST',
@@ -91,6 +102,10 @@ function useMicroserviceCard(props: IProps) {
         })
         .catch((error) => {
           console.error('Error:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          props.getMicroservices();
         });
     } else {
       fetch('http://localhost:8080/stopmicroservice', {
@@ -110,6 +125,10 @@ function useMicroserviceCard(props: IProps) {
         })
         .catch((error) => {
           console.error('Error:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          props.getMicroservices();
         });
     }
   }
@@ -117,5 +136,6 @@ function useMicroserviceCard(props: IProps) {
   return {
     handlePlayClick,
     formatDate,
+    isLoading,
   };
 }
