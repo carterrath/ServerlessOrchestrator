@@ -1,0 +1,26 @@
+# .golangci.yml
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - gocyclo
+    - gosec
+    - gofmt
+    - goimports
+  disable:
+    - golint
+
+issues:
+  exclude-rules:
+    - linters:
+        - govet
+      text: "composite literal uses unkeyed fields"
+  max-same-issues: 0
+  max-issues-per-linter: 0
