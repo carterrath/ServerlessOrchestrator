@@ -35,7 +35,7 @@ export function Microservices() {
             </div>
           </div>
           {data.microservices !== null && data.microservices.length > 0 && (
-            <MicroserviceCards items={data.microservices} search={data.search}/>
+            <MicroserviceCards items={data.microservices} search={data.search} />
           )}
         </>
       }
@@ -79,6 +79,6 @@ function useMicroservices() {
     microservices,
     handleUploadClick,
     search,
-    setSearch
+    setSearch,
   };
 }
