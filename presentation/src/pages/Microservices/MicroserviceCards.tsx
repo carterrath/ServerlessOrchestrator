@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 interface IProps {
   items: IMicroserviceData[];
   search: string;
+  getMicroservices: () => void;
 }
 
 export function MicroserviceCards(props: IProps) {
@@ -34,7 +35,7 @@ export function MicroserviceCards(props: IProps) {
         )
         .map((item: IMicroserviceData, index: number) => (
           <div className="mb-4 mx-4" key={index}>
-            <MicroserviceCard item={item} />
+            <MicroserviceCard item={item} getMicroservices={props.getMicroservices} />
           </div>
         ))}
     </div>

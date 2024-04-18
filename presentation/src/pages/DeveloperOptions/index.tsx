@@ -18,7 +18,7 @@ export default function DeveloperOptions() {
             <header className="App-header">
               <h1>Serverless Orchestrator</h1>
               <div className="login-container">
-                <div className="login developer-login">
+                <div className="login DeveloperLogin">
                   <button onClick={handleUpload}>Upload Microservice</button>
                 </div>
                 <div className="login user-login">

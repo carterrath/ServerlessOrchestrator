@@ -102,7 +102,7 @@ function useConSignup() {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        navigate('/consumer-login');
+        navigate('/ConsumerLogin');
       } else {
         console.error('Failed to signup');
         // Handle HTTP error responses (e.g., 400, 401, 500)
@@ -113,11 +113,11 @@ function useConSignup() {
   };
 
   const handleLoginClick = () => {
-    navigate('/consumer-login'); // need to create this page
+    navigate('/ConsumerLogin'); // need to create this page
   };
 
   const handleDevSignupClick = () => {
-    navigate('/developer-signup'); // need to create this page
+    navigate('/DeveloperSignup'); // need to create this page
   };
 
   return {

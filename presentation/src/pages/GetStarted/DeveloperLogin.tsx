@@ -98,14 +98,14 @@ function useDevLogin() {
   };
 
   const handleSignupClick = () => {
-    navigate('/developer-signup');
+    navigate('/DeveloperSignup');
   };
 
   const handleConLoginClick = () => {
-    navigate('/consumer-login');
+    navigate('/ConsumerLogin');
   };
   const handleRecoveryClick = () => {
-    navigate('/recover-account');
+    navigate('/RecoverAccount');
   };
 
   return {

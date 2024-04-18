@@ -17,7 +17,7 @@ export function Router() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <NavBar isDeveloper={true} />
+        <NavBar />
         <div className="min-h-[calc(100svh-80px)] w-full absolute top-22">
           <Routes>
             <Route path="/*" element={<Home />} />
@@ -25,12 +25,12 @@ export function Router() {
             <Route path="/DeveloperOptions" element={<DeveloperOptions />} />
             <Route path="/Microservices" element={<Microservices />} />
             <Route path="/GetStarted" element={<MainChoice />} />
-            <Route path="/developer-signup" element={<DeveloperSignup />} />
-            <Route path="/consumer-signup" element={<ConsumerSignup />} />
-            <Route path="/developer-login" element={<DeveloperLogin />} />
-            <Route path="/consumer-login" element={<ConsumerLogin />} />
-            <Route path="/recover-account" element={<Recover />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/DeveloperSignup" element={<DeveloperSignup />} />
+            <Route path="/ConsumerSignup" element={<ConsumerSignup />} />
+            <Route path="/DeveloperLogin" element={<DeveloperLogin />} />
+            <Route path="/ConsumerLogin" element={<ConsumerLogin />} />
+            <Route path="/RecoverAccount" element={<Recover />} />
+            <Route path="/ResetPassword" element={<ResetPassword />} />
           </Routes>
         </div>
       </AuthProvider>

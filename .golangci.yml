@@ -21,6 +21,6 @@ issues:
   exclude-rules:
     - linters:
         - govet
-      text: "composite literal uses unkeyed fields"
+      text: 'composite literal uses unkeyed fields'
   max-same-issues: 0
   max-issues-per-linter: 0
