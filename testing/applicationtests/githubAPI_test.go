@@ -3,6 +3,7 @@ package applicationtests
 import (
 	"os"
 	"os/exec"
+	"path/filepath"
 	"reflect"
 	"testing"
 
@@ -11,9 +12,20 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func init() {
+	// Get the current working directory
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	// Set testPath to be relative to the current working directory
+	testPath = filepath.Join(cwd, "../application/microholder")
+}
+
 var (
 	testURL  = "https://github.com/ruthijimenez/shopping-cart.git"
-	testPath = "/Users/ruthjimenez/Documents/GitHub/ServerlessOrchestrator/application/microholder/"
+	testPath string //= "/application/microholder/"
 )
 
 func TestGithubAPISuite(t *testing.T) {
