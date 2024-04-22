@@ -76,12 +76,7 @@ function useDevSignup() {
     UserType: 'Developer',
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value); // Add this line
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -91,7 +86,7 @@ function useDevSignup() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/signup/developer', {
+      const response = await fetch('https://serverlessorchestrator.com/signup/developer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,8 +95,6 @@ function useDevSignup() {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
         navigate('/DeveloperLogin');
       } else {
         console.error('Failed to signup');

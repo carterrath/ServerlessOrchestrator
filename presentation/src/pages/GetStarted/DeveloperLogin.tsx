@@ -75,12 +75,7 @@ function useDevLogin() {
     UserType: 'Developer',
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value); // Add this line
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,

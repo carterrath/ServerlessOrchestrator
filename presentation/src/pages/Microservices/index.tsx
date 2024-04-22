@@ -58,7 +58,7 @@ function useMicroservices() {
   }
 
   function getMicroservices() {
-    fetch('http://localhost:8080/microservice')
+    fetch('https://serverlessorchestrator.com/microservice')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch microservices');

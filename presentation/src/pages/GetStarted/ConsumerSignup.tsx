@@ -76,12 +76,7 @@ function useConSignup() {
     UserType: 'Consumer',
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value); // Add this line
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -91,7 +86,7 @@ function useConSignup() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/signup/consumer', {
+      const response = await fetch('https://serverlessorchestrator.com/signup/consumer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,8 +95,6 @@ function useConSignup() {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
         navigate('/ConsumerLogin');
       } else {
         console.error('Failed to signup');

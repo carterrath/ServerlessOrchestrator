@@ -71,10 +71,6 @@ function useRecovery() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -89,10 +85,10 @@ function useRecovery() {
       let body = {};
 
       if (step === 'email') {
-        url = 'http://localhost:8080/recovery';
+        url = 'https://serverlessorchestrator.com/recovery';
         body = { email: formData.Email };
       } else if (step === 'code') {
-        url = 'http://localhost:8080/verify-code';
+        url = 'https://serverlessorchestrator.com/verify-code';
         body = { email: formData.Email, code: formData.Code };
       }
 
@@ -105,8 +101,6 @@ function useRecovery() {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
         if (step === 'email') {
           setStep('code');
         } else if (step === 'code') {

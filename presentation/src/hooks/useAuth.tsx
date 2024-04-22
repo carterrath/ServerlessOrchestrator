@@ -28,7 +28,7 @@ export function AuthProvider(props: IAuthProviderProps) {
   async function login(username: string, password: string, userType: UserType) {
     try {
       if (userType === 'Developer') {
-        const response = await fetch('http://localhost:8080/login/developer', {
+        const response = await fetch('https://serverlessorchestrator.com/login/developer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -43,7 +43,6 @@ export function AuthProvider(props: IAuthProviderProps) {
           const responseData = await response.json();
 
           storeTokenInLocalStorage(responseData.token);
-          console.log(responseData);
           fetchUserDetails();
           return 'success';
         } else {
@@ -52,7 +51,7 @@ export function AuthProvider(props: IAuthProviderProps) {
         }
       }
       if (userType === 'Consumer') {
-        const response = await fetch('http://localhost:8080/login/consumer', {
+        const response = await fetch('https://serverlessorchestrator.com/login/consumer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +66,6 @@ export function AuthProvider(props: IAuthProviderProps) {
           const responseData = await response.json();
 
           storeTokenInLocalStorage(responseData.token);
-          console.log(responseData);
           fetchUserDetails();
           return 'success';
         } else {
@@ -88,11 +86,10 @@ export function AuthProvider(props: IAuthProviderProps) {
     const token = localStorage.getItem('token');
     if (!token) {
       // maybe redirect to login page
-      console.log('No token found');
       return;
     }
     try {
-      const response = await fetch('http://localhost:8080/getuserdetails', {
+      const response = await fetch('https://serverlessorchestrator.com/getuserdetails', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +101,6 @@ export function AuthProvider(props: IAuthProviderProps) {
       if (!response.ok) {
         throw new Error('Failed to fetch user details');
       }
-      console.log('response ok');
       // If response is OK, parse JSON data
       const data = await response.json();
 
@@ -129,7 +125,6 @@ export function AuthProvider(props: IAuthProviderProps) {
 
       setClearStatesTimeout(timeout);
     } catch (error) {
-      console.log(error);
       clearStates();
     }
   }

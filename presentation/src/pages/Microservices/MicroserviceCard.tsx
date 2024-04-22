@@ -85,7 +85,7 @@ function useMicroserviceCard(props: IProps) {
   function handlePlayClick() {
     setIsLoading(true);
     if (props.item.IsActive === false) {
-      fetch('http://localhost:8080/runmicroservice', {
+      fetch('https://serverlessorchestrator.com/runmicroservice', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,6 @@ function useMicroserviceCard(props: IProps) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Success:', data);
           // Update the IsActive property of the microservice
           props.item.IsActive = data.isRunning;
         })
@@ -108,7 +107,7 @@ function useMicroserviceCard(props: IProps) {
           props.getMicroservices();
         });
     } else {
-      fetch('http://localhost:8080/stopmicroservice', {
+      fetch('https://serverlessorchestrator.com/stopmicroservice', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +118,6 @@ function useMicroserviceCard(props: IProps) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Success:', data);
           // Update the IsActive property of the microservice
           props.item.IsActive = data.isRunning;
         })
