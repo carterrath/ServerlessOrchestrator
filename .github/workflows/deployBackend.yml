@@ -19,7 +19,11 @@ jobs:
 
     - name: Remove old executable
       run: |
-        ssh -o "StrictHostKeyChecking=no" ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "sudo rm /usr/local/bin/serverlessorchestratorbackend"
+        ssh -o "StrictHostKeyChecking=no" ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+          if [ -f /usr/local/bin/serverlessorchestratorbackend ]; then
+            sudo rm /usr/local/bin/serverlessorchestratorbackend
+          fi"
+
 
     - name: Clone repository and build executable
       run: |
