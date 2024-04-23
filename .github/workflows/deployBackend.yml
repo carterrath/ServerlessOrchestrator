@@ -17,10 +17,6 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.AWS_SSH_KEY }}
 
-    - name: Debug ssh-add
-      run: |
-        echo "$SSH_PRIVATE_KEY" | ssh-add -
-
     - name: Remove old executable
       run: |
         ssh -o "StrictHostKeyChecking=no" ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "sudo rm /usr/local/bin/serverlessorchestratorbackend"
