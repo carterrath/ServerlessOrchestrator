@@ -1,4 +1,3 @@
-import React from 'react';
 import PlusSvg from '../../assets/svg/plus.svg';
 import MinusSvg from '../../assets/svg/minus.svg';
 import { IInput } from '../../types/input';

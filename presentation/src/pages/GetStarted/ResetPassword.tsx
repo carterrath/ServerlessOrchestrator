@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { IResetData } from '../../types/password-reset';
 import { BackgroundImage } from '../../components/BackgroundImage';
+import { API_URL } from '../../constants';
 
 const ResetPassword = () => {
   const data = useReset();
@@ -63,7 +64,7 @@ function useReset() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://serverlessorchestrator.com/reset', {
+      const response = await fetch(`${API_URL}/reset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

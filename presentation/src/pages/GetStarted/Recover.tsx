@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IRecoveryData } from '../../types/recovery-data';
 import { BackgroundImage } from '../../components/BackgroundImage';
+import { API_URL } from '../../constants';
 
 const RecoverAccount = () => {
   const data = useRecovery();
@@ -85,10 +86,10 @@ function useRecovery() {
       let body = {};
 
       if (step === 'email') {
-        url = 'https://serverlessorchestrator.com/recovery';
+        url = `${API_URL}/recovery`;
         body = { email: formData.Email };
       } else if (step === 'code') {
-        url = 'https://serverlessorchestrator.com/verify-code';
+        url = `${API_URL}/verify-code`;
         body = { email: formData.Email, code: formData.Code };
       }
 

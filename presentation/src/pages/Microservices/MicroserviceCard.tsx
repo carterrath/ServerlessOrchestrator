@@ -6,6 +6,7 @@ import GithubBlackSvg from '../../assets/svg/github-black.svg';
 import OutputSvg from '../../assets/svg/output.svg';
 import { useState } from 'react';
 import { Loading } from '../../components/Loading';
+import { API_URL } from '../../constants';
 interface IProps {
   item: IMicroserviceData;
   getMicroservices: () => void;
@@ -85,7 +86,7 @@ function useMicroserviceCard(props: IProps) {
   function handlePlayClick() {
     setIsLoading(true);
     if (props.item.IsActive === false) {
-      fetch('https://serverlessorchestrator.com/runmicroservice', {
+      fetch(`${API_URL}/runmicroservice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ function useMicroserviceCard(props: IProps) {
           props.getMicroservices();
         });
     } else {
-      fetch('https://serverlessorchestrator.com/stopmicroservice', {
+      fetch(`${API_URL}/stopmicroservice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

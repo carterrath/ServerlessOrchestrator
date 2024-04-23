@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { BackgroundGradient } from '../../components/BackgroundGradient';
 import { Loading } from '../../components/Loading';
 import { DialogueMessage } from '../../components/DialogueMessage';
+import { API_URL } from '../../constants';
 
 export function UploadMicroservice() {
   const data = useUploadMicroservice();
@@ -177,7 +178,7 @@ function useUploadMicroservice() {
   function handleRemoveInput(index: number) {
     setMicroservice((prevMicroservice) => ({
       ...prevMicroservice,
-      Inputs: prevMicroservice.Inputs.filter((input, i) => i !== index),
+      Inputs: prevMicroservice.Inputs.filter((i) => i !== index),
     }));
   }
 
@@ -188,7 +189,7 @@ function useUploadMicroservice() {
     const microserviceJson = JSON.stringify(microservice);
     setIsUploading(true);
     // Make a POST request to the endpoint
-    fetch('https://serverlessorchestrator.com/microservice', {
+    fetch(`${API_URL}/microservice`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

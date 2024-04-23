@@ -5,7 +5,6 @@ import { ScrollAssistant } from '../../components/ScrollAssistant';
 import { HeaderSection } from '../../components/HeaderSection';
 import { OtherMaterialsSection } from '../../components/OtherMaterialsSection';
 import { TechStackSection } from '../../components/TechStackSection';
-import { useEffect } from 'react';
 
 export function Home() {
   return (
@@ -31,13 +30,4 @@ export function Home() {
       <ScrollAssistant />
     </div>
   );
-}
-
-function useHome() {
-  useEffect(() => {
-    //reload the page
-    window.location.reload();
-  }, []);
-
-  return {};
 }

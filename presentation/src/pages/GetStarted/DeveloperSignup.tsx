@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IUser } from '../../types/user-upload';
 import { BackgroundImage } from '../../components/BackgroundImage';
+import { API_URL } from '../../constants';
 
 const DeveloperSignup = () => {
   const data = useDevSignup();
@@ -86,7 +87,7 @@ function useDevSignup() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://serverlessorchestrator.com/signup/developer', {
+      const response = await fetch(`${API_URL}/signup/developer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

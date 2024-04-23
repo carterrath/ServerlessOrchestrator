@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IUser } from '../../types/user-upload';
 import { useAuth } from '../../hooks/useAuth';
 import { BackgroundImage } from '../../components/BackgroundImage';
