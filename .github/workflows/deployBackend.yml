@@ -24,7 +24,10 @@ jobs:
     - name: Clone repository and build executable
       run: |
         ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
-          git clone https://github.com/carterrath/ServerlessOrchestrator.git ~/ServerlessOrchestrator &&
+          GIT_CLONE_CMD='git clone https://GH_USERNAME:GH_TOKEN@github.com/carterrath/ServerlessOrchestrator.git ~/ServerlessOrchestrator'
+          GIT_CLONE_CMD=\${GIT_CLONE_CMD//'GH_USERNAME'/${{ secrets.GH_USERNAME }}}
+          GIT_CLONE_CMD=\${GIT_CLONE_CMD//'GH_TOKEN'/${{ secrets.GH_TOKEN }}}
+          eval \$GIT_CLONE_CMD &&
           cd ~/ServerlessOrchestrator &&
           echo 'POSTGRES_USERNAME=${{ secrets.POSTGRES_USERNAME }}' > .env &&
           echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> .env &&
