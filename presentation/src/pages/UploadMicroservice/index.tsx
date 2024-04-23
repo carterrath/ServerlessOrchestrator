@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { BackgroundGradient } from '../../components/BackgroundGradient';
 import { Loading } from '../../components/Loading';
 import { DialogueMessage } from '../../components/DialogueMessage';
+import { API_URL } from '../../constants';
 
 export function UploadMicroservice() {
   const data = useUploadMicroservice();
@@ -177,19 +178,18 @@ function useUploadMicroservice() {
   function handleRemoveInput(index: number) {
     setMicroservice((prevMicroservice) => ({
       ...prevMicroservice,
-      Inputs: prevMicroservice.Inputs.filter((input, i) => i !== index),
+      Inputs: prevMicroservice.Inputs.filter((i) => i !== index),
     }));
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(microservice);
     setResultMessage(null);
     // Convert the microservice object to JSON
     const microserviceJson = JSON.stringify(microservice);
     setIsUploading(true);
     // Make a POST request to the endpoint
-    fetch('http://localhost:8080/microservice', {
+    fetch(`${API_URL}/microservice`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -206,11 +206,9 @@ function useUploadMicroservice() {
         return response.json(); // If response is OK, parse JSON data
       })
       .then((res) => {
-        console.log('Microservice uploaded successfully:', res.message);
         setResultMessage({ msg: res.message, type: 'success' });
       })
       .catch((error) => {
-        console.log(error);
         setResultMessage({ msg: error.message, type: 'error' });
       })
       .finally(() => {

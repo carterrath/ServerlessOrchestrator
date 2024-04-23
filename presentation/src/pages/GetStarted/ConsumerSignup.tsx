@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IUser } from '../../types/user-upload';
 import { BackgroundImage } from '../../components/BackgroundImage';
+import { API_URL } from '../../constants';
 
 const ConsumerSignup = () => {
   const data = useConSignup();
@@ -76,12 +77,7 @@ function useConSignup() {
     UserType: 'Consumer',
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value); // Add this line
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -91,7 +87,7 @@ function useConSignup() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/signup/consumer', {
+      const response = await fetch(`${API_URL}/signup/consumer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,8 +96,6 @@ function useConSignup() {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
         navigate('/ConsumerLogin');
       } else {
         console.error('Failed to signup');

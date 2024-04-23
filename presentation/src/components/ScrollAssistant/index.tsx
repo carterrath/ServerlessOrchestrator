@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 export function ScrollAssistant() {
   const sectionIds = ['header-section', 'features-section', 'about-section', 'other-materials-section', 'team-section'];

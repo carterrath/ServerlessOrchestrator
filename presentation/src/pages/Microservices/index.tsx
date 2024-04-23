@@ -4,6 +4,7 @@ import { MicroserviceCards } from './MicroserviceCards';
 import FilterSvg from '../../assets/svg/filter.svg';
 import UploadSvg from '../../assets/svg/upload.svg';
 import { BackgroundGradient } from '../../components/BackgroundGradient';
+import { API_URL } from '../../constants';
 
 export function Microservices() {
   const data = useMicroservices();
@@ -58,7 +59,7 @@ function useMicroservices() {
   }
 
   function getMicroservices() {
-    fetch('http://localhost:8080/microservice')
+    fetch(`${API_URL}/microservice`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch microservices');

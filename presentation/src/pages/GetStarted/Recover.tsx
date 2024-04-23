@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IRecoveryData } from '../../types/recovery-data';
 import { BackgroundImage } from '../../components/BackgroundImage';
+import { API_URL } from '../../constants';
 
 const RecoverAccount = () => {
   const data = useRecovery();
@@ -71,10 +72,6 @@ function useRecovery() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -89,10 +86,10 @@ function useRecovery() {
       let body = {};
 
       if (step === 'email') {
-        url = 'http://localhost:8080/recovery';
+        url = `${API_URL}/recovery`;
         body = { email: formData.Email };
       } else if (step === 'code') {
-        url = 'http://localhost:8080/verify-code';
+        url = `${API_URL}/verify-code`;
         body = { email: formData.Email, code: formData.Code };
       }
 
@@ -105,8 +102,6 @@ function useRecovery() {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
         if (step === 'email') {
           setStep('code');
         } else if (step === 'code') {

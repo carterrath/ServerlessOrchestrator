@@ -1,6 +1,7 @@
 import { IUserData } from '../types/user-data';
 import { useState, useEffect, createContext, useMemo, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../constants';
 
 type UserType = 'Developer' | 'Consumer';
 
@@ -26,54 +27,27 @@ export function AuthProvider(props: IAuthProviderProps) {
   const navigate = useNavigate();
 
   async function login(username: string, password: string, userType: UserType) {
+    const loginUrl = `${API_URL}/login/${userType.toLowerCase()}`;
     try {
-      if (userType === 'Developer') {
-        const response = await fetch('http://localhost:8080/login/developer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: username,
-            password: password,
-            userType: userType,
-          }),
-        });
-        if (response.ok) {
-          const responseData = await response.json();
-
-          storeTokenInLocalStorage(responseData.token);
-          console.log(responseData);
-          fetchUserDetails();
-          return 'success';
-        } else {
-          const errorData = await response.json();
-          return errorData.error;
-        }
-      }
-      if (userType === 'Consumer') {
-        const response = await fetch('http://localhost:8080/login/consumer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: username,
-            password: password,
-            userType: userType,
-          }),
-        });
-        if (response.ok) {
-          const responseData = await response.json();
-
-          storeTokenInLocalStorage(responseData.token);
-          console.log(responseData);
-          fetchUserDetails();
-          return 'success';
-        } else {
-          const errorData = await response.json();
-          return errorData.error;
-        }
+      const response = await fetch(loginUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          userType: userType,
+        }),
+      });
+      if (response.ok) {
+        const responseData = await response.json();
+        storeTokenInLocalStorage(responseData.token);
+        fetchUserDetails();
+        return 'success';
+      } else {
+        const errorData = await response.json();
+        return errorData.error;
       }
     } catch (error) {
       return error;
@@ -88,11 +62,10 @@ export function AuthProvider(props: IAuthProviderProps) {
     const token = localStorage.getItem('token');
     if (!token) {
       // maybe redirect to login page
-      console.log('No token found');
       return;
     }
     try {
-      const response = await fetch('http://localhost:8080/getuserdetails', {
+      const response = await fetch(`${API_URL}/getuserdetails`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +77,6 @@ export function AuthProvider(props: IAuthProviderProps) {
       if (!response.ok) {
         throw new Error('Failed to fetch user details');
       }
-      console.log('response ok');
       // If response is OK, parse JSON data
       const data = await response.json();
 
@@ -129,7 +101,6 @@ export function AuthProvider(props: IAuthProviderProps) {
 
       setClearStatesTimeout(timeout);
     } catch (error) {
-      console.log(error);
       clearStates();
     }
   }

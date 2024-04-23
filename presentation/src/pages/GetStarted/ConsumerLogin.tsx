@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IUser } from '../../types/user-upload';
 import { useAuth } from '../../hooks/useAuth';
-import orcaArt from '../../assets/images/orcaArt.png';
 import { BackgroundImage } from '../../components/BackgroundImage';
 
 const ConsumerLogin = () => {
@@ -76,12 +75,7 @@ function useConLogin() {
     UserType: 'Consumer',
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,

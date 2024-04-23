@@ -1,8 +1,9 @@
 // this will prompt user to enter a new password
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IResetData } from '../../types/password-reset';
 import { BackgroundImage } from '../../components/BackgroundImage';
+import { API_URL } from '../../constants';
 
 const ResetPassword = () => {
   const data = useReset();
@@ -53,12 +54,7 @@ function useReset() {
     Password: '',
   });
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -68,7 +64,7 @@ function useReset() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/reset', {
+      const response = await fetch(`${API_URL}/reset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,8 +73,6 @@ function useReset() {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
         navigate('/Home'); // Navigate on success
       } else {
         // Log the response status
