@@ -1,0 +1,58 @@
+name: Deploy backend to EC2
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup SSH connection
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.AWS_SSH_KEY }}
+
+    - name: Remove old executable
+      run: |
+        ssh -o "StrictHostKeyChecking=no" ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+          if [ -f /usr/local/bin/serverlessorchestratorbackend ]; then
+            sudo rm /usr/local/bin/serverlessorchestratorbackend
+          fi"
+
+
+    - name: Clone repository and build executable
+      run: |
+        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+          GIT_CLONE_CMD='git clone https://GH_USERNAME:GH_TOKEN@github.com/carterrath/ServerlessOrchestrator.git ~/ServerlessOrchestrator'
+          GIT_CLONE_CMD=\${GIT_CLONE_CMD//'GH_USERNAME'/${{ secrets.GH_USERNAME }}}
+          GIT_CLONE_CMD=\${GIT_CLONE_CMD//'GH_TOKEN'/${{ secrets.GH_TOKEN }}}
+          eval \$GIT_CLONE_CMD &&
+          cd ~/ServerlessOrchestrator &&
+          echo 'POSTGRES_USERNAME=${{ secrets.POSTGRES_USERNAME }}' > .env &&
+          echo 'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' >> .env &&
+          echo 'POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}' >> .env &&
+          echo 'POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}' >> .env &&
+          echo 'POSTGRES_DB=${{ secrets.POSTGRES_DB }}' >> .env &&
+          echo 'JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}' >> .env &&
+          echo 'AWS_REGION=${{ secrets.AWS_REGION }}' >> .env &&
+          echo 'SENDER_EMAIL=${{ secrets.SENDER_EMAIL }}' >> .env &&
+          echo 'AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}' >> .env &&
+          echo 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' >> .env &&
+          go build -o serverlessorchestratorbackend"
+
+    - name: Move executable and restart service
+      run: |
+        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+          sudo mv ~/ServerlessOrchestrator/serverlessorchestratorbackend /usr/local/bin/ &&
+          sudo systemctl daemon-reload &&
+          sudo systemctl restart serverlessorchestratorbackend.service &&
+          sudo systemctl status serverlessorchestratorbackend.service"
+
+    - name: Remove old directory
+      run: |
+        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "sudo rm -rf ~/ServerlessOrchestrator"
