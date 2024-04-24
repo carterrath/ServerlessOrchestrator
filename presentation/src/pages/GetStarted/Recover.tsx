@@ -86,10 +86,10 @@ function useRecovery() {
       let body = {};
 
       if (step === 'email') {
-        url = `${API_URL}/recovery`;
+        url = `${API_URL}/api/recovery`;
         body = { email: formData.Email };
       } else if (step === 'code') {
-        url = `${API_URL}/verify-code`;
+        url = `${API_URL}/api/verify-code`;
         body = { email: formData.Email, code: formData.Code };
       }
 

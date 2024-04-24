@@ -78,40 +78,40 @@ func corsMiddleware() gin.HandlerFunc {
 
 func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) {
 	//MicroserviceRouter := router.Group("/microservice")
-	router.GET("/microservice", func(c *gin.Context) {
+	router.GET("/api/microservice", func(c *gin.Context) {
 		microservice.GetAllMicroservices(c, dao, userdao)
 	})
-	router.POST("/microservice", func(c *gin.Context) {
+	router.POST("/api/microservice", func(c *gin.Context) {
 		microservice.UploadMicroservice(c, dao)
 	})
-	router.POST("/signup/developer", func(c *gin.Context) {
+	router.POST("/api/signup/developer", func(c *gin.Context) {
 		users.CreateDeveloper(c, userdao)
 	})
-	router.POST("/signup/consumer", func(c *gin.Context) {
+	router.POST("/api/signup/consumer", func(c *gin.Context) {
 		users.CreateConsumer(c, userdao)
 	})
-	router.POST("/login/developer", func(c *gin.Context) {
+	router.POST("/api/login/developer", func(c *gin.Context) {
 		users.Login(c, userdao)
 	})
-	router.POST("/login/consumer", func(c *gin.Context) {
+	router.POST("/api/login/consumer", func(c *gin.Context) {
 		users.Login(c, userdao)
 	})
-	router.POST("/runmicroservice", func(c *gin.Context) {
+	router.POST("/api/runmicroservice", func(c *gin.Context) {
 		runmicroservice.RunMicroservice(c, dao)
 	})
-	router.POST("/stopmicroservice", func(c *gin.Context) {
+	router.POST("/api/stopmicroservice", func(c *gin.Context) {
 		stopmicroservice.StopMicroservice(c, dao)
 	})
-	router.GET("/getuserdetails", func(c *gin.Context) {
+	router.GET("/api/getuserdetails", func(c *gin.Context) {
 		users.GetUserDetails(c, userdao)
 	})
-	router.POST("/recovery", func(c *gin.Context) {
+	router.POST("/api/recovery", func(c *gin.Context) {
 		users.Recovery(c, userdao)
 	})
-	router.POST("/verify-code", func(c *gin.Context) {
+	router.POST("/api/verify-code", func(c *gin.Context) {
 		users.Recovery(c, userdao)
 	})
-	router.POST("/reset", func(c *gin.Context) {
+	router.POST("/api/reset", func(c *gin.Context) {
 		users.ResetPassword(c, userdao)
 	})
 }

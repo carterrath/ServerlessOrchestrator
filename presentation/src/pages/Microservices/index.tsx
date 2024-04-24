@@ -59,7 +59,7 @@ function useMicroservices() {
   }
 
   function getMicroservices() {
-    fetch(`${API_URL}/microservice`)
+    fetch(`${API_URL}/api/microservice`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch microservices');

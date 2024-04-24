@@ -27,7 +27,7 @@ export function AuthProvider(props: IAuthProviderProps) {
   const navigate = useNavigate();
 
   async function login(username: string, password: string, userType: UserType) {
-    const loginUrl = `${API_URL}/login/${userType.toLowerCase()}`;
+    const loginUrl = `${API_URL}/api/login/${userType.toLowerCase()}`;
     try {
       const response = await fetch(loginUrl, {
         method: 'POST',
@@ -65,7 +65,7 @@ export function AuthProvider(props: IAuthProviderProps) {
       return;
     }
     try {
-      const response = await fetch(`${API_URL}/getuserdetails`, {
+      const response = await fetch(`${API_URL}/api/getuserdetails`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

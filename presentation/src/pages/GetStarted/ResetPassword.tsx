@@ -64,7 +64,7 @@ function useReset() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/reset`, {
+      const response = await fetch(`${API_URL}/api/reset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

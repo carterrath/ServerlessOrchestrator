@@ -87,7 +87,7 @@ function useDevSignup() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/signup/developer`, {
+      const response = await fetch(`${API_URL}/api/signup/developer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

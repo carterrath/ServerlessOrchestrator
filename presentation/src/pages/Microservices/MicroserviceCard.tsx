@@ -86,7 +86,7 @@ function useMicroserviceCard(props: IProps) {
   function handlePlayClick() {
     setIsLoading(true);
     if (props.item.IsActive === false) {
-      fetch(`${API_URL}/runmicroservice`, {
+      fetch(`${API_URL}/api/runmicroservice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ function useMicroserviceCard(props: IProps) {
           props.getMicroservices();
         });
     } else {
-      fetch(`${API_URL}/stopmicroservice`, {
+      fetch(`${API_URL}/api/stopmicroservice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

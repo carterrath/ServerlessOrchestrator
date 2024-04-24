@@ -189,7 +189,7 @@ function useUploadMicroservice() {
     const microserviceJson = JSON.stringify(microservice);
     setIsUploading(true);
     // Make a POST request to the endpoint
-    fetch(`${API_URL}/microservice`, {
+    fetch(`${API_URL}/api/microservice`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
