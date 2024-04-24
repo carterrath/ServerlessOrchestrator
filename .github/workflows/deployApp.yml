@@ -19,7 +19,7 @@ jobs:
 
     - name: Remove old directory
       run: |
-        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+        ssh -o "StrictHostKeyChecking=no" ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
           if [ -d ~/ServerlessOrchestrator ]; then
             sudo rm -rf ~/ServerlessOrchestrator
           fi"
