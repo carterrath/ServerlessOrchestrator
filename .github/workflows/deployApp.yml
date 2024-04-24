@@ -54,7 +54,7 @@ jobs:
     - name: Build frontend
       run: |
         ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
-          cd ~/ServerlessOrchestrator/presenation &&
+          cd ~/ServerlessOrchestrator/presentation &&
           echo 'VITE_APP_API_URL=https://serverlessorchestrator.com' > .env &&
           npm install &&
           npm run build"
