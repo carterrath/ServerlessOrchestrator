@@ -56,8 +56,10 @@ jobs:
         ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
           cd ~/ServerlessOrchestrator/presentation &&
           echo 'VITE_APP_API_URL=https://serverlessorchestrator.com' > .env &&
-          npm install &&
-          npm run build"
+            sudo apt-get update &&
+            sudo apt-get install -y npm &&
+            npm install &&
+            npm run build"
 
     - name: Move executable and restart service
       run: |
