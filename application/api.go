@@ -46,7 +46,7 @@ func Init(dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) error {
 
 	// Add CORS middleware to allow requests from http://localhost:5173
 	router.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://serverlessorchestrator.com")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
