@@ -31,8 +31,6 @@ package application
 import (
 	"net/http"
 
-	"fmt"
-
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/microservice"
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/runmicroservice"
 	"github.com/GoKubes/ServerlessOrchestrator/application/routes/stopmicroservice"
@@ -44,8 +42,23 @@ import (
 func Init(dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) error {
 	router := gin.Default()
 
-	// Add CORS middleware to allow requests from http://localhost:5173
-	router.Use(func(c *gin.Context) {
+	// CORS middleware first
+	router.Use(corsMiddleware())
+
+	// Other routes and middleware
+	handleRoutes(router, dao, userdao)
+
+	// Run the server
+	err := router.Run("0.0.0.0:8080")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
 		if origin == "https://www.serverlessorchestrator.com" || origin == "https://serverlessorchestrator.com" {
 			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
@@ -60,18 +73,7 @@ func Init(dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) error {
 		}
 
 		c.Next()
-	})
-
-	handleRoutes(router, dao, userdao)
-
-	err := router.Run("0.0.0.0:8080")
-	if err != nil {
-		return err
 	}
-
-	fmt.Println("Server is now listening on localhost:8080")
-
-	return nil
 }
 
 func handleRoutes(router *gin.Engine, dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) {
