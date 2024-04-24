@@ -1,4 +1,4 @@
-name: Deploy backend to EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -17,13 +17,19 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.AWS_SSH_KEY }}
 
+    - name: Remove old directory
+      run: |
+        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+          if [ -d ~/ServerlessOrchestrator ]; then
+            sudo rm -rf ~/ServerlessOrchestrator
+          fi"
+
     - name: Remove old executable
       run: |
         ssh -o "StrictHostKeyChecking=no" ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
           if [ -f /usr/local/bin/serverlessorchestratorbackend ]; then
             sudo rm /usr/local/bin/serverlessorchestratorbackend
           fi"
-
 
     - name: Clone repository and build executable
       run: |
@@ -45,6 +51,14 @@ jobs:
           echo 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' >> .env &&
           go build -o serverlessorchestratorbackend"
 
+    - name: Build frontend
+      run: |
+        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
+          cd ~/ServerlessOrchestrator/presenation &&
+          echo 'VITE_APP_API_URL=https://serverlessorchestrator.com' > .env &&
+          npm install &&
+          npm run build"
+
     - name: Move executable and restart service
       run: |
         ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "
@@ -52,7 +66,3 @@ jobs:
           sudo systemctl daemon-reload &&
           sudo systemctl restart serverlessorchestratorbackend.service &&
           sudo systemctl status serverlessorchestratorbackend.service"
-
-    - name: Remove old directory
-      run: |
-        ssh ${{ secrets.BACKEND_USER }}@${{ secrets.BACKEND_HOST }} "sudo rm -rf ~/ServerlessOrchestrator"
