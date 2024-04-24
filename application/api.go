@@ -64,7 +64,7 @@ func Init(dao *dataaccess.MicroservicesDAO, userdao *dataaccess.UserDAO) error {
 
 	handleRoutes(router, dao, userdao)
 
-	err := router.Run("localhost:8080")
+	err := router.Run("0.0.0.0:8080")
 	if err != nil {
 		return err
 	}
