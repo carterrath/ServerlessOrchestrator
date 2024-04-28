@@ -58,7 +58,7 @@ func TestCloneRepositoryUsingCommand(t *testing.T) {
 	defer monkey.Unpatch(exec.Command)
 
 	assert.Error(t, github.CloneRepositoryUsingCommand("repoURL", "backendName", "filePath"))
-
+	teardown()
 }
 
 func TestCloneRepositoryUsingCommandPass(t *testing.T) {
@@ -87,6 +87,7 @@ func TestGetLatestPushDate(t *testing.T) {
 
 	// Check that error was returned
 	assert.Error(t, err)
+	teardown()
 }
 
 func TestGetLastestPushDatePass(t *testing.T) {

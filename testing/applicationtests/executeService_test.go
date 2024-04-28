@@ -25,7 +25,6 @@ var (
 func TestExecuteServiceSuite(t *testing.T) {
 	// Load environment variables from .env file
 	err := godotenv.Load("../../.env")
-	fmt.Println("passed")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -39,7 +38,7 @@ func TestExecuteServiceSuite(t *testing.T) {
 		t.Fatalf("Failed to get last microservice ID: %v", err)
 	}
 
-	backendname = "testbackendname" + strconv.Itoa(int(lastID+1))
+	backendname = "testmicroserviceexec" + strconv.Itoa(int(lastID+1))
 
 	// Run tests
 	t.Run("TestExecuteService_ErrorConditions", TestExecuteService_ErrorConditions)
@@ -73,7 +72,7 @@ func TestExecuteService_ErrorConditions(t *testing.T) {
 	}
 
 	// Run ExecuteService with the microservice object, which should fail due to non-existent repository
-	err = services.ExecuteService("testmicroserviceexec", daoMicroservice)
+	err = services.ExecuteService(backendname, daoMicroservice)
 	if err == nil {
 		t.Error("ExecuteService did not return an error for a non-existent repository")
 	}
@@ -84,7 +83,7 @@ func TestExecuteService_ErrorConditions(t *testing.T) {
 
 func teardownMicroTestDatabase(db *gorm.DB) {
 	// Clean up test data from the database
-	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testbackendname%'")
+	db.Exec("DELETE FROM microservices WHERE backend_name LIKE 'testmicroserviceexec%'")
 }
 
 func setupExecTestDatabase() *gorm.DB {

@@ -23,7 +23,6 @@ var dao *dataaccess.MicroservicesDAO
 func TestUploadServiceSuite(t *testing.T) {
 	// Load environment variables from .env file
 	err := godotenv.Load("../../.env")
-	fmt.Println("passed")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
