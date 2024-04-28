@@ -1,8 +1,10 @@
 package applicationtests
 
 import (
+	"log"
 	"os"
 	"os/exec"
+
 	"path/filepath"
 	"reflect"
 	"testing"
@@ -20,12 +22,12 @@ func init() {
 	}
 
 	// Set testPath to be relative to the current working directory
-	testPath = filepath.Join(cwd, "../application/microholder")
+	testPath = filepath.Join(cwd, "/application/microholder/")
 }
 
 var (
 	testURL  = "https://github.com/ruthijimenez/shopping-cart.git"
-	testPath string //= "/application/microholder/"
+	testPath string
 )
 
 func TestGithubAPISuite(t *testing.T) {
@@ -42,6 +44,12 @@ func teardown() {
 	// delete the cloned repo
 	os.RemoveAll(testPath + "testBackendName")
 	os.RemoveAll(testPath + "testBackendName2")
+
+	// delete the /application/microholder directory
+	err := os.RemoveAll("/application/")
+	if err != nil {
+		log.Printf("Error removing directory: %v", err)
+	}
 }
 
 func TestCloneRepositoryUsingCommand(t *testing.T) {
@@ -63,6 +71,8 @@ func TestCloneRepositoryUsingCommand(t *testing.T) {
 
 func TestCloneRepositoryUsingCommandPass(t *testing.T) {
 	assert.NoError(t, github.CloneRepositoryUsingCommand(testURL, "testBackendName", testPath))
+
+	os.RemoveAll(testPath + "testBackendName")
 }
 
 func TestGetLatestPushDate(t *testing.T) {
@@ -94,4 +104,6 @@ func TestGetLastestPushDatePass(t *testing.T) {
 	date, err := github.GetLatestPushDate(testURL, "testBackendName2", testPath)
 	assert.NoError(t, err)
 	assert.NotNil(t, date)
+
+	os.RemoveAll(testPath + "testBackendName2")
 }
