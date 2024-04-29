@@ -42,6 +42,13 @@ func TestUploadServiceSuite(t *testing.T) {
 	t.Run("TestUploadService_ValidateGithubURL", TestUploadService_ValidateGithubURL)
 	t.Run("TestUploadService_GenerateBackendName", TestUploadService_GenerateBackendName)
 	t.Run("TestUploadService_GetImageDigest", TestUploadService_GetImageDigest)
+	t.Run("TestCheckIfExists", TestCheckIfExists)
+	t.Run("TestCloneRepo", TestCloneRepo)
+	t.Run("TestCheckConfigs", TestCheckConfigs)
+	t.Run("TestBuildImageFailure", TestBuildImageFailure)
+	t.Run("TestGetImageDigest", TestGetImageDigest)
+	t.Run("TestInsert", TestInsert)
+	t.Run("TestDeleteDirectory", TestDeleteDirectory)
 
 	// Teardown: Clean up test data from the database
 	teardownUploadTestDatabase(dbMicroservice)

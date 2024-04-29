@@ -42,8 +42,8 @@ func TestGithubAPISuite(t *testing.T) {
 
 func teardown() {
 	// delete the cloned repo
-	os.RemoveAll(testPath + "testBackendName")
-	os.RemoveAll(testPath + "testBackendName2")
+	//os.RemoveAll(testPath + "testBackendName")
+	//os.RemoveAll(testPath + "testBackendName2")
 
 	// delete the /application/microholder directory
 	err := os.RemoveAll("/application/")
