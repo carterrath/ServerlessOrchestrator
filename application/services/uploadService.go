@@ -68,6 +68,10 @@ func SaveMicroservice(microservice business.Microservice, microserviceDao *dataa
 
 	microservice.ImageID = res
 
+	microservice.IsActive = false
+
+	microservice.StatusMessage = "Inactive"
+
 	// call Insert to MicroservicesDAO
 	err = Insert(microservice, microserviceDao)
 	if err != nil {

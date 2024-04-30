@@ -30,6 +30,9 @@ export function MicroserviceCard(props: IProps) {
             )}
           </button>
         </div>
+        <div>
+          {props.item.StatusMessage}
+        </div>
         <span
           className={`h-6 w-6 drop-shadow-lg shadow-black ${props.item.IsActive === true ? 'bg-green-500' : 'bg-red-500'} text-white rounded-full`}
         ></span>
@@ -51,8 +54,13 @@ export function MicroserviceCard(props: IProps) {
         {props.item.OutputLink === '' ? (
           <p className="text-gray-600">N/A</p>
         ) : (
-          <a href={props.item.OutputLink} className="text-blue-500 hover:underline">
-            {props.item.OutputLink}
+          <a
+            href={props.item.OutputLink}
+            className="text-blue-500 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {'https://' + props.item.BackendName + '.serverlessorchestrator.com'}
           </a>
         )}
       </div>
@@ -79,10 +87,10 @@ function useMicroserviceCard(props: IProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   function formatDate(dateString: string) {
-    // Assuming the date string is in ISO 8601 format
     const date = new Date(dateString);
-    return format(date, 'MMMM dd, yyyy HH:mm:ss');
+    return format(date, 'MMMM dd, yyyy hh:mm:ss a'); // e.g., April 29, 2024 08:30:25 PM
   }
+
   function handlePlayClick() {
     setIsLoading(true);
     if (props.item.IsActive === false) {

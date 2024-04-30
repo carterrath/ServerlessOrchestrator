@@ -3,16 +3,21 @@ package services
 import (
 	"errors"
 	"fmt"
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/GoKubes/ServerlessOrchestrator/application/dockerhub"
+	"github.com/GoKubes/ServerlessOrchestrator/application/elasticcontainerservice"
 	"github.com/GoKubes/ServerlessOrchestrator/application/github"
 	"github.com/GoKubes/ServerlessOrchestrator/business"
 	"github.com/GoKubes/ServerlessOrchestrator/dataaccess"
+	"github.com/aws/aws-sdk-go-v2/service/ecs"
+	"github.com/aws/aws-sdk-go-v2/service/route53"
 	"gorm.io/gorm"
 )
 
-func ExecuteService(backendNameStr string, dao *dataaccess.MicroservicesDAO) error {
+func ExecuteService(backendNameStr string, dao *dataaccess.MicroservicesDAO, ecsClient *ecs.Client, r53Client *route53.Client) error {
 	// get microservice object from database
 	microservice, err := FetchMicroservice(backendNameStr, dao)
 	if err != nil {
@@ -49,15 +54,31 @@ func ExecuteService(backendNameStr string, dao *dataaccess.MicroservicesDAO) err
 		}
 		microservice.ImageID = digest
 	}
+
+	activeMicroserviceCount, err := dao.GetAllActiveCount()
+	if err != nil {
+		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
+		return fmt.Errorf("error getting active microservice count: %w", err)
+	}
+
+	port := 3000 + activeMicroserviceCount
 	//if the date is not more recent, then run the image
-	err = RunImage(microservice.ImageID, microservice.BackendName, 3000)
+	err = RunImage(microservice.ImageID, microservice.BackendName, port, ecsClient, r53Client)
 	if err != nil {
 		_ = DeleteDirectory(filePath + microservice.BackendName) // Ignoring error here as we're already returning an error
 		return fmt.Errorf("error running image: %w", err)
 	}
 
 	microservice.IsActive = true
-	microservice.OutputLink = "http://serverlessorchestrator.com/" + microservice.BackendName
+
+	mode := os.Getenv("DEPLOYMENT_MODE")
+	if mode == "cloud" {
+		microservice.OutputLink = "https://" + microservice.BackendName + ".serverlessorchestrator.com"
+	} else {
+		microservice.OutputLink = "http://127.0.0.1:" + strconv.Itoa(port)
+	}
+	microservice.StatusMessage = "Active"
+
 	// Update the microservice record in the database
 	err = dao.Update(*microservice)
 	if err != nil {
@@ -107,11 +128,36 @@ func ParseDate(dateStr string) (time.Time, error) {
 	return date, nil
 }
 
-func RunImage(imageID, backendName string, port int) error {
-	// Run the image locally on the specified port
-	err := dockerhub.RunImageFromDockerHub(imageID, backendName, port)
-	if err != nil {
-		return err
+func RunImage(imageID, backendName string, port int, ecsClient *ecs.Client, r53Client *route53.Client) error {
+	mode := os.Getenv("DEPLOYMENT_MODE")
+	domain := os.Getenv("DOMAIN")
+	if mode == "local" {
+		// Run the image locally on the specified port
+		err := dockerhub.RunImageFromDockerHub(imageID, backendName, port)
+		if err != nil {
+			return err
+		}
+	} else if mode == "cloud" {
+		// Step 1: Register Task Definition
+		taskDefinitionArn, err := elasticcontainerservice.RegisterTaskDefinition(ecsClient, backendName)
+		if err != nil {
+			return fmt.Errorf("error registering task definition: %w", err)
+		}
+
+		// Step 2: Create ECS Service
+		serviceName := backendName + "-service" // You might want to create a naming convention for services
+		err = elasticcontainerservice.CreateService(ecsClient, "MicroserviceOrchestratorCluster", serviceName, *taskDefinitionArn)
+		if err != nil {
+			return fmt.Errorf("error creating service: %w", err)
+		}
+
+		loadBalancerDNSName := os.Getenv("LOAD_BALANCER_DNS_NAME")
+
+		// Step 3: Create DNS Record
+		err = elasticcontainerservice.CreateDNSRecord(r53Client, domain, backendName, loadBalancerDNSName)
+		if err != nil {
+			return fmt.Errorf("error creating DNS record: %w", err)
+		}
 	}
 	return nil
 }

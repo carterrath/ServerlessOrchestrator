@@ -171,5 +171,25 @@ func (dao *MicroservicesDAO) GetAllWithUsers(userDAO *UserDAO) ([]MicroserviceDa
 	return microservicesData, nil
 }
 
+func (dao *MicroservicesDAO) UpdateStatusMessage(id uint, message string) error {
+	result := dao.db.Model(&business.Microservice{}).Where("ID = ?", id).Update("status_message", message)
+	return result.Error
+}
+
+func (dao *MicroservicesDAO) GetAllActiveCount() (int, error) {
+	var count int64
+	result := dao.db.Model(&business.Microservice{}).Where("is_active = ?", true).Count(&count)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+	return int(count), nil // Convert int64 to int before returning
+}
+
+func (dao *MicroservicesDAO) GetStatusMessage(id uint) (string, error) {
+	var micro business.Microservice
+	result := dao.db.Select("status_message").First(&micro, id)
+	return micro.StatusMessage, result.Error
+}
+
 // Ensure that MicroservicesDAO implements the MicroservicesDAO_IF interface.
 var _ business.DAO_IF = (*MicroservicesDAO)(nil)

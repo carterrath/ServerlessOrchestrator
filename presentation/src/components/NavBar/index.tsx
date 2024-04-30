@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import OrcaSvg from '../../assets/svg/orca.svg';
 
 export function NavBar() {
   const data = useNavBar();
@@ -7,7 +8,7 @@ export function NavBar() {
     <div className="top-0 z-[999999999999] sticky w-full h-20 px-4 items-center flex drop-shadow-xl bg-gradient-to-r from-darkPink to-amaranthPink justify-between">
       <div className="flex gap-6 items-center">
         <Link className="flex items-center hover:scale-105 transition duration-150 ease-in-out text-xl" to="/Home">
-          <img className="w-8 h-8" src="/src/assets/images/logo.png" alt="Logo" />
+          <img src={OrcaSvg} alt="logo" className="w-9 h-9" />
           &nbsp;<b className="text-white">Serverless Orchestrator</b>
         </Link>
       </div>

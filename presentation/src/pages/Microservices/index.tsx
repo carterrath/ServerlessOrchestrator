@@ -24,9 +24,6 @@ export function Microservices() {
                 >
                   <img src={UploadSvg} alt="upload" className="w-8 h-8" />
                 </button>
-                <button className="bg-gray-800 rounded-lg py-1 px-2 hover:shadow-md">
-                  <img src={FilterSvg} alt="filter" className="w-8 h-8" />
-                </button>
                 <input
                   type="text"
                   placeholder="Search"

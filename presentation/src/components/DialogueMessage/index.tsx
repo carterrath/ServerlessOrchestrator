@@ -43,7 +43,7 @@ export function DialogueMessage(props: IProps) {
           className={`w-full max-w-md rounded-lg shadow-lg p-6 transform translate-y-full animate-slide-up ${bgColor}`}
           ref={dialogueRef}
         >
-          <div className='flex justify-between items-center'>
+          <div className="flex justify-between items-center">
             <h2 className="text-lg font-bold text-white">{props.title}</h2>
             <button
               onClick={() => {
@@ -52,7 +52,7 @@ export function DialogueMessage(props: IProps) {
               }}
               className={`p-2 rounded-full hover:shadow-md ${buttonColor}`}
             >
-              <img src={closeSvg} alt="close" className='w-4 h-4' />
+              <img src={closeSvg} alt="close" className="w-4 h-4" />
             </button>
           </div>
           <p className="text-white my-2">{props.message}</p>

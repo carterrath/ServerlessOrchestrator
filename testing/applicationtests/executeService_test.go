@@ -73,7 +73,7 @@ func TestExecuteService_ErrorConditions(t *testing.T) {
 	}
 
 	// Run ExecuteService with the microservice object, which should fail due to non-existent repository
-	err = services.ExecuteService("testmicroserviceexec", daoMicroservice)
+	err = services.ExecuteService("testmicroserviceexec", daoMicroservice, nil, nil)
 	if err == nil {
 		t.Error("ExecuteService did not return an error for a non-existent repository")
 	}
