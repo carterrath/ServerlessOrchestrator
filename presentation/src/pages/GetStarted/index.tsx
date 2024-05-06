@@ -1,6 +1,6 @@
 // MainChoice.tsx
 import { useNavigate } from 'react-router-dom';
-import toolsSvg from '../../assets/svg/tools.svg';
+import toolsBlackSvg from '../../assets/svg/tools-black.svg';
 import shoppingBagSvg from '../../assets/svg/shopping-bag.svg';
 import { BackgroundGradient } from '../../components/BackgroundGradient';
 
@@ -23,7 +23,7 @@ export default function MainChoice() {
           <div className="flex flex-col items-center p-2 bg-gray-200 my-6 rounded-xl drop-shadow-lg w-1/2">
             <div className="flex items-center justify-center font-extrabold m-4 text-2xl"> Developer </div>
             {/* image of tools */}
-            <img src={toolsSvg} alt="developer" className="rounded-lg w-20 h-20 pb-6" />
+            <img src={toolsBlackSvg} alt="developer" className="rounded-lg w-20 h-20 pb-6" />
             <div className="flex flex-col justify-between">
               <div>
                 Developers are the creative backbone of the application, responsible for uploading and managing their

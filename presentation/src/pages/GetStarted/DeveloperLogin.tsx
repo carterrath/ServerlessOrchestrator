@@ -86,7 +86,7 @@ function useDevLogin() {
     e.preventDefault();
     const result = await auth?.login(formData.Username, formData.Password, 'Developer');
     if (result === 'success') {
-      navigate('/Home');
+      navigate('/Microservices');
     } else {
       alert(result);
     }

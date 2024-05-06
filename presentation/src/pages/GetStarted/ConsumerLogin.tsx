@@ -86,7 +86,7 @@ function useConLogin() {
     e.preventDefault();
     const result = await auth?.login(formData.Username, formData.Password, 'Consumer');
     if (result === 'success') {
-      navigate('/Home');
+      navigate('/Microservices');
     } else {
       alert(result);
     }

@@ -3,6 +3,8 @@ import photoMae from '../../assets/images/photoMae.png';
 import photoRuth from '../../assets/images/photoRuth.png';
 import photoCarter from '../../assets/images/photoCarter.png';
 import photoJackie from '../../assets/images/photoJackie.png';
+import linkedInSvg from '../../assets/svg/linkedin.svg';
+import githubBlackSvg from '../../assets/svg/github-black.svg';
 
 export function TeamSection() {
   const people = [
@@ -10,25 +12,29 @@ export function TeamSection() {
       name: 'Mae Pereyra',
       role: 'Software Barbie',
       imageUrl: photoMae,
-      linkedinUrl: 'url_to_linkedin_profile',
+      linkedinUrl: 'https://www.linkedin.com/in/macariamae/',
+      githubUrl: 'https://github.com/maepereyra'
     },
     {
       name: 'Ruth Jimenez',
       role: 'Software Barbie',
       imageUrl: photoRuth,
-      linkedinUrl: 'url_to_linkedin_profile',
+      linkedinUrl: 'https://www.linkedin.com/in/ruth-jimenez-4826651a8/',
+      githubUrl: 'https://github.com/ruthijimenez'
     },
     {
       name: 'Carter Rath',
       role: 'Software Barbie',
       imageUrl: photoCarter,
-      linkedinUrl: 'url_to_linkedin_profile',
+      linkedinUrl: 'https://www.linkedin.com/in/carter-rath/',
+      githubUrl: 'https://github.com/carterrath'
     },
     {
       name: 'Jaclyn Walsh',
       role: 'Software Barbie',
       imageUrl: photoJackie,
       linkedinUrl: 'https://www.linkedin.com/in/jaclynewalsh/',
+      githubUrl: 'https://github.com/JaclynW'
     },
   ];
 
@@ -57,6 +63,14 @@ export function TeamSection() {
                             {person.name}
                           </h3>
                           <p className="text-sm font-semibold leading-6 text-indigo-600">{person.role}</p>
+                          <div className="flex gap-2 mt-2">
+                            <a href={person.linkedinUrl} target="_blank" rel="noreferrer">
+                              <img src={linkedInSvg} alt="linkedin" className="w-6 h-6 hover:scale-[110%] transition duration-150 ease-in-out" />
+                            </a>
+                            <a href={person.githubUrl} target="_blank" rel="noreferrer">
+                              <img src={githubBlackSvg} alt="github" className="w-6 h-6 hover:scale-[110%] transition duration-150 ease-in-out" />
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </li>

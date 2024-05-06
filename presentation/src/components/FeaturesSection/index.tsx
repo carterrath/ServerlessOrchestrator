@@ -2,6 +2,10 @@ import { Fade } from 'react-awesome-reveal';
 import githubWhiteIcon from '../../assets/svg/github-white.svg';
 import boxIcon from '../../assets/svg/box.svg';
 import codeIcon from '../../assets/svg/code.svg';
+import toolsWhiteIcon from '../../assets/svg/tools-white.svg';
+import stackIcon from '../../assets/svg/stack.svg';
+import orcaWhiteIcon from '../../assets/svg/orca-white.svg';
+import networkIcon from '../../assets/svg/network.svg';
 
 export function FeaturesSection() {
   // Assume each feature has a title and description
@@ -9,32 +13,32 @@ export function FeaturesSection() {
     {
       title: 'Simplifying Full-Stack Development',
       description: 'Tackle multiple domains without the complexity of managing integrated components.',
-      icon: <img src={githubWhiteIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
+      icon: <img src={stackIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
     },
     {
       title: 'Monolithic to Microservices',
       description: 'Transition from monolithic architectures to scalable, serverless models.',
-      icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
+      icon: <img src={networkIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
     },
     {
       title: 'Serverless Orchestration',
       description: 'Automate serverless functions and microservices with a container orchestration platform.',
-      icon: <img src={codeIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
+      icon: <img src={orcaWhiteIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
     },
     {
       title: 'Developer-Friendly Environment',
       description: 'Supports various programming languages.',
-      icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
+      icon: <img src={toolsWhiteIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
     },
     {
       title: 'GitHub Integration',
       description: 'Easy cloning from GitHub repository for seamless collaboration.',
-      icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
+      icon: <img src={githubWhiteIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
     },
     {
       title: 'Focus on Code',
       description: 'Empowers developers to concentrate on business logic rather than infrastructure management.',
-      icon: <img src={boxIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
+      icon: <img src={codeIcon} alt="Github Icon" width="50" height="50" style={{ fill: 'white' }} />,
     },
   ];
 

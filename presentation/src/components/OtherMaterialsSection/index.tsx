@@ -1,4 +1,5 @@
 import { Fade } from 'react-awesome-reveal';
+import capstonePoster from '../../assets/pdf/CapstonePoster.pdf';
 
 export function OtherMaterialsSection() {
   return (
@@ -13,12 +14,14 @@ export function OtherMaterialsSection() {
             <div className="text-right">
               <a
                 href="https://docs.google.com/document/d/1ntyUV9hUDh3Jr1VFuqCIltkTqBcT-A-gCIzc0nnVt8c/edit?usp=sharing"
+                target="_blank"
                 className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-black hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
               >
                 Documentation
               </a>
               <a
-                href="#documentation"
+                href={capstonePoster}
+                target="_blank"
                 className="ml-4 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-black hover:bg-gray-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out"
               >
                 Capstone Poster

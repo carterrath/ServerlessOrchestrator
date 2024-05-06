@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import OrcaSvg from '../../assets/svg/orca.svg';
+import orcaBlackSvg from '../../assets/svg/orca-black.svg';
 
 export function NavBar() {
   const data = useNavBar();
@@ -8,7 +8,7 @@ export function NavBar() {
     <div className="top-0 z-[999999999999] sticky w-full h-20 px-4 items-center flex drop-shadow-xl bg-gradient-to-r from-darkPink to-amaranthPink justify-between">
       <div className="flex gap-6 items-center">
         <Link className="flex items-center hover:scale-105 transition duration-150 ease-in-out text-xl" to="/Home">
-          <img src={OrcaSvg} alt="logo" className="w-9 h-9" />
+          <img src={orcaBlackSvg} alt="logo" className="w-9 h-9" />
           &nbsp;<b className="text-white">Serverless Orchestrator</b>
         </Link>
       </div>
@@ -34,7 +34,7 @@ export function NavBar() {
         )}
         {!data.isAuthenticated && (
           <Link
-            className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded"
+            className="hover:scale-105 transition duration-150 ease-in-out bg-gray-800 text-white px-4 py-2 rounded"
             to="/DeveloperLogin"
           >
             Login
@@ -43,7 +43,7 @@ export function NavBar() {
         {data.isAuthenticated && <div className=" text-white font-bold">Welcome {data.userName}!</div>}
         {data.isAuthenticated && (
           <button
-            className="hover:scale-105 transition duration-150 ease-in-out bg-darkPink text-white px-4 py-2 rounded"
+            className="hover:scale-105 transition duration-150 ease-in-out bg-gray-800 text-white px-4 py-2 rounded"
             onClick={data.handleLogout}
           >
             Logout

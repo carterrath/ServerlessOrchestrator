@@ -30,12 +30,12 @@ export function MicroserviceCard(props: IProps) {
             )}
           </button>
         </div>
-        <div>
+        <div className='flex gap-1'>
           {props.item.StatusMessage}
-        </div>
         <span
           className={`h-6 w-6 drop-shadow-lg shadow-black ${props.item.IsActive === true ? 'bg-green-500' : 'bg-red-500'} text-white rounded-full`}
         ></span>
+        </div>
       </div>
 
       <div className="flex justify-start items-center mb-4">

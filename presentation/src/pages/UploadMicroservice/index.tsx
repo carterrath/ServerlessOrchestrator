@@ -43,7 +43,7 @@ export function UploadMicroservice() {
                 placeholder="My Microservice"
                 value={data.microservice.FriendlyName}
                 onChange={data.handleChange}
-                className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md"
+                className="rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md disabled:none"
                 required
                 disabled={data.isUploading}
               />
@@ -56,7 +56,7 @@ export function UploadMicroservice() {
                 placeholder="https://github.com/janedoe/MyRepository.git"
                 value={data.microservice.RepoLink}
                 onChange={data.handleChange}
-                className={`rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md mb-16 ${data.isUploading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                className={`rounded-lg p-2 border w-2/3 border-gray-300 hover:shadow-md mb-16 ${data.isUploading ? 'cursor-not-allowed' : 'cursor-pointer'} disabled:none`}
                 required
                 disabled={data.isUploading}
               />
