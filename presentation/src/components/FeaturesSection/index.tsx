@@ -1,6 +1,5 @@
 import { Fade } from 'react-awesome-reveal';
 import githubWhiteIcon from '../../assets/svg/github-white.svg';
-import boxIcon from '../../assets/svg/box.svg';
 import codeIcon from '../../assets/svg/code.svg';
 import toolsWhiteIcon from '../../assets/svg/tools-white.svg';
 import stackIcon from '../../assets/svg/stack.svg';
