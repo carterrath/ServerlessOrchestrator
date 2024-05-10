@@ -1,31 +1,3 @@
-/*
-Package application provides the API server for the application.
-
-The API server is a RESTful API that allows clients to interact with the application.
-
-The API server is built using the Gin web framework.
-
-The API server provides the following endpoints:
-
-- GET /items: Get all items
-- POST /items: Add a new item
-
-API provides the following Devloper endpoints:
-- POST /submit-repo: Submit a GitHub repository for analysis
-  - Check public or private
-  - If public, check for duplicates in database
-  - If private, return error
-  - If no duplicates, add to database
-  - If duplicates, return error
-
-- GET /microservices: Get all microservices
-  - Return all microservices in the database
-  - Return error if database is empty
-
-- GET /microservices/:id: Get a microservice by ID
-
-The API server is started by calling the APIStart function.
-*/
 package application
 
 import (

@@ -13,7 +13,7 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 
 	dockerfile := filepath.Join(destinationPath, "Dockerfile")
 
-	dockerRepository := "carterrath/serverless-orchestrator"
+	dockerRepository := os.Getenv("DOCKERHUB_REPO")
 
 	// Build the Docker image
 	buildCmd := exec.Command("docker", "build", "-t", dockerRepository+":"+backendName, "-f", dockerfile, destinationPath)
@@ -57,7 +57,7 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 }
 
 func RunImageFromDockerHub(imageDigest, backendName string, port int) error {
-	repositoryName := "carterrath/serverless-orchestrator"
+	repositoryName := os.Getenv("DOCKERHUB_REPO")
 
 	image := repositoryName + ":" + backendName
 
@@ -85,7 +85,7 @@ func RunImageFromDockerHub(imageDigest, backendName string, port int) error {
 }
 
 func StopImage(backendName string) error {
-	repositoryName := "carterrath/serverless-orchestrator"
+	repositoryName := os.Getenv("DOCKERHUB_REPO")
 
 	image := repositoryName + ":" + backendName
 	// Stop the running container
