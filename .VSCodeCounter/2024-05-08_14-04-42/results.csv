@@ -1,0 +1,136 @@
+"filename", "language", "JSON", "YAML", "Go Checksum File", "Markdown", "Go Module File", "Go", "JavaScript", "TypeScript", "JSON with Comments", "TypeScript JSX", "HTML", "CSS", "SVG", "comment", "blank", "total"
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/.github/workflows/deployApplication.yml", "YAML", 0, 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 71
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/.github/workflows/tests.yml", "YAML", 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 9, 53
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/.golangci.yml", "YAML", 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 27
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/.prettierrc", "JSON", 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/README.md", "Markdown", 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 39
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/api.go", "Go", 0, 0, 0, 0, 0, 76, 0, 0, 0, 0, 0, 0, 0, 31, 12, 119
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/dockerhub/dockerhubAPI.go", "Go", 0, 0, 0, 0, 0, 79, 0, 0, 0, 0, 0, 0, 0, 13, 25, 117
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/elasticcontainerservice/elasticcontainerserviceAPI.go", "Go", 0, 0, 0, 0, 0, 77, 0, 0, 0, 0, 0, 0, 0, 0, 6, 83
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/github/githubAPI.go", "Go", 0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 0, 0, 5, 11, 49
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/microholder/README.md", "Markdown", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/microservice/getAllMicroservices.go", "Go", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 5, 19
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/microservice/uploadMicroservice.go", "Go", 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0, 9, 15, 80
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/runmicroservice/runMicroservice.go", "Go", 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 6, 8, 39
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/stopmicroservice/stopMicroservice.go", "Go", 0, 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 5, 10, 38
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/users/authentication.go", "Go", 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0, 0, 11, 11, 76
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/users/createAccount.go", "Go", 0, 0, 0, 0, 0, 71, 0, 0, 0, 0, 0, 0, 0, 8, 16, 95
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/users/getUserDetails.go", "Go", 0, 0, 0, 0, 0, 116, 0, 0, 0, 0, 0, 0, 0, 13, 17, 146
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/users/loginAccount.go", "Go", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 9, 11, 61
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/users/recovery.go", "Go", 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 0, 0, 0, 18, 21, 117
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/routes/users/reset.go", "Go", 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 0, 0, 3, 8, 39
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/services/executeService.go", "Go", 0, 0, 0, 0, 0, 124, 0, 0, 0, 0, 0, 0, 0, 18, 22, 164
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/services/stopService.go", "Go", 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 4, 9, 44
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/application/services/uploadService.go", "Go", 0, 0, 0, 0, 0, 164, 0, 0, 0, 0, 0, 0, 0, 38, 45, 247
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/business/BuildScript.go", "Go", 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 2, 6
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/business/DAO_IF.go", "Go", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 4, 4, 14
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/business/DockerBuild.go", "Go", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/business/Input.go", "Go", 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 2, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/business/Microservice.go", "Go", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 1, 3, 20
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/business/User.go", "Go", 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 1, 3, 15
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/dataaccess/dbSetup.go", "Go", 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 16, 16, 79
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/dataaccess/microservicesDAO.go", "Go", 0, 0, 0, 0, 0, 151, 0, 0, 0, 0, 0, 0, 0, 16, 29, 196
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/dataaccess/userDAO.go", "Go", 0, 0, 0, 0, 0, 70, 0, 0, 0, 0, 0, 0, 0, 13, 16, 99
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/go.mod", "Go Module File", 0, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 89
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/go.sum", "Go Checksum File", 0, 0, 264, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 265
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/main.go", "Go", 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 4, 10, 45
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/package-lock.json", "JSON", 1613, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1614
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/package.json", "JSON", 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 22
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/.eslintrc.cjs", "JavaScript", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 1, 25
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/README.md", "Markdown", 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 31
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/index.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 1, 14
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/package-lock.json", "JSON", 6887, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6888
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/package.json", "JSON", 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 46
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/postcss.config.js", "JavaScript", 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/Main.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 2, 10
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/styles/styles.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 4
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/box.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 15
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/builder.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0, 91
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/cart.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/close.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 10
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/code.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/docker-logo-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 10
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/filter.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/github-black.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 18
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/github-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 19
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/go-logo-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 12
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/kubernetes-logo-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/linkedIn.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 18
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/loading-black.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/loading-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/login.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 14
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/minus.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 8
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/network.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 10
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/orca-black.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 26
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/orca-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 26
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/output.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 0, 0, 17
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/play.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/plus.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 8
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/react-logo-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 11
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/react.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 6
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/scale.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/search.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/shield.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/shopping-bag.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 15
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/stack.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/stop.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/tailwind-logo-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/tools-black.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 27
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/tools-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 27
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/typescript-logo-white.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/update.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/upload.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 12
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/vite.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 20
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/assets/svg/worker-man.svg", "SVG", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 106, 0, 14, 120
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/AboutSection/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 115, 0, 0, 0, 0, 3, 118
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/BackgroundGradient/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 2, 15
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/BackgroundImage/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 3, 21
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/DialogueMessage/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 1, 9, 64
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/FeaturesSection/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 0, 0, 0, 1, 4, 78
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/HeaderSection/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, 3, 48
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/Loading/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 2, 17
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/NavBar/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 6, 70
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/OtherMaterialsSection/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 2, 36
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/ScrollAssistant/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 12, 10, 58
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/TeamSection/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 84, 0, 0, 0, 0, 3, 87
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/components/TechStackSection/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 3, 67
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/constants/index.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/hooks/useAuth.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 125, 0, 0, 0, 6, 21, 152
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 1, 3, 14
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/DeveloperOptions/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 2, 5, 47
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/ConsumerLogin.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 105, 0, 0, 0, 0, 13, 118
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/ConsumerSignup.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 114, 0, 0, 0, 1, 12, 127
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/DeveloperLogin.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 105, 0, 0, 0, 0, 12, 117
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/DeveloperSignup.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 114, 0, 0, 0, 1, 12, 127
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/Recover.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 122, 0, 0, 0, 0, 14, 136
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/ResetPassword.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 84, 0, 0, 0, 4, 10, 98
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/GetStarted/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 0, 0, 0, 3, 6, 69
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/Home/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 4, 34
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/Microservices/MicroserviceCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 138, 0, 0, 0, 2, 9, 149
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/Microservices/MicroserviceCards.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 4, 5, 44
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/Microservices/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 7, 85
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/UploadMicroservice/Input.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 3, 56
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/pages/UploadMicroservice/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 216, 0, 0, 0, 10, 16, 242
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/router/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 1, 1, 40
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/input.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/microservice-data.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 2, 18
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/microservice-upload.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/password-reset.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/recovery-data.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 1, 5
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/type.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/user-data.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/types/user-upload.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/src/vite-env.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/tailwind.config.js", "JavaScript", 0, 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 0, 0, 1, 1, 33
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/tsconfig.json", "JSON with Comments", 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 2, 3, 26
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/tsconfig.node.json", "JSON", 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/presentation/vite.config.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 1, 2, 8
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/applicationtests/dockerhubAPI_test.go", "Go", 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 0, 22, 13, 90
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/applicationtests/executeService_test.go", "Go", 0, 0, 0, 0, 0, 87, 0, 0, 0, 0, 0, 0, 0, 13, 21, 121
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/applicationtests/githubAPI_test.go", "Go", 0, 0, 0, 0, 0, 68, 0, 0, 0, 0, 0, 0, 0, 10, 19, 97
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/applicationtests/stopService_test.go", "Go", 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 0, 0, 11, 15, 83
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/applicationtests/uploadService_test.go", "Go", 0, 0, 0, 0, 0, 237, 0, 0, 0, 0, 0, 0, 0, 26, 47, 310
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/dataaccesstests/dbSetup_test.go", "Go", 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0, 8, 14, 71
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/dataaccesstests/microservicesDAO_test.go", "Go", 0, 0, 0, 0, 0, 124, 0, 0, 0, 0, 0, 0, 0, 28, 29, 181
+"/Users/carterrath/Documents/Fall2023/SE490/ServerlessOrchestrator/testing/dataaccesstests/userDAO_test.go", "Go", 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 16, 24, 131
+"Total", "-", 8581, 127, 264, 50, 84, 2201, 61, 59, 21, 2090, 13, 3, 661, 438, 816, 15469

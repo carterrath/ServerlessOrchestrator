@@ -14,16 +14,6 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 	dockerfile := filepath.Join(destinationPath, "Dockerfile")
 
 	dockerRepository := "carterrath/serverless-orchestrator"
-	// token := os.Getenv("DOCKERHUB_TOKEN")
-
-	// Authenticate with Docker Hub
-	// loginCmd := exec.Command("docker", "login", "-u", "jaclynw", "--password-stdin")
-	// loginCmd.Stdin = strings.NewReader(token)
-	// loginCmd.Stdout = os.Stdout
-	// loginCmd.Stderr = os.Stderr
-	// if err := loginCmd.Run(); err != nil {
-	// 	return "", fmt.Errorf("failed to authenticate with Docker Hub: %v", err)
-	// }
 
 	// Build the Docker image
 	buildCmd := exec.Command("docker", "build", "-t", dockerRepository+":"+backendName, "-f", dockerfile, destinationPath)
@@ -32,14 +22,6 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 	if err := buildCmd.Run(); err != nil {
 		return "", fmt.Errorf("failed to build Docker image: %v", err)
 	}
-
-	// Tag the Docker image with the custom tag
-	// tagCmd := exec.Command("docker", "tag", backendName, dockerRepository+":"+backendName)
-	// tagCmd.Stdout = os.Stdout
-	// tagCmd.Stderr = os.Stderr
-	// if err := tagCmd.Run(); err != nil {
-	// 	return "", fmt.Errorf("failed to tag Docker image: %v", err)
-	// }
 
 	// Push the built image to Dockerhub
 	pushCmd := exec.Command("docker", "push", dockerRepository+":"+backendName)
@@ -61,14 +43,6 @@ func CreateAndPushImage(backendName, filePath string) (string, error) {
 
 	// Remove any leading and trailing single quotes or newlines that may encapsulate the output
 	digest := strings.Trim(outputStr, "'\n")
-
-	// Remove the local image tagged with backendName
-	// removeLocalCmd := exec.Command("docker", "rmi", backendName)
-	// removeLocalCmd.Stdout = os.Stdout
-	// removeLocalCmd.Stderr = os.Stderr
-	// if err := removeLocalCmd.Run(); err != nil {
-	// 	return "", fmt.Errorf("failed to remove local image %s: %v", backendName, err)
-	// }
 
 	// Remove the image tagged with the Docker repository name and backendName
 	removeRepoCmd := exec.Command("docker", "rmi", dockerRepository+":"+backendName)
