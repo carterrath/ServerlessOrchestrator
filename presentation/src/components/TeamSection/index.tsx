@@ -3,7 +3,7 @@ import photoMae from '../../assets/images/photoMae.png';
 import photoRuth from '../../assets/images/photoRuth.png';
 import photoCarter from '../../assets/images/photoCarter.png';
 import photoJackie from '../../assets/images/photoJackie.png';
-import linkedInSvg from '../../assets/svg/linkedin.svg';
+import linkedInSvg from '../../assets/svg/linkedIn.svg';
 import githubBlackSvg from '../../assets/svg/github-black.svg';
 
 export function TeamSection() {
