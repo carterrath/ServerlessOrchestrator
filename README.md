@@ -1,38 +1,16 @@
 # ServerlessOrchestrator
 
-## Accessing PostgreSQL
+Hi! This is our Senior CapStone project for CSUSM's Software Engineering program. It's a full-stack web application designed to streamline the deployment process for developers, allowing them to easily upload and deploy their microservices on a Docker container. Our team consists of [Carter Rath](https://www.linkedin.com/in/carter-rath/), [Ruth Jimenez](https://www.linkedin.com/in/ruth-jimenez-4826651a8/), [Jaclyn Walsh](https://www.linkedin.com/in/jaclynewalsh/), and [Mae Pereyra](https://www.linkedin.com/in/macariamae/).
 
-1. Go to PostgreSQL App.
-2. Click your personal server. A terminal will appear.
-3. Use the folowing command to look at tables in your database: \dt
-4. Then to enter into the microservices table use: \d microservices
-5. To view the rows of the table use: SELECT \* FROM microservices;
+## Developer Setup
 
-## Run Minikube
-
-Run minikube tunnel in a separate terminal
-minikube start
-minikube tunnel
-
-## Run Serverless Orchestrator
-
-go run main.go
-enter any microservice name
-Paste repository link for microservice: https://github.com/ruthijimenez/service-catalog
-
-- This will add the microservice to the sqlite database
-  go run main.go
-  enter same microservice name
-  enter yes
-
-## React setup
-
-Install node.js and npm
-brew install node
-Navigate to program directory
-npm install react-router-dom
-
-## Dependencies
-
-    npm install @mui/material @mui/icons-material @emotion/styled @emotion/react
-    npm install --save-dev @types/react @types/react-dom
+- Install [Golang](https://go.dev/doc/install)
+- Install [Docker](https://docs.docker.com/engine/install/)
+- Clone repository from [GitHub](https://github.com/carterrath/ServerlessOrchestrator.git)
+- Open terminal in project directory
+- Run command **go mod tidy** to download libraries for the backend
+- Run command **cd presentation** to go into the frontend directory
+- Run command **npm install** to download libraries for the frontend
+- Run command **cd ..** to go back into the main project directory
+- Run command **npm run start** to run application
+- Go to http://localhost:5173
